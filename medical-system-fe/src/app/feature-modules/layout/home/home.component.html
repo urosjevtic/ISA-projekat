@@ -8,6 +8,40 @@
   </div>
 </div>
 
+
+
+<!-- COMPANY CARDS -->
 <div class="scroll-content">
-  <h1>Checkout some of the companies</h1>
+  <h1>Browse companies</h1>
+  <div class="companies-scroller">
+
+    <div class="carousel-container">
+      <div class="carousel-controls">
+        <div class="carousel-wrapper" [style.transform]="'translateX(-' + currentIndex * 100 + '%)'">
+          <div *ngFor="let company of companies" class="wrapper">
+            <div class="product-img">
+              <img src="https://www.creativefabrica.com/wp-content/uploads/2021/03/29/1617000756/Medical-cross-580x386.jpg" height="420" width="327">
+            </div>
+            <div class="product-info">
+              <div class="product-text">
+                <h1>{{company.name}}</h1>
+                <p>{{company.description}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button (click)="prevSlide()" class="carousel-button prev">Previous</button>
+        <button class="carousel-button">See all</button>
+        <button (click)="nextSlide()" class="carousel-button next">Next</button>
+      </div>
+    </div>
+
+  
+
+  </div>
 </div>
+
+

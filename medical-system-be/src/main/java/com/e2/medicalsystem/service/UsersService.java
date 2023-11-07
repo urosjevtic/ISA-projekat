@@ -14,12 +14,10 @@ import java.util.List;
 public class UsersService {
 
     private final UsersRepository usersRepository;
-    private final PasswordEncoder passwordEncoder;
     @Autowired
-    public UsersService(UsersRepository usersRepository, PasswordEncoder passwordEncoder)
+    public UsersService(UsersRepository usersRepository)
     {
         this.usersRepository = usersRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -37,8 +35,6 @@ public class UsersService {
         {
             throw new EmailAlreadyExistException("Username already exist");
         }
-
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return usersRepository.save(user);
     }
 

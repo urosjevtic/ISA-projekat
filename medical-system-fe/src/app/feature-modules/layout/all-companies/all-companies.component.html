@@ -1,0 +1,33 @@
+
+<div class="table-companies">
+    <div class="header">
+        Companies
+        <div class="wrap">
+            <div class="search">
+                <input type="text" class="searchTerm" placeholder="Search...">
+                <button type="submit" class="searchButton">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <table cellspacing="0">
+       <tr>
+          <th></th>
+          <th>Company name</th>
+          <th>Address</th>
+          <th>Review</th>
+          <th width="230">Description</th>
+       </tr>
+ 
+       <tr *ngFor="let company of companies">
+          <td><img src="https://www.creativefabrica.com/wp-content/uploads/2021/03/29/1617000756/Medical-cross-580x386.jpg" alt="" /></td>
+          <td>{{company.name}}</td>
+          <td></td>
+          <td></td>
+          <td>{{company.description}}</td>
+       </tr>
+ 
+    </table>
+ </div>

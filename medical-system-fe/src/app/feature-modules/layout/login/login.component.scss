@@ -13,6 +13,8 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
     overflow: hidden;
     border: none;
+    height: 500px;
+    width: 550px;
 }
 
 .user-info, .company-info {
@@ -91,9 +93,6 @@ body {
     color: #174ea6;
 }
 
-
-.password-warning {
-    color: red;
-    margin-bottom: 5px;
-  }
-  
+.not-register{
+    padding-top: 100px;
+}

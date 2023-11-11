@@ -1,10 +1,8 @@
 package com.e2.medicalsystem.service;
 
 import com.e2.medicalsystem.exception.EmailAlreadyExistException;
-import com.e2.medicalsystem.exception.UsernameAlreadyExistException;
 import com.e2.medicalsystem.model.User;
 import com.e2.medicalsystem.repository.UsersRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,13 +25,9 @@ public class UsersService {
 
     public User saveUser(User user)
     {
-        if(usersRepository.findByUsername(user.getUsername()) != null)
-        {
-            throw new UsernameAlreadyExistException("Username already exist");
-        }
         if(usersRepository.findByEmail(user.getEmail()) != null)
         {
-            throw new EmailAlreadyExistException("Username already exist");
+            throw new EmailAlreadyExistException("Email already exist");
         }
         return usersRepository.save(user);
     }

@@ -5,6 +5,8 @@ import { MaterialModule } from 'src/app/infrastructure/material/material.module'
 import { HomeComponent } from './home/home.component';
 import { AllCompaniesComponent } from './all-companies/all-companies.component';
 import { AppRoutingModule } from 'src/app/app-routing.module';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -13,6 +15,8 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
     NavbarComponent,
     HomeComponent,
     AllCompaniesComponent,
+    RegisterComponent,
+    LoginComponent,
   ],
   imports: [
     CommonModule,

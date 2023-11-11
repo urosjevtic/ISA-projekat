@@ -13,6 +13,8 @@ import { MatOption } from '@angular/material/core';
 import {MatCheckbox, MatCheckboxModule} from '@angular/material/checkbox';
 import {MatCard, MatCardModule} from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -29,7 +31,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatSnackBarModule,
     MatSelectModule,
     MatCheckboxModule,
-    MatCardModule
+    MatCardModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule
 
   ],
   exports: [
@@ -46,7 +50,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatSelect,
     MatOption,
     MatCheckbox,
-    MatCardModule
+    MatCardModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule
   ]
 })
 export class MaterialModule { }

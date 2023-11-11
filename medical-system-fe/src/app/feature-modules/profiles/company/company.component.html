@@ -1,0 +1,22 @@
+<div>
+    <h1>Company Profiles</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Average Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let companyProfile of companyProfiles">
+          <td>{{ companyProfile.id }}</td>
+          <td>{{ companyProfile.name }}</td>
+          <td>{{ companyProfile.address }}</td>
+          <td>{{ companyProfile.averageRating }}</td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+  

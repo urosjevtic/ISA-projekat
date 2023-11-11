@@ -7,11 +7,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ProfilesService {
-  private apiUrl = 'http://localhost:4200';
+  private apiUrl = 'http://localhost:8080/api/';
 
   constructor(private http: HttpClient) { }
 
   getAllCompanyProfiles(): Observable<CompanyProfile[]> {
-    return this.http.get<CompanyProfile[]>(this.apiUrl + '/company');
+    return this.http.get<CompanyProfile[]>(this.apiUrl + 'company');
   }
 }

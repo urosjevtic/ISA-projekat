@@ -14,6 +14,7 @@ import {MatCheckbox, MatCheckboxModule} from '@angular/material/checkbox';
 import {MatCard, MatCardModule} from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatSelectModule,
     MatCheckboxModule,
     MatCardModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule
 
   ],
   exports: [
@@ -49,7 +51,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatOption,
     MatCheckbox,
     MatCardModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule
   ]
 })
 export class MaterialModule { }

@@ -8,31 +8,42 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String username;
+    private String email;
     private String password;
     private String name;
     private String surname;
-    private String email;
     private String phone;
 
     private String city;
     private String country;
+    private String profession;
+
 
 
     public User() {
-
     }
 
-    public User(Integer id, String username, String password, String name, String surname, String email, String phone, String city, String country) {
+    public User(Integer id, String email, String password, String name, String surname, String phone, String city, String country, String profession) {
         this.id = id;
-        this.username = username;
+        this.email = email;
         this.password = password;
         this.name = name;
         this.surname = surname;
-        this.email = email;
         this.phone = phone;
-        this.country = country;
         this.city = city;
+        this.country = country;
+        this.profession = profession;
+    }
+
+    public User(String email, String password, String name, String surname, String phone, String city, String country, String profession) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.phone = phone;
+        this.city = city;
+        this.country = country;
+        this.profession = profession;
     }
 
     public Integer getId() {
@@ -42,13 +53,12 @@ public class User {
     public void setId(Integer id) {
         this.id = id;
     }
-
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -75,14 +85,6 @@ public class User {
         this.surname = surname;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -106,6 +108,13 @@ public class User {
     public void setCountry(String country) {
         this.country = country;
     }
-}
 
+    public String getProfession() {
+        return profession;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession;
+    }
+}
 

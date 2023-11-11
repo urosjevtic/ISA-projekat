@@ -6,7 +6,6 @@ import jakarta.persistence.ManyToOne;
 
 public class UsersDto {
     private Integer id;
-    private String username;
     private String password;
     private String name;
     private String surname;
@@ -15,9 +14,8 @@ public class UsersDto {
     private String country;
     private String city;
 
-    public UsersDto(Integer id, String username, String password, String name, String surname, String email, String phone, String country, String city) {
+    public UsersDto(Integer id, String password, String name, String surname, String email, String phone, String country, String city) {
         this.id = id;
-        this.username = username;
         this.password = password;
         this.name = name;
         this.surname = surname;
@@ -29,7 +27,7 @@ public class UsersDto {
 
     public UsersDto(User user)
     {
-        this(user.getId(), user.getUsername(), user.getPassword(), user.getName(), user.getSurname(),
+        this(user.getId(), user.getPassword(), user.getName(), user.getSurname(),
                 user.getEmail(), user.getPhone(), user.getCountry(), user.getCity());
 
     }
@@ -43,13 +41,6 @@ public class UsersDto {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public String getPassword() {
         return password;

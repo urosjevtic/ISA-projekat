@@ -21,8 +21,4 @@ export class LayoutService {
   getAllCompanies(): Observable<CompanyProfile[]> {
     return this.http.get<CompanyProfile[]>(this.apiUrl + 'company/' + 'all');
   }
-
-  getCompanyById(id: number): Observable<CompanyProfile> {
-    return this.http.get<CompanyProfile>(this.apiUrl + 'company/' + id);
-  }
 }

@@ -9,6 +9,9 @@ import { Observable } from 'rxjs';
 export class ProfilesService {
   private apiUrl = 'http://localhost:8080/api/';
 
-  constructor(private http: HttpClient) { }
-
+  constructor(private http: HttpClient) {}
+  
+  getCompanyById(id: number): Observable<CompanyProfile> {
+    return this.http.get<CompanyProfile>(this.apiUrl + 'company/' + id);
+  }
 }

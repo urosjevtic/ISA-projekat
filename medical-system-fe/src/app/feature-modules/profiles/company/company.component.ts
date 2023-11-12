@@ -13,7 +13,7 @@ export class CompanyComponent implements OnInit {
  
   company: CompanyProfile | undefined;
 
-  constructor(private route: ActivatedRoute, private layoutService: LayoutService) {}
+  constructor(private route: ActivatedRoute, private profilesService: ProfilesService) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -23,7 +23,7 @@ export class CompanyComponent implements OnInit {
   }
 
   getCompanyById(id: number) {
-    this.layoutService.getCompanyById(id).subscribe((data) => {
+    this.profilesService.getCompanyById(id).subscribe((data) => {
       this.company = data;
     });
   }

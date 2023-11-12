@@ -10,7 +10,6 @@ import { LayoutService } from '../layout.service';
 export class AllCompaniesComponent {
 
   companies: CompanyProfile[] = [];
-  selectedCompany: CompanyProfile | undefined;
   
   constructor(private layoutService: LayoutService) {}
 
@@ -21,12 +20,6 @@ export class AllCompaniesComponent {
   getAllCompanies() {
     this.layoutService.getAllCompanies().subscribe((data) => {
       this.companies = data;
-    });
-  }
-
-  getCompanyById(id: number) {
-    this.layoutService.getCompanyById(id).subscribe((data) => {
-      this.selectedCompany = data;
     });
   }
 }

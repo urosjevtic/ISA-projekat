@@ -13,16 +13,20 @@ public class CompanyProfile {
     private String Name;
     private String Address;
     private double AverageRating;
+    private String Description;
+    private String CompanyLogo;
     //@OneToMany(mappedBy = "id")
     //private List<MedicalEquipment> Equipment;
 
     public CompanyProfile() {}
 
-    public CompanyProfile(long id, String name, String address, double averageRating) {
+    public CompanyProfile(long id, String name, String address, double averageRating, String description, String companyLogo) {
         Id = id;
         Name = name;
         Address = address;
         AverageRating = averageRating;
+        Description = description;
+        CompanyLogo = companyLogo;
         //Equipment = equipment;
     }
 
@@ -56,6 +60,22 @@ public class CompanyProfile {
 
     public void setAverageRating(double averageRating) {
         AverageRating = averageRating;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
+    }
+
+    public String getCompanyLogo() {
+        return CompanyLogo;
+    }
+
+    public void setCompanyLogo(String companyLogo) {
+        CompanyLogo = companyLogo;
     }
 
     /*public List<MedicalEquipment> getEquipment() {

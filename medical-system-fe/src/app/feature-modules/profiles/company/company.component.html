@@ -1,22 +1,13 @@
-<div>
-    <h1>Company Profiles</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Address</th>
-          <th>Average Rating</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let companyProfile of companyProfiles">
-          <td>{{ companyProfile.id }}</td>
-          <td>{{ companyProfile.name }}</td>
-          <td>{{ companyProfile.address }}</td>
-          <td>{{ companyProfile.averageRating }}</td>
-        </tr>
-      </tbody>
-    </table>
-</div>
+<div *ngIf="company" class="profile-card">
+  <div class="cover-photo">
+
+  </div>
   
+  <img [src]="company.companyLogo" alt="Profile Picture" class="profile-picture">
+  
+  <div class="company-info">
+    <h2>{{ company.name }}</h2>
+    <p>{{ company.address }}</p>
+    <p>{{ company.description }}</p>
+  </div>
+</div>

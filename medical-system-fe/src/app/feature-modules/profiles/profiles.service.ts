@@ -11,7 +11,4 @@ export class ProfilesService {
 
   constructor(private http: HttpClient) { }
 
-  getAllCompanyProfiles(): Observable<CompanyProfile[]> {
-    return this.http.get<CompanyProfile[]>(this.apiUrl + 'company');
-  }
 }

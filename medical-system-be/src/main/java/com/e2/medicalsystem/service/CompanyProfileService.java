@@ -18,5 +18,8 @@ public class CompanyProfileService {
     }
 
     public List<CompanyProfile> getAllCompanies(){ return companyProfileRepository.findAll(); }
-
+    public CompanyProfile getCompanyById(long id)
+    {
+        return companyProfileRepository.findById(id).orElse(null);
+    }
 }

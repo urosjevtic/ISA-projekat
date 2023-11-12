@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Company } from '../model/company.model';
+import { CompanyProfile } from '../../profiles/model/company.model';
 
 @Component({
   selector: 'app-home',
@@ -8,44 +8,20 @@ import { Company } from '../model/company.model';
 })
 export class HomeComponent {
 
-company1: Company = {
-  name: 'Kompanija1',
-  description: 'Opis kompanije',
-  companyLogo: ''
-};
+  currentIndex: number = 0;
+  companies: CompanyProfile[] = [];
 
-company3: Company = {
-  name: 'Kompanija3',
-  description: 'Opis trece kompanije',
-  companyLogo: ''
-};
-
-company2: Company = {
-  name: 'Kompanija2',
-  description: 'Opis kompanije asdkja lskdja lskdjalk sjdla jsdklaj lsdkja lsdj kalsjdkl ajdslaj fkasljf sdhf kasdhf kahdsfklash fdkasjldfk hfksdhf ksjdf jksadf',
-  companyLogo: ''
-};
-
-company4: Company = {
-  name: 'Kompanija4',
-  description: 'Opis kompanije asdkja lskdja lskdjalk sjdla jsdklaj lsdkja lsdj kalsjdkl ajdslaj fkasljf sdhf kasdhf kahdsfklash fdkasjldfk hfksdhf ksjdf jksadf',
-  companyLogo: ''
-};
-companies: Company[] = [this.company1, this.company2, this.company3, this.company4, this.company4, this.company4]
-
-currentIndex: number = 0;
-
-// Function to go to the previous slide
-prevSlide() {
-  if (this.currentIndex > 0) {
-    this.currentIndex--;
+  // Function to go to the previous slide
+  prevSlide() {
+    if (this.currentIndex > 0) {
+      this.currentIndex--;
+    }
   }
-}
 
-// Function to go to the next slide
-nextSlide() {
-  if (this.currentIndex < this.companies.length - 3) {
-    this.currentIndex++;
+  // Function to go to the next slide
+  nextSlide() {
+    if (this.currentIndex < this.companies.length - 3) {
+      this.currentIndex++;
+    }
   }
-}
 }

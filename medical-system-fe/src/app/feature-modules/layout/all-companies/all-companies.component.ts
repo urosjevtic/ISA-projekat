@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Company } from '../model/company.model';
+import { CompanyProfile } from '../../profiles/model/company.model';
+import { LayoutService } from '../layout.service';
 
 @Component({
   selector: 'app-all-companies',
@@ -8,30 +9,24 @@ import { Company } from '../model/company.model';
 })
 export class AllCompaniesComponent {
 
-  company1: Company = {
-    name: 'Kompanija1',
-    description: 'Opis kompanije',
-    companyLogo: ''
-  };
+  companies: CompanyProfile[] = [];
+  selectedCompany: CompanyProfile | undefined;
   
-  company3: Company = {
-    name: 'Kompanija3',
-    description: 'Opis trece kompanije',
-    companyLogo: ''
-  };
-  
-  company2: Company = {
-    name: 'Kompanija2',
-    description: 'Opis kompanije asdkja lskdja lskdjalk sjdla jsdklaj lsdkja lsdj kalsjdkl ajdslaj fkasljf sdhf kasdhf kahdsfklash fdkasjldfk hfksdhf ksjdf jksadf',
-    companyLogo: ''
-  };
-  
-  company4: Company = {
-    name: 'Kompanija4',
-    description: 'Opis kompanije asdkja lskdja lskdjalk sjdla jsdklaj lsdkja lsdj kalsjdkl ajdslaj fkasljf sdhf kasdhf kahdsfklash fdkasjldfk hfksdhf ksjdf jksadf',
-    companyLogo: ''
-  };
-  companies: Company[] = [this.company1, this.company2, this.company3, this.company4, this.company4, this.company4]
+  constructor(private layoutService: LayoutService) {}
 
+  ngOnInit(): void {
+    this.getAllCompanies();
+  }
+  
+  getAllCompanies() {
+    this.layoutService.getAllCompanies().subscribe((data) => {
+      this.companies = data;
+    });
+  }
 
+  getCompanyById(id: number) {
+    this.layoutService.getCompanyById(id).subscribe((data) => {
+      this.selectedCompany = data;
+    });
+  }
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfilesService } from '../profiles.service';
 import { CompanyProfile } from '../model/company.model';
+import { LayoutService } from '../../layout/layout.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-company',
@@ -9,18 +11,20 @@ import { CompanyProfile } from '../model/company.model';
 })
 export class CompanyComponent implements OnInit {
  
-  companyProfiles: CompanyProfile[] = [];
+  company: CompanyProfile | undefined;
 
-  constructor(private profilesService: ProfilesService) {}
+  constructor(private route: ActivatedRoute, private layoutService: LayoutService) {}
 
   ngOnInit(): void {
-    this.getAllCompanyProfiles();
+    this.route.params.subscribe(params => {
+      const companyId = params['id'];
+      this.getCompanyById(companyId);
+    }); 
   }
 
-  getAllCompanyProfiles() {
-    this.profilesService.getAllCompanyProfiles().subscribe((data) => {
-      this.companyProfiles = data;
+  getCompanyById(id: number) {
+    this.layoutService.getCompanyById(id).subscribe((data) => {
+      this.company = data;
     });
   }
-
 }

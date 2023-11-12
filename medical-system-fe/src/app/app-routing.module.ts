@@ -8,10 +8,8 @@ import { LoginComponent } from './feature-modules/layout/login/login.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
-  {path: 'all-companies', component: AllCompaniesComponent},
-  {path: 'company', component: CompanyComponent},
-
-  {path: 'all-companies', component: AllCompaniesComponent},
+  {path: 'company', component: AllCompaniesComponent},
+  {path: 'company/:id', component: CompanyComponent },
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent}
 ];

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +24,7 @@ public class CompanyProfileController {
         this.companyProfileService = companyProfileService;
     }
 
-    @GetMapping(value = "/all")
+    @GetMapping(value = "all")
     public ResponseEntity<List<CompanyProfileDto>> getAllCompanies() {
 
         List<CompanyProfile> allCompanies = companyProfileService.getAllCompanies();
@@ -34,5 +35,12 @@ public class CompanyProfileController {
         }
         return new ResponseEntity<>(allCompaniesDto, HttpStatus.OK);
 
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<CompanyProfileDto> getCompanyById(@PathVariable Integer id){
+        CompanyProfile companyProfile = companyProfileService.getCompanyById(id);
+        CompanyProfileDto companyProfileDto = new CompanyProfileDto(companyProfile);
+        return new ResponseEntity<>(companyProfileDto, HttpStatus.OK);
     }
 }

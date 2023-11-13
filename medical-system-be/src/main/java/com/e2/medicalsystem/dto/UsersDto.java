@@ -11,24 +11,20 @@ public class UsersDto {
     private String surname;
     private String email;
     private String phone;
-    private String country;
-    private String city;
 
-    public UsersDto(Integer id, String password, String name, String surname, String email, String phone, String country, String city) {
+    public UsersDto(Integer id, String password, String name, String surname, String email, String phone) {
         this.id = id;
         this.password = password;
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.phone = phone;
-        this.country = country;
-        this.city = city;
     }
 
     public UsersDto(User user)
     {
         this(user.getId(), user.getPassword(), user.getName(), user.getSurname(),
-                user.getEmail(), user.getPhone(), user.getCountry(), user.getCity());
+                user.getEmail(), user.getPhone());
 
     }
 
@@ -82,19 +78,4 @@ public class UsersDto {
         this.phone = phone;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
 }

@@ -12,16 +12,13 @@ public class RegistrationInfoDto {
     public String profession;
 
     public String companyName;
-    public String companyCountry;
-    public String companyCity;
-    public String companyAddress;
-    public String companyWebsite;
+    public String address;
 
     public RegistrationInfoDto()
     {
 
     }
-    public RegistrationInfoDto(String email, String password, String confirmPassword, String name, String surname, String city, String country, String phone, String profession, String companyName, String companyCountry, String companyCity, String companyAddress, String companyWebsite) {
+    public RegistrationInfoDto(String email, String password, String confirmPassword, String name, String surname, String city, String country, String phone, String profession, String companyName, String address) {
         this.email = email;
         this.password = password;
         this.confirmPassword = confirmPassword;
@@ -32,10 +29,7 @@ public class RegistrationInfoDto {
         this.phone = phone;
         this.profession = profession;
         this.companyName = companyName;
-        this.companyCountry = companyCountry;
-        this.companyCity = companyCity;
-        this.companyAddress = companyAddress;
-        this.companyWebsite = companyWebsite;
+        this.address = address;
     }
 
     public String getEmail() {
@@ -118,35 +112,13 @@ public class RegistrationInfoDto {
         this.companyName = companyName;
     }
 
-    public String getCompanyCountry() {
-        return companyCountry;
+
+    public String getAddress() {
+        return address;
     }
 
-    public void setCompanyCountry(String companyCountry) {
-        this.companyCountry = companyCountry;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getCompanyCity() {
-        return companyCity;
-    }
-
-    public void setCompanyCity(String companyCity) {
-        this.companyCity = companyCity;
-    }
-
-    public String getCompanyAddress() {
-        return companyAddress;
-    }
-
-    public void setCompanyAddress(String companyAddress) {
-        this.companyAddress = companyAddress;
-    }
-
-    public String getCompanyWebsite() {
-        return companyWebsite;
-    }
-
-    public void setCompanyWebsite(String companyWebsite) {
-        this.companyWebsite = companyWebsite;
-    }
 }

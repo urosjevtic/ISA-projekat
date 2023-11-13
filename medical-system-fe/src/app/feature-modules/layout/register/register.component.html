@@ -41,23 +41,6 @@
                     </mat-form-field>
                 </div>
 
-                <div class="location">
-                    <mat-form-field class="country">
-                        <mat-label>Select country</mat-label>
-                        <mat-select formControlName="country" required>
-                          <mat-option value="one">First option</mat-option>
-                          <mat-option value="two">Second option</mat-option>
-                        </mat-select>
-                      </mat-form-field>
-
-                      <mat-form-field class="city">
-                        <mat-label>Select city</mat-label>
-                        <mat-select formControlName="city" required> 
-                          <mat-option value="one">First option</mat-option>
-                          <mat-option value="two">Second option</mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                </div>
 
                 <mat-form-field>
                     <mat-label>Phone number</mat-label>
@@ -81,33 +64,29 @@
                 </mat-form-field>
 
                 <div class="location">
-                    <mat-form-field class="country">
-                        <mat-label>Select country</mat-label>
-                        <mat-select formControlName="companyCountry">
-                          <mat-option value="one">First option</mat-option>
-                          <mat-option value="two">Second option</mat-option>
-                        </mat-select>
-                      </mat-form-field>
+                  <mat-form-field class="country">
+                      <mat-label>Select country</mat-label>
+                      <mat-select formControlName="country" required>
+                        <mat-option value="one">First option</mat-option>
+                        <mat-option value="two">Second option</mat-option>
+                      </mat-select>
+                    </mat-form-field>
 
-                      <mat-form-field class="city">
-                        <mat-label>Select city</mat-label>
-                        <mat-select formControlName="companyCity">
-                          <mat-option value="one">First option</mat-option>
-                          <mat-option value="two">Second option</mat-option>
-                        </mat-select>
-                      </mat-form-field>
+                    <mat-form-field class="city">
+                      <mat-label>Select city</mat-label>
+                      <mat-select formControlName="city" required> 
+                        <mat-option value="one">First option</mat-option>
+                        <mat-option value="two">Second option</mat-option>
+                      </mat-select>
+                    </mat-form-field>
                 </div>
 
 
                 <mat-form-field class="address-field">
                     <mat-label>Address</mat-label>
-                    <input matInput formControlName="companyAddress" required>
+                    <input matInput formControlName="address" required>
                 </mat-form-field>
 
-                <mat-form-field>
-                    <mat-label>Website</mat-label>
-                    <input matInput formControlName="companyWebsite">
-                </mat-form-field>
 
                 <button class="button" role="button" (click)="onRegisterClick()">Register</button>
     

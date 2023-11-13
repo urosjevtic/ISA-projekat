@@ -14,8 +14,10 @@ public class User {
     private String surname;
     private String phone;
 
+    private String companyName;
     private String city;
     private String country;
+    private String address;
     private String profession;
 
 
@@ -23,26 +25,30 @@ public class User {
     public User() {
     }
 
-    public User(Integer id, String email, String password, String name, String surname, String phone, String city, String country, String profession) {
+    public User(Integer id, String email, String password, String name, String surname, String phone, String companyName, String city, String country, String address, String profession) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.name = name;
         this.surname = surname;
         this.phone = phone;
+        this.companyName = companyName;
         this.city = city;
         this.country = country;
+        this.address = address;
         this.profession = profession;
     }
 
-    public User(String email, String password, String name, String surname, String phone, String city, String country, String profession) {
+    public User(String email, String password, String name, String surname, String phone, String companyName, String city, String country, String address, String profession) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.surname = surname;
         this.phone = phone;
+        this.companyName = companyName;
         this.city = city;
         this.country = country;
+        this.address = address;
         this.profession = profession;
     }
 
@@ -115,6 +121,22 @@ public class User {
 
     public void setProfession(String profession) {
         this.profession = profession;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
 

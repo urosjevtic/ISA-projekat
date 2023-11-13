@@ -3,6 +3,7 @@ package com.e2.medicalsystem.controller;
 import com.e2.medicalsystem.dto.RegistrationInfoDto;
 import com.e2.medicalsystem.dto.UsersDto;
 import com.e2.medicalsystem.model.User;
+import com.e2.medicalsystem.service.EmailSenderService;
 import com.e2.medicalsystem.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,10 +18,12 @@ import java.util.List;
 public class UsersController {
 
     private UsersService usersService;
+    private EmailSenderService emailSenderService;
     @Autowired
-    public UsersController(UsersService usersService)
+    public UsersController(UsersService usersService, EmailSenderService emailSenderService)
     {
         this.usersService = usersService;
+        this.emailSenderService = emailSenderService;
     }
 
 
@@ -49,6 +52,7 @@ public class UsersController {
     {
         User newUser = new User();
         newUser = usersService.saveUser(createNewUser(registrationInfoDto));
+        emailSenderService.sendEmail(newUser.getEmail(), "Confirmation mail", "Confirm your registration: http://localhost:4200");
         return new ResponseEntity<>(new UsersDto(newUser), HttpStatus.OK);
     }
 

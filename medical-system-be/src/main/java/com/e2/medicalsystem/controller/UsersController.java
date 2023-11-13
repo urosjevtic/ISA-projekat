@@ -1,6 +1,8 @@
 package com.e2.medicalsystem.controller;
 
+import com.e2.medicalsystem.dto.PasswordChangeDto;
 import com.e2.medicalsystem.dto.RegistrationInfoDto;
+import com.e2.medicalsystem.dto.UserInfoDto;
 import com.e2.medicalsystem.dto.UsersDto;
 import com.e2.medicalsystem.model.Hospital;
 import com.e2.medicalsystem.model.Location;
@@ -57,6 +59,26 @@ public class UsersController {
         newUser = usersService.saveUser(createNewUser(registrationInfoDto));
         hospitalService.saveHospital(createNewHospital(registrationInfoDto, newUser));
         return new ResponseEntity<>(new UsersDto(newUser), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "getUserInfo/{id}")
+    public ResponseEntity<UserInfoDto> getUserInfo(@PathVariable Integer id)
+    {
+        return new ResponseEntity<>(usersService.getUserInfo(id), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "changePassword")
+    public ResponseEntity<String> changePassword(@RequestBody PasswordChangeDto passwordChangeDto)
+    {
+        usersService.changePassword(passwordChangeDto,1);
+        return new ResponseEntity<>("Password changed successfully!",HttpStatus.OK);
+    }
+
+    @PostMapping(value = "changeInfo")
+    public ResponseEntity<String> changeInfo(@RequestBody UserInfoDto userInfoDto)
+    {
+        usersService.changeInfo(userInfoDto,1);
+        return new ResponseEntity<>("User info changed successfully!",HttpStatus.OK);
     }
 
     private User createNewUser(RegistrationInfoDto registrationInfoDto)

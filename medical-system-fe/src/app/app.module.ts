@@ -10,13 +10,11 @@ import { ProfilesModule } from './feature-modules/profiles/profiles.module';
     AppComponent,
   ],
   imports: [
- 
     AppRoutingModule,
     LayoutModule,
     HttpClientModule,
     LayoutModule,
-    ProfilesModule
-
+    ProfilesModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

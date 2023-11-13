@@ -7,7 +7,13 @@
   
   <div class="company-info">
     <h2>{{ company.name }}</h2>
-    <p>{{ company.address }}</p>
-    <p>{{ company.description }}</p>
+    <p class="address">{{ company.address }}</p>
+    <p class="description">{{ company.description }}</p>
+
+    <form class="reservation-form" (submit)="reserveEquipment()">
+      <label for="reservationDate">Scheduled equipment pickup:</label>
+      <input type="date" id="reservationDate" [(ngModel)]="reservationDate" name="reservationDate" required>
+      <button type="submit">Done</button>
+    </form>
   </div>
 </div>

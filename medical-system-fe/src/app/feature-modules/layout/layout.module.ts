@@ -7,6 +7,8 @@ import { AllCompaniesComponent } from './all-companies/all-companies.component';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile/profile.component';
+import {MatDividerModule} from "@angular/material/divider";
 
 
 
@@ -17,11 +19,13 @@ import { LoginComponent } from './login/login.component';
     AllCompaniesComponent,
     RegisterComponent,
     LoginComponent,
+    ProfileComponent,
   ],
   imports: [
     CommonModule,
     MaterialModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatDividerModule
   ],
   exports: [
     NavbarComponent

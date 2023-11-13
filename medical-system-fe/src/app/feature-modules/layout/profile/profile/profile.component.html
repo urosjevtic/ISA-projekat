@@ -1,0 +1,94 @@
+<div class="profile-container">
+  <form>
+
+    <mat-label>Change Password</mat-label>
+    <mat-divider></mat-divider>
+
+    <mat-form-field>
+      <mat-label>Old Password</mat-label>
+      <input matInput type="password" [disabled]="!editPassword">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>New Password</mat-label>
+      <input matInput type="password" [disabled]="!editPassword">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Confirm Password</mat-label>
+      <input matInput type="password" [disabled]="!editPassword">
+    </mat-form-field>
+
+    <div class="button-container">
+
+      <button mat-raised-button color="primary" (click)="enableEditPassword()" *ngIf="!editPassword">
+        Change Password
+      </button>
+
+      <button mat-raised-button color="primary"  *ngIf="editPassword">
+        Save
+      </button>
+
+      <button mat-raised-button color="warn" (click)="disableEditPassword()" *ngIf="editPassword">
+        Cancel
+      </button>
+
+    </div>
+
+    <mat-label>Personal Info</mat-label>
+    <mat-divider></mat-divider>
+
+    <mat-form-field>
+      <mat-label>E-mail</mat-label>
+      <input matInput [disabled]="!editInfo" value="email@nigger.com">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput [disabled]="!editInfo" value="Nigger">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Surname</mat-label>
+      <input matInput [disabled]="!editInfo" value="Killer">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Phone number</mat-label>
+      <input matInput type="number" [disabled]="!editInfo" value="062117546">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>City</mat-label>
+      <input matInput [disabled]="!editInfo" value="Novi Sad">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Country</mat-label>
+      <input matInput [disabled]="!editInfo" value="Serbia">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Profession</mat-label>
+      <input matInput [disabled]="!editInfo" value="Nigger killer">
+    </mat-form-field>
+
+
+    <div class="button-container">
+
+      <button mat-raised-button color="primary" (click)="enableEditInfo()" *ngIf="!editInfo">
+        Edit Info
+      </button>
+
+      <button mat-raised-button color="primary"  *ngIf="editInfo">
+        Save
+      </button>
+
+      <button mat-raised-button color="warn" (click)="disableEditInfo()" *ngIf="editInfo">
+        Cancel
+      </button>
+
+    </div>
+
+  </form>
+</div>

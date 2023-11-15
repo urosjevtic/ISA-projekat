@@ -69,14 +69,15 @@ h2 {
   margin: 0 10px; /* Add margin to create space between cards */
   
   /* Increase the height and width of the card */
-  height: 400px; /* Set the height to your desired value */
-  width: 350px; /* Set the width to your desired value */
+  height: 300px; /* Set the height to your desired value */
+  width: 150px; /* Set the width to your desired value */
   box-sizing: border-box;
   /* Your other styles */
 }
 
 .product-img {
-  height: 200px; /* Adjust the image container height */
+  height: 150px; /* Adjust the image container height */
+  width: 150px;
   display: flex;
   align-items: center;
 }
@@ -168,7 +169,7 @@ section {
 }
 
 .buttons{
-  margin-top: 20px;
+  margin-top: 100px;
 }
 
 

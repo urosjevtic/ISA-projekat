@@ -22,4 +22,19 @@ public class CompanyProfileService {
     {
         return companyProfileRepository.findById(id).orElse(null);
     }
+
+    public CompanyProfile updateCompanyProfile(CompanyProfile updatedProfile) {
+        CompanyProfile existingProfile = companyProfileRepository.findById(updatedProfile.getId()).orElse(null);
+
+        if (existingProfile != null) {
+            existingProfile.setName(updatedProfile.getName());
+            existingProfile.setAddress(updatedProfile.getAddress());
+            existingProfile.setDescription(updatedProfile.getDescription());
+            existingProfile.setCompanyLogo(updatedProfile.getCompanyLogo());
+
+            return companyProfileRepository.save(existingProfile);
+        }
+
+        return null;
+    }
 }

@@ -19,4 +19,8 @@ export class ProfilesService {
   reserveEquipment(reservation: Reservation): Observable<any> {
     return this.http.post<any>(this.apiUrl + 'reservation/' + 'save', reservation);
   }
+
+  updateCompanyProfile(company: CompanyProfile): Observable<any> {
+    return this.http.put<any>(this.apiUrl + 'company/' + company.id, company);
+  }
 }

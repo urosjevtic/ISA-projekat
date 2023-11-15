@@ -14,7 +14,7 @@ export class CompanyComponent implements OnInit {
  
   company: CompanyProfile | undefined;
   reservationDate: string = '';
-
+  isEditFormVisible = false;
   constructor(private route: ActivatedRoute, private profilesService: ProfilesService) {}
 
   ngOnInit(): void {
@@ -22,6 +22,16 @@ export class CompanyComponent implements OnInit {
       const companyId = params['id'];
       this.getCompanyById(companyId);
     }); 
+
+    
+  }
+
+  showEditForm() {
+    this.isEditFormVisible = true;
+  }
+
+  hideEditForm() {
+    this.isEditFormVisible = false;
   }
 
   getCompanyById(id: number) {
@@ -39,6 +49,14 @@ export class CompanyComponent implements OnInit {
 
       this.profilesService.reserveEquipment(reservation).subscribe((response) => {
         console.log('Rezervacija uspešna!', response);
+      });
+    }
+  }
+
+  updateProfile() {
+    if (this.company) {
+      this.profilesService.updateCompanyProfile(this.company).subscribe((response) => {
+        console.log('Profil ažuriran!', response);
       });
     }
   }

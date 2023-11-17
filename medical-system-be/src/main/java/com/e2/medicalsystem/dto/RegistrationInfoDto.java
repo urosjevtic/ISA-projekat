@@ -2,6 +2,7 @@ package com.e2.medicalsystem.dto;
 
 public class RegistrationInfoDto {
     public String email;
+    public String username;
     public String password;
     public String confirmPassword;
     public String name;
@@ -18,8 +19,9 @@ public class RegistrationInfoDto {
     {
 
     }
-    public RegistrationInfoDto(String email, String password, String confirmPassword, String name, String surname, String city, String country, String phone, String profession, String companyName, String address) {
+    public RegistrationInfoDto(String email, String username, String password, String confirmPassword, String name, String surname, String city, String country, String phone, String profession, String companyName, String address) {
         this.email = email;
+        this.username = username;
         this.password = password;
         this.confirmPassword = confirmPassword;
         this.name = name;
@@ -30,6 +32,14 @@ public class RegistrationInfoDto {
         this.profession = profession;
         this.companyName = companyName;
         this.address = address;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {

@@ -3,11 +3,18 @@ package com.e2.medicalsystem.controller;
 import com.e2.medicalsystem.dto.RegistrationInfoDto;
 import com.e2.medicalsystem.dto.UsersDto;
 import com.e2.medicalsystem.model.User;
+import com.e2.medicalsystem.security.AuthTokenFilter;
 import com.e2.medicalsystem.service.EmailSenderService;
 import com.e2.medicalsystem.service.UsersService;
+import com.e2.medicalsystem.service.impl.EmailSenderServiceImpl;
+import com.e2.medicalsystem.service.impl.UsersServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -17,18 +24,18 @@ import java.util.List;
 @RequestMapping(value = "api/users")
 public class UsersController {
 
-    private UsersService usersService;
-    private EmailSenderService emailSenderService;
     @Autowired
-    public UsersController(UsersService usersService, EmailSenderService emailSenderService)
-    {
-        this.usersService = usersService;
-        this.emailSenderService = emailSenderService;
-    }
-
+    private UsersService usersService;
+    @Autowired
+    private EmailSenderService emailSenderService;
+    private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
     @GetMapping(value = "/all")
-    public ResponseEntity<List<UsersDto>> getAllStudents() {
+    @PreAuthorize("hasAuthority('ROLL_USER')")
+    //@PreAuthorize("isAuthenticated()")
+    public ResponseEntity<List<UsersDto>> getAllStudents(@AuthenticationPrincipal User u) {
+
+        logger.info(u.getAuthorities().toString());
 
         List<User> allUsers = usersService.getAllUsers();
         List<UsersDto> allUsersDto = new ArrayList<>();
@@ -47,14 +54,6 @@ public class UsersController {
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
-    @PostMapping(consumes = "application/json")
-    public ResponseEntity<UsersDto> saveUser(@RequestBody RegistrationInfoDto registrationInfoDto)
-    {
-        User newUser = new User();
-        newUser = usersService.saveUser(createNewUser(registrationInfoDto));
-        emailSenderService.sendEmail(newUser.getEmail(), "Confirmation mail", "Confirm your registration: http://localhost:4200");
-        return new ResponseEntity<>(new UsersDto(newUser), HttpStatus.OK);
-    }
 
     private User createNewUser(RegistrationInfoDto registrationInfoDto)
     {

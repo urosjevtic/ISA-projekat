@@ -1,33 +1,48 @@
 package com.e2.medicalsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String username;
     private String email;
     private String password;
     private String name;
     private String surname;
     private String phone;
-
     private String companyName;
     private String city;
     private String country;
     private String address;
     private String profession;
+    private ERole role;
 
+    private boolean enabled;
 
 
     public User() {
     }
 
-    public User(Integer id, String email, String password, String name, String surname, String phone, String companyName, String city, String country, String address, String profession) {
+    public User(Integer id, String email, String username, String password, String name, String surname, String phone, String companyName, String city, String country, String address, String profession, boolean enabled) {
         this.id = id;
         this.email = email;
+        this.username = username;
         this.password = password;
         this.name = name;
         this.surname = surname;
@@ -37,10 +52,12 @@ public class User {
         this.country = country;
         this.address = address;
         this.profession = profession;
+        this.enabled = enabled;
     }
 
-    public User(String email, String password, String name, String surname, String phone, String companyName, String city, String country, String address, String profession) {
+    public User(String email, String username, String password, String name, String surname, String phone, String companyName, String city, String country, String address, String profession, boolean enabled) {
         this.email = email;
+        this.username = username;
         this.password = password;
         this.name = name;
         this.surname = surname;
@@ -50,6 +67,19 @@ public class User {
         this.country = country;
         this.address = address;
         this.profession = profession;
+        this.enabled = enabled;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+
+    public ERole getRole() {
+        return role;
+    }
+    public void setRole(ERole role) {
+        this.role = role;
     }
 
     public Integer getId() {
@@ -67,8 +97,45 @@ public class User {
         this.email = email;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        grantedAuthorities.add(new SimpleGrantedAuthority(role.name()));
+        return grantedAuthorities;
+    }
+
+    @Override
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public void setPassword(String password) {
@@ -138,5 +205,6 @@ public class User {
     public void setAddress(String address) {
         this.address = address;
     }
+
 }
 

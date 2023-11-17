@@ -2,7 +2,6 @@ package com.e2.medicalsystem.dto;
 
 import com.e2.medicalsystem.model.Location;
 import com.e2.medicalsystem.model.User;
-import jakarta.persistence.ManyToOne;
 
 public class UsersDto {
     private Integer id;

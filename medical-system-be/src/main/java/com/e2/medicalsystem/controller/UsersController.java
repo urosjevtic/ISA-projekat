@@ -31,7 +31,7 @@ public class UsersController {
     private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
     @GetMapping(value = "/all")
-    @PreAuthorize("hasAuthority('ROLL_USER')")
+    @PreAuthorize("hasAuthority('ROLL_ADMIN')")
     //@PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<UsersDto>> getAllStudents(@AuthenticationPrincipal User u) {
 

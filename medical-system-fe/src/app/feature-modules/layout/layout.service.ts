@@ -11,7 +11,4 @@ export class LayoutService {
   private baseUrl = 'http://localhost:8080/api/';
   constructor(private http: HttpClient) { }
 
-  getUsers(): Observable<User[]>{
-    return this.http.get<User[]>(this.baseUrl+'users/all');
-  }
 }

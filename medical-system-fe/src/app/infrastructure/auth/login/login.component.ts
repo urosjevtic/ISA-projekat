@@ -33,11 +33,6 @@ export class LoginComponent {
         },
       });
     }
-    this.service.getUsers().subscribe({
-      next: (result)=>{
-        console.log(result);
-      }
-    })
   }
 
   navigateToRegister(){

@@ -39,11 +39,6 @@ currentIndex: number = 0;
 constructor(private service: LayoutService) {}
 
 ngOnInit(){
-  this.service.getUsers().subscribe({
-    next: (result)=>{
-      console.log(result);
-    }
-  })
 }
 
 // Function to go to the previous slide

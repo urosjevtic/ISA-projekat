@@ -1,5 +1,6 @@
 export interface RegistrationInfo{
     email: string,
+    username: string,
     password: string,
     confirmPassword: string,
     name: string,

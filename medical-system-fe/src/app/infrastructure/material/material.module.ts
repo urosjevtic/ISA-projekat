@@ -15,6 +15,8 @@ import {MatCard, MatCardModule} from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from '../auth/jwt/jwt.interceptor';
 
 
 @NgModule({
@@ -53,6 +55,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatCardModule,
     BrowserAnimationsModule,
     ReactiveFormsModule
-  ]
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true,
+    }]
 })
 export class MaterialModule { }

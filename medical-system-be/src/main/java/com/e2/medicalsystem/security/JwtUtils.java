@@ -28,6 +28,7 @@ public class JwtUtils {
     public String generateJwtToken(User user) {
         return JWT.create()
                 .withSubject(user.getUsername())
+                .withClaim("role", user.getRole().toString())
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date((new Date()).getTime() + jwtExpirationMs))
                 .sign(Algorithm.HMAC256(jwtSecret));

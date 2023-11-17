@@ -1,22 +1,22 @@
 <body>
     <div>
-        <form class="container">
+        <form class="container" [formGroup]="loginForm">
             <div class="user-info">
                 <h2>Log in</h2>
 
                 <mat-form-field>
-                    <mat-label>Enter your email</mat-label>
-                    <input matInput placeholder="pat@example.com" required>
+                    <mat-label>Enter your username</mat-label>
+                    <input matInput formControlName="username"  required>
                 </mat-form-field>
 
                 <mat-form-field>
                     <mat-label>Enter your password</mat-label>
-                    <input matInput [type]="hide ? 'password' : 'text'" required>
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
                     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                       <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
                 </mat-form-field>
-                <button class="button" role="button">Log in</button>
+                <button class="button" role="button" (click)="onLogin()">Log in</button>
 
                 <div class="not-register">
                     <p>Don't have an account? <a routerLink="/register">Register</a></p>

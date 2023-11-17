@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Company } from '../model/company.model';
+import { OnInit } from '@angular/core';
+import { LayoutService } from '../layout.service';
 
 @Component({
   selector: 'app-home',
@@ -34,6 +36,15 @@ company4: Company = {
 companies: Company[] = [this.company1, this.company2, this.company3, this.company4, this.company4, this.company4]
 
 currentIndex: number = 0;
+constructor(private service: LayoutService) {}
+
+ngOnInit(){
+  this.service.getUsers().subscribe({
+    next: (result)=>{
+      console.log(result);
+    }
+  })
+}
 
 // Function to go to the previous slide
 prevSlide() {

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RegistrationInfo } from '../model/registrationInfo.model';
-import { LayoutService } from '../layout.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-register',
@@ -11,11 +11,12 @@ import { LayoutService } from '../layout.service';
 export class RegisterComponent {
   hide = true;
   passwordsMatch: boolean = true;
-  constructor(private service: LayoutService){
+  constructor(private service: AuthService){
 
   }
   registrationForm = new FormGroup({
     email: new FormControl('', [Validators.required]),
+    username: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
     confirmPassword: new FormControl('', [Validators.required]),
     name: new FormControl('', [Validators.required]),
@@ -39,6 +40,7 @@ export class RegisterComponent {
       this.passwordsMatch = true;
       const registrationInfo: RegistrationInfo={
         email: this.registrationForm.value.email || '',
+        username: this.registrationForm.value.username || '',
         password: this.registrationForm.value.password || '',
         confirmPassword: this.registrationForm.value.confirmPassword || '',
         name: this.registrationForm.value.name || '',

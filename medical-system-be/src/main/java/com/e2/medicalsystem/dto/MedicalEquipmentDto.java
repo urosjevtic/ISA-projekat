@@ -1,26 +1,23 @@
-package com.e2.medicalsystem.model;
+package com.e2.medicalsystem.dto;
 
-import jakarta.persistence.*;
+import com.e2.medicalsystem.model.MedicalEquipment;
 
-@Entity
-public class MedicalEquipment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class MedicalEquipmentDto {
     private Integer id;
     private String name;
     private String description;
     private long companyId;
 
-    public MedicalEquipment()
-    {
-
-    }
-
-    public MedicalEquipment(Integer id, String name, String description, long companyId) {
+    public MedicalEquipmentDto(Integer id, String name, String description, long companyId) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.companyId = companyId;
+    }
+
+    public MedicalEquipmentDto(MedicalEquipment medicalEquipment)
+    {
+        this(medicalEquipment.getId(), medicalEquipment.getName(), medicalEquipment.getDescription(), medicalEquipment.getCompanyId());
     }
 
     public Integer getId() {

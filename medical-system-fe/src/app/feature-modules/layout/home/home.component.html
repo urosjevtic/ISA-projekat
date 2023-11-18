@@ -20,12 +20,12 @@
         <div class="carousel-wrapper" [style.transform]="'translateX(-' + currentIndex * 100 + '%)'">
           <div *ngFor="let company of companies" class="wrapper">
             <div class="product-img">
-              <img src="https://www.creativefabrica.com/wp-content/uploads/2021/03/29/1617000756/Medical-cross-580x386.jpg" height="420" width="327">
+              <img [src]="company.companyLogo" alt="Company Logo">
             </div>
             <div class="product-info">
               <div class="product-text">
                 <h1>{{company.name}}</h1>
-                <p>{{company.description}}</p>
+                <p>{{company.address}}</p>
               </div>
             </div>
           </div>

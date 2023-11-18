@@ -5,8 +5,6 @@ import { MaterialModule } from 'src/app/infrastructure/material/material.module'
 import { HomeComponent } from './home/home.component';
 import { AllCompaniesComponent } from './all-companies/all-companies.component';
 import { AppRoutingModule } from 'src/app/app-routing.module';
-import { RegisterComponent } from './register/register.component';
-import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile/profile.component';
 import {MatDividerModule} from "@angular/material/divider";
 import { RegisterComponent } from '../../infrastructure/auth/register/register.component';

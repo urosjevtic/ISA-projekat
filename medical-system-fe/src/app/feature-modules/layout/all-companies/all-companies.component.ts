@@ -1,8 +1,6 @@
-import { Component } from '@angular/core';
 import { CompanyProfile } from '../../profiles/model/company.model';
 import { LayoutService } from '../layout.service';
 import { Component , OnInit} from '@angular/core';
-import { Company } from '../model/company.model';
 import {Observable} from "rxjs";
 
 @Component({
@@ -13,9 +11,9 @@ import {Observable} from "rxjs";
 export class AllCompaniesComponent implements OnInit{
 
   companies: CompanyProfile[] = [];
-  
+
   constructor(private layoutService: LayoutService) {}
-  companiesFiltered: Company[] = [];
+  companiesFiltered: CompanyProfile[] = [];
   searchFilter: string = '';
   minRating: number = 0;
 
@@ -38,7 +36,7 @@ export class AllCompaniesComponent implements OnInit{
   ngOnInit(): void {
     this.getAllCompanies();
   }
-  
+
   getAllCompanies() {
     this.layoutService.getAllCompanies().subscribe((data) => {
       this.companies = data;

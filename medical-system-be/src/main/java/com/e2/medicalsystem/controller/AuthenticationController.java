@@ -5,6 +5,7 @@ import com.e2.medicalsystem.dto.RegistrationInfoDto;
 import com.e2.medicalsystem.dto.UserTokenState;
 import com.e2.medicalsystem.exception.UsernameAlreadyExistException;
 import com.e2.medicalsystem.model.User;
+import com.e2.medicalsystem.service.EmailSenderService;
 import com.e2.medicalsystem.service.impl.UsersServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class AuthenticationController {
     @Autowired
     private UsersServiceImpl userService;
 
+    @Autowired
+    private EmailSenderService emailService;
+
     @PostMapping("/register")
     public ResponseEntity<User> addUser(@RequestBody RegistrationInfoDto registratonInfo, UriComponentsBuilder ucBuilder) {
         Optional<User> existUser = this.userService.findByUsername(registratonInfo.getUsername());
@@ -43,9 +47,24 @@ public class AuthenticationController {
 
         User user = this.userService.saveUser(registratonInfo);
 
+        String verificationLink = "http://localhost:8080/api/verify/" + user.getId();
+        String verificationMail = generateVerificationEmail(user.getUsername(), verificationLink);
+
+        emailService.sendEmail(user.getEmail(), "Verification email", verificationMail);
+        System.out.println("Email poslat valjda...");
+
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
+    private String generateVerificationEmail(String userName, String verificationLink) {
+        return String.format("Subject: Verify Your Profile\n\n" +
+                "Dear %s,\n\n" +
+                "Thank you for signing up with our medical equipment system!\n\n" +
+                "To complete the registration process, please click the following link to verify your email address:\n\n" +
+                "%s\n\n" +
+                "Best regards,\n" +
+                "Marko, Uros and Filip", userName, verificationLink);
+    }
 
     @PostMapping(value = "login", consumes = "application/json")
     public ResponseEntity<UserTokenState> login(@RequestBody JwtAuthenticationRequest loginDto, HttpServletRequest request){

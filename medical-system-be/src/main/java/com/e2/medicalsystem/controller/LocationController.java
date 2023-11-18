@@ -13,4 +13,5 @@ public class LocationController {
     @Autowired
     private LocationService locationServiceImpl;
 
+
 }

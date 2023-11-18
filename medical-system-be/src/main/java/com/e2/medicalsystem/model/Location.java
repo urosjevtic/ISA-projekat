@@ -3,6 +3,8 @@ package com.e2.medicalsystem.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Location {
     @Id

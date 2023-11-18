@@ -70,20 +70,22 @@
 
                 <div class="location">
                   <mat-form-field class="country">
-                      <mat-label>Select country</mat-label>
-                      <mat-select formControlName="country" required>
-                        <mat-option value="one">First option</mat-option>
-                        <mat-option value="two">Second option</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-
-                    <mat-form-field class="city">
-                      <mat-label>Select city</mat-label>
-                      <mat-select formControlName="city" required> 
-                        <mat-option value="one">First option</mat-option>
-                        <mat-option value="two">Second option</mat-option>
-                      </mat-select>
-                    </mat-form-field>
+                    <mat-label>Select country</mat-label>
+                    <mat-select formControlName="country" required (ngModelChange)="onCountrySelected()">
+                      <mat-option *ngFor="let country of countries" [value]="country.name">
+                        {{ country.name }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                
+                  <mat-form-field class="city">
+                    <mat-label>Select city</mat-label>
+                    <mat-select formControlName="city" required>
+                      <mat-option *ngFor="let city of cities.cities" [value]="city">
+                        {{city}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
 
 

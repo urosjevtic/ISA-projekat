@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { RegistrationInfo } from '../model/registrationInfo.model';
+import { City, Country, RegistrationInfo } from '../model/registrationInfo.model';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -11,6 +11,11 @@ import { AuthService } from '../auth.service';
 export class RegisterComponent {
   hide = true;
   passwordsMatch: boolean = true;
+  countries: Country[] = [];
+  cities: City = {
+    country: '',
+    cities: []
+  };
   constructor(private service: AuthService){
 
   }
@@ -32,6 +37,23 @@ export class RegisterComponent {
 
   })
 
+  ngOnInit(): void {
+    this.service.getCountries().subscribe({
+      next: (response) => {
+        this.countries = response;
+        console.log(this.countries);
+      }
+    })
+  }
+
+  onCountrySelected() {
+    this.service.getCities(this.registrationForm.value.country || '').subscribe({
+      next: (response) => {
+        this.cities = response;
+        console.log(this.cities);
+      }
+    })
+  }
 
   onRegisterClick()
   {

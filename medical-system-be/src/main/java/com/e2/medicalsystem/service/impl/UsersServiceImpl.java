@@ -75,6 +75,34 @@ public class UsersServiceImpl implements UsersService {
         return usersRepository.findByUsername(username);
     }
 
+    @Override
+    public User updateUser(User user) {
+        User existingUser = usersRepository.findById(user.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+
+        existingUser.setUsername(user.getUsername());
+        existingUser.setEmail(user.getEmail());
+        existingUser.setAddress(user.getAddress());
+        existingUser.setCompanyName(user.getCompanyName());
+        existingUser.setProfession(user.getProfession());
+        existingUser.setCity(user.getCity());
+        existingUser.setCountry(user.getCountry());
+        existingUser.setPhone(user.getPhone());
+        existingUser.setName(user.getName());
+        existingUser.setSurname(user.getSurname());
+
+        return usersRepository.save(existingUser);
+    }
+
+    @Override
+    public User changeUserStatus(User user) {
+        User existingUser = usersRepository.findById(user.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+
+        existingUser.setEnabled(user.isEnabled());
+        return usersRepository.save(existingUser);
+    }
+
     public UserTokenState login(JwtAuthenticationRequest loginDto) {
 
         Optional<User> userOpt = usersRepository.findByUsername(loginDto.getUsername());
@@ -82,21 +110,19 @@ public class UsersServiceImpl implements UsersService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "message: Incorrect credentials!");
         }
 
-        String encodedPassword = passwordEncoder.encode(loginDto.getPassword());
+
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginDto.getUsername(), encodedPassword));
+                new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
         User user = (User) authentication.getPrincipal();
 
-
         UserTokenState tokenDTO = new UserTokenState();
         tokenDTO.setAccessToken(jwt);
-        //tokenDTO.setExpiresIn();
-        //tokenDTO.setUserId(user.getId());
-        //tokenDTO.setUserRole(user.getRole());
-        //tokenDTO.setEmail(user.getEmail());
+        tokenDTO.setExpiresIn(10000000L);
 
         return tokenDTO;
     }

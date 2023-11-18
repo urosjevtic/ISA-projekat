@@ -9,6 +9,8 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile/profile.component';
 import {MatDividerModule} from "@angular/material/divider";
+import { RegisterComponent } from '../../infrastructure/auth/register/register.component';
+import { LoginComponent } from '../../infrastructure/auth/login/login.component';
 
 
 

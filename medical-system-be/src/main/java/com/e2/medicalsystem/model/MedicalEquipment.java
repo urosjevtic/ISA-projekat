@@ -1,9 +1,6 @@
 package com.e2.medicalsystem.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class MedicalEquipment {
@@ -12,18 +9,18 @@ public class MedicalEquipment {
     private Integer id;
     private String name;
     private String description;
-    private EquipmentClass equipmentClass;
+    private long companyId;
 
     public MedicalEquipment()
     {
 
     }
 
-    public MedicalEquipment(Integer id, String name, String description, EquipmentClass equipmentClass) {
+    public MedicalEquipment(Integer id, String name, String description, long companyId) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.equipmentClass = equipmentClass;
+        this.companyId = companyId;
     }
 
     public Integer getId() {
@@ -50,17 +47,11 @@ public class MedicalEquipment {
         this.description = description;
     }
 
-    public EquipmentClass getEquipmentClass() {
-        return equipmentClass;
+    public long getCompanyId() {
+        return companyId;
     }
 
-    public void setEquipmentClass(EquipmentClass equipmentClass) {
-        this.equipmentClass = equipmentClass;
-    }
-
-    enum EquipmentClass{
-        CLASS1,
-        CLASS2,
-        CLASS3
+    public void setCompanyId(long companyId) {
+        this.companyId = companyId;
     }
 }

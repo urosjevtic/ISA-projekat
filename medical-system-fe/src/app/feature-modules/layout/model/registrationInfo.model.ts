@@ -4,14 +4,11 @@ export interface RegistrationInfo{
     confirmPassword: string,
     name: string,
     surname: string,
-    city: string,
-    country: string,
     phone: string
     profession?: string,
 
+    country: string,
+    city: string,
     companyName: string,
-    companyCountry: string,
-    companyCity: string,
-    companyAddress: string,
-    companyWebsite?: string
+    address: string,
 }

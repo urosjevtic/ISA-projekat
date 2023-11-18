@@ -5,10 +5,15 @@ import { AllCompaniesComponent } from './feature-modules/layout/all-companies/al
 import { RegisterComponent } from './feature-modules/layout/register/register.component';
 import { LoginComponent } from './feature-modules/layout/login/login.component';
 import {ProfileComponent} from "./feature-modules/layout/profile/profile/profile.component";
+import { CompanyComponent } from './feature-modules/profiles/company/company.component';
+import { RegisterComponent } from './infrastructure/auth/register/register.component';
+import { LoginComponent } from './infrastructure/auth/login/login.component';
+import { AuthGuard } from './infrastructure/auth/auth.guard';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
-  {path: 'all-companies', component: AllCompaniesComponent},
+  {path: 'company', component: AllCompaniesComponent},
+  {path: 'company/:id', component: CompanyComponent },
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
   {path: 'profile', component: ProfileComponent}

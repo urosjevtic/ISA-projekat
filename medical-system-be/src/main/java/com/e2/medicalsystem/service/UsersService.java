@@ -4,12 +4,11 @@ import com.e2.medicalsystem.dto.PasswordChangeDto;
 import com.e2.medicalsystem.dto.UserInfoDto;
 import com.e2.medicalsystem.exception.EmailAlreadyExistException;
 import com.e2.medicalsystem.exception.InvalidPasswordException;
+import com.e2.medicalsystem.dto.RegistrationInfoDto;
 import com.e2.medicalsystem.model.User;
-import com.e2.medicalsystem.repository.UsersRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsersService {
@@ -73,4 +72,9 @@ public class UsersService {
         user.setProfession(userInfoDto.profession);
     }
 
+public interface UsersService {
+    public List<User> getAllUsers();
+    public User saveUser(RegistrationInfoDto registrationInfo);
+    public User getUserById(Integer id);
+    public Optional<User> findByUsername(String username);
 }

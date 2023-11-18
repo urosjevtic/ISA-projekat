@@ -1,0 +1,59 @@
+<div *ngIf="company" class="profile-card">
+  <div class="cover-photo">
+  
+  </div>  
+   
+  <img [src]="company.companyLogo" alt="Profile Picture" class="profile-picture">
+  
+  <div class="edit-wrapper">
+    <button class="edit-btn" *ngIf="!isEditFormVisible" (click)="showEditForm()">Edit</button>  
+  </div>
+
+  <div class="company-info">
+    <h2>{{ company.name }}</h2>
+
+    <div class="rating">
+      <span *ngFor="let star of stars" [class.full]="star <= company.averageRating" [class.empty]="star > company.averageRating">&#9733;</span>
+    </div>
+
+    <p class="address">{{ company.address }}</p>
+    <p class="description">{{ company.description }}</p>
+
+    <form class="reservation-form" (submit)="reserveEquipment()">
+      <label for="reservationDate">Scheduled equipment pickup:</label>
+      <input type="date" id="reservationDate" [(ngModel)]="reservationDate" name="reservationDate" required>
+      <button type="submit">Done</button>
+    </form>
+  
+    <div class="medical-equipment-table">
+      <table cellspacing="0">
+        <tr>
+          <th>No.</th>
+          <th>Name</th>
+        </tr>
+
+        <tr *ngFor="let medicalEquipment of medicalEquipments; let i = index">
+          <td>{{ i + 1 }}.</td>
+          <td>{{medicalEquipment.name}}</td>
+        </tr>
+      </table>
+    </div>
+
+    <form *ngIf="isEditFormVisible" class="edit-form" (submit)="updateProfile(); hideEditForm()">
+     
+      <label for="editName">Name:</label>
+      <input type="text" id="editName" [(ngModel)]="company.name" name="editName" required>
+
+      <label for="editAddress">Address:</label>
+      <input type="text" id="editAddress" [(ngModel)]="company.address" name="editAddress" required>
+
+      <label for="editAverageRating">Rating:</label>
+      <input type="number" id="editAverageRating" [(ngModel)]="company.averageRating" name="editAverageRating" required>
+
+      <label for="editDescription">Description:</label>
+      <textarea id="editDescription" [(ngModel)]="company.description" name="editDescription" required></textarea>
+
+      <button type="submit">Save</button>
+    </form>
+  </div>
+</div>

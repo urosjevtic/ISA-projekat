@@ -11,4 +11,6 @@ public interface UsersService {
     public User saveUser(RegistrationInfoDto registrationInfo);
     public User getUserById(Integer id);
     public Optional<User> findByUsername(String username);
+    public User updateUser(User user);
+    public User changeUserStatus(User user);
 }

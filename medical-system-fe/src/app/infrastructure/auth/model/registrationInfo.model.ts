@@ -13,3 +13,13 @@ export interface RegistrationInfo{
     companyName: string,
     address: string,
 }
+
+export interface Country{
+    id: number,
+    name: string
+}
+
+export interface City{
+    country: string,
+    cities: string[]
+}

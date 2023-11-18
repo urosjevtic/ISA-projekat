@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RegistrationInfo } from './model/registrationInfo.model';
+import { City, Country, RegistrationInfo } from './model/registrationInfo.model';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Login } from './model/login.model';
@@ -14,7 +14,7 @@ import { User } from './model/user.model';
 export class AuthService {
 
   private baseUrl = 'http://localhost:8080/api/';
-  user$ = new BehaviorSubject<User>({username: "", role: "" });
+  user$ = new BehaviorSubject<User>({id:0, username: "", role: "" });
   constructor(private http: HttpClient, private tokenStorage: TokenStorage) { }
 
 
@@ -41,10 +41,19 @@ export class AuthService {
     const jwtHelperService = new JwtHelperService();
     const accessToken = this.tokenStorage.getAccessToken() || "";
     const user: User = {
+      id: jwtHelperService.decodeToken(accessToken).id,
       username: jwtHelperService.decodeToken(accessToken).username,
       role: jwtHelperService.decodeToken(accessToken).role
     };
     this.user$.next(user);
+  }
+
+  getCountries(): Observable<Country[]>{
+    return this.http.get<Country[]>(this.baseUrl+"country/all");
+  }
+
+  getCities(countryName: string): Observable<City>{
+    return this.http.get<City>(this.baseUrl+"country/city/"+countryName);
   }
 
 }

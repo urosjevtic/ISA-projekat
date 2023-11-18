@@ -15,8 +15,6 @@ public class CompanyProfile {
     private double AverageRating;
     private String Description;
     private String CompanyLogo;
-    //@OneToMany(mappedBy = "id")
-    //private List<MedicalEquipment> Equipment;
 
     public CompanyProfile() {}
 
@@ -27,7 +25,6 @@ public class CompanyProfile {
         AverageRating = averageRating;
         Description = description;
         CompanyLogo = companyLogo;
-        //Equipment = equipment;
     }
 
     public long getId() {
@@ -78,13 +75,5 @@ public class CompanyProfile {
         CompanyLogo = companyLogo;
     }
 
-    /*public List<MedicalEquipment> getEquipment() {
-        return Equipment;
-    }
-
-    public void setEquipment(List<MedicalEquipment> equipment) {
-        Equipment = equipment;
-    }
-    */
 }
 

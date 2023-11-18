@@ -4,6 +4,7 @@ import { CompanyProfile } from '../model/company.model';
 import { LayoutService } from '../../layout/layout.service';
 import { ActivatedRoute } from '@angular/router';
 import { Reservation } from '../model/reservation.model';
+import { MedicalEquipment } from '../model/medical-equipment.model';
 
 @Component({
   selector: 'app-company',
@@ -13,16 +14,21 @@ import { Reservation } from '../model/reservation.model';
 export class CompanyComponent implements OnInit {
  
   company: CompanyProfile | undefined;
+  medicalEquipments: MedicalEquipment[] = [];
   reservationDate: string = '';
   isEditFormVisible = false;
+  stars: number[] = [1, 2, 3, 4, 5];
+  
   constructor(private route: ActivatedRoute, private profilesService: ProfilesService) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const companyId = params['id'];
       this.getCompanyById(companyId);
-    }); 
-
+      
+      this.profilesService.getAllEquipmentByCompanyId(companyId)
+      .subscribe(data => this.medicalEquipments = data);
+    });
     
   }
 

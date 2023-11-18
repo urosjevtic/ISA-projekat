@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { CompanyProfile } from './model/company.model';
 import { Observable } from 'rxjs';
 import { Reservation } from './model/reservation.model';
+import { MedicalEquipment } from './model/medical-equipment.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,10 @@ export class ProfilesService {
   
   getCompanyById(id: number): Observable<CompanyProfile> {
     return this.http.get<CompanyProfile>(this.apiUrl + 'company/' + id);
+  }
+
+  getAllEquipmentByCompanyId(companyId: number): Observable<MedicalEquipment[]> {
+    return this.http.get<MedicalEquipment[]>(this.apiUrl + 'equipment/all?companyId=' + companyId);
   }
 
   reserveEquipment(reservation: Reservation): Observable<any> {

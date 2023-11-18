@@ -1,6 +1,9 @@
 package com.e2.medicalsystem.dto;
 
 import com.e2.medicalsystem.model.CompanyProfile;
+import com.e2.medicalsystem.model.MedicalEquipment;
+
+import java.util.List;
 
 public class CompanyProfileDto {
     private long Id;
@@ -9,7 +12,6 @@ public class CompanyProfileDto {
     private double AverageRating;
     private String Description;
     private String CompanyLogo;
-    //private List<MedicalEquipment> Equipment;
 
     public CompanyProfileDto(long id, String name, String address, double averageRating, String description, String companyLogo) {
         Id = id;
@@ -18,7 +20,6 @@ public class CompanyProfileDto {
         AverageRating = averageRating;
         Description = description;
         CompanyLogo = companyLogo;
-        //Equipment = equipment;
     }
 
     public CompanyProfileDto(CompanyProfile companyProfile)
@@ -69,12 +70,4 @@ public class CompanyProfileDto {
         CompanyLogo = companyLogo;
     }
 
-    /*public List<MedicalEquipment> getEquipment() {
-        return Equipment;
-    }
-
-    public void setEquipment(List<MedicalEquipment> equipment) {
-        Equipment = equipment;
-    }
-    */
 }

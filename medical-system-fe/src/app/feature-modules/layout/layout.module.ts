@@ -11,6 +11,8 @@ import { ProfileComponent } from './profile/profile/profile.component';
 import {MatDividerModule} from "@angular/material/divider";
 import { RegisterComponent } from '../../infrastructure/auth/register/register.component';
 import { LoginComponent } from '../../infrastructure/auth/login/login.component';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {FormsModule} from "@angular/forms";
 
 
 
@@ -27,7 +29,9 @@ import { LoginComponent } from '../../infrastructure/auth/login/login.component'
     CommonModule,
     MaterialModule,
     AppRoutingModule,
-    MatDividerModule
+    MatDividerModule,
+    MatAutocompleteModule,
+    FormsModule
   ],
   exports: [
     NavbarComponent

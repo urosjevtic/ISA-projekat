@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { CompanyProfile } from '../../profiles/model/company.model';
+import { Company } from '../model/company.model';
+import { OnInit } from '@angular/core';
 import { LayoutService } from '../layout.service';
 
 @Component({

@@ -3,8 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './feature-modules/layout/home/home.component';
 import { AllCompaniesComponent } from './feature-modules/layout/all-companies/all-companies.component';
 import { CompanyComponent } from './feature-modules/profiles/company/company.component';
-import { RegisterComponent } from './feature-modules/layout/register/register.component';
-import { LoginComponent } from './feature-modules/layout/login/login.component';
+import { RegisterComponent } from './infrastructure/auth/register/register.component';
+import { LoginComponent } from './infrastructure/auth/login/login.component';
+import { AuthGuard } from './infrastructure/auth/auth.guard';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},

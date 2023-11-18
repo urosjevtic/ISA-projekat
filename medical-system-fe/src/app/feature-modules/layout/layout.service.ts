@@ -9,7 +9,7 @@ import { CompanyProfile } from '../profiles/model/company.model';
   providedIn: 'root'
 })
 export class LayoutService {
-  private baseUrl = 'http://localhost:8080/api/users';
+  private baseUrl = 'http://localhost:8080/api/';
   private apiUrl = 'http://localhost:8080/api/';
 
   constructor(private http: HttpClient) { }
@@ -21,4 +21,5 @@ export class LayoutService {
   getAllCompanies(): Observable<CompanyProfile[]> {
     return this.http.get<CompanyProfile[]>(this.apiUrl + 'company/' + 'all');
   }
+
 }

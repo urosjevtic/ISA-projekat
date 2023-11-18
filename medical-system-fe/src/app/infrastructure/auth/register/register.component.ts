@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RegistrationInfo } from '../model/registrationInfo.model';
-import { LayoutService } from '../layout.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-register',
@@ -11,25 +11,23 @@ import { LayoutService } from '../layout.service';
 export class RegisterComponent {
   hide = true;
   passwordsMatch: boolean = true;
-  constructor(private service: LayoutService){
+  constructor(private service: AuthService){
 
   }
   registrationForm = new FormGroup({
     email: new FormControl('', [Validators.required]),
+    username: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
     confirmPassword: new FormControl('', [Validators.required]),
     name: new FormControl('', [Validators.required]),
     surname: new FormControl('', [Validators.required]),
-    country: new FormControl('', [Validators.required]),
-    city: new FormControl('', [Validators.required]),
     phone: new FormControl('', [Validators.required]),
-    profession: new FormControl('', [Validators.required]),
+    profession: new FormControl(''),
 
     companyName:new FormControl('', [Validators.required]),
-    companyCountry: new FormControl('', [Validators.required]),
-    companyCity: new FormControl('', [Validators.required]),
-    companyAddress: new FormControl('', [Validators.required]),
-    companyWebsite: new FormControl('', [Validators.required])
+    country: new FormControl('', [Validators.required]),
+    city: new FormControl('', [Validators.required]),
+    address: new FormControl('', [Validators.required]),
 
 
   })
@@ -42,19 +40,17 @@ export class RegisterComponent {
       this.passwordsMatch = true;
       const registrationInfo: RegistrationInfo={
         email: this.registrationForm.value.email || '',
+        username: this.registrationForm.value.username || '',
         password: this.registrationForm.value.password || '',
         confirmPassword: this.registrationForm.value.confirmPassword || '',
         name: this.registrationForm.value.name || '',
         surname: this.registrationForm.value.surname || '',
-        city: this.registrationForm.value.city || '',
-        country: this.registrationForm.value.country || '',
         phone: this.registrationForm.value.phone || '',
         profession: this.registrationForm.value.profession || '',
         companyName: this.registrationForm.value.companyName || '',
-        companyCountry: this.registrationForm.value.companyCountry || '',
-        companyCity: this.registrationForm.value.companyCity || '',
-        companyAddress: this.registrationForm.value.companyAddress || '',
-        companyWebsite: this.registrationForm.value.companyWebsite || ''
+        country: this.registrationForm.value.country || '',
+        city: this.registrationForm.value.city || '',
+        address: this.registrationForm.value.address || '',
       }
 
       this.service.registerUser(registrationInfo).subscribe({

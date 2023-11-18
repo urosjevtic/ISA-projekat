@@ -2,17 +2,21 @@ package com.e2.medicalsystem.controller;
 
 import com.e2.medicalsystem.dto.RegistrationInfoDto;
 import com.e2.medicalsystem.dto.UsersDto;
-import com.e2.medicalsystem.model.Hospital;
-import com.e2.medicalsystem.model.Location;
 import com.e2.medicalsystem.model.User;
-import com.e2.medicalsystem.service.HospitalService;
+import com.e2.medicalsystem.security.AuthTokenFilter;
+import com.e2.medicalsystem.service.EmailSenderService;
 import com.e2.medicalsystem.service.UsersService;
+import com.e2.medicalsystem.service.impl.EmailSenderServiceImpl;
+import com.e2.medicalsystem.service.impl.UsersServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,18 +24,18 @@ import java.util.List;
 @RequestMapping(value = "api/users")
 public class UsersController {
 
-    private UsersService usersService;
-    private HospitalService hospitalService;
     @Autowired
-    public UsersController(UsersService usersService, HospitalService hospitalService)
-    {
-        this.usersService = usersService;
-        this.hospitalService = hospitalService;
-    }
-
+    private UsersService usersService;
+    @Autowired
+    private EmailSenderService emailSenderService;
+    private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
     @GetMapping(value = "/all")
-    public ResponseEntity<List<UsersDto>> getAllStudents() {
+    @PreAuthorize("hasAuthority('ROLL_ADMIN')")
+    //@PreAuthorize("isAuthenticated()")
+    public ResponseEntity<List<UsersDto>> getAllStudents(@AuthenticationPrincipal User u) {
+
+        logger.info(u.getAuthorities().toString());
 
         List<User> allUsers = usersService.getAllUsers();
         List<UsersDto> allUsersDto = new ArrayList<>();
@@ -50,14 +54,6 @@ public class UsersController {
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
-    @PostMapping(consumes = "application/json")
-    public ResponseEntity<UsersDto> saveUser(@RequestBody RegistrationInfoDto registrationInfoDto)
-    {
-        User newUser = new User();
-        newUser = usersService.saveUser(createNewUser(registrationInfoDto));
-        hospitalService.saveHospital(createNewHospital(registrationInfoDto, newUser));
-        return new ResponseEntity<>(new UsersDto(newUser), HttpStatus.OK);
-    }
 
     private User createNewUser(RegistrationInfoDto registrationInfoDto)
     {
@@ -69,17 +65,9 @@ public class UsersController {
         newUser.setEmail(registrationInfoDto.getEmail());
         newUser.setCity(registrationInfoDto.getCity());
         newUser.setCountry(registrationInfoDto.getCountry());
+        newUser.setAddress(registrationInfoDto.getAddress());
         newUser.setProfession(registrationInfoDto.getProfession());
+        newUser.setCompanyName(registrationInfoDto.getCompanyName());
         return newUser;
-    }
-    private Hospital createNewHospital(RegistrationInfoDto registrationInfoDto, User employee)
-    {
-        Hospital newHospital = new Hospital();
-        newHospital.setName(registrationInfoDto.getCompanyName());
-        newHospital.setCountry(registrationInfoDto.getCompanyCountry());
-        newHospital.setCity(registrationInfoDto.getCompanyCity());
-        newHospital.setAddress(registrationInfoDto.getCompanyAddress());
-        newHospital.setEmployee(employee);
-        return newHospital;
     }
 }

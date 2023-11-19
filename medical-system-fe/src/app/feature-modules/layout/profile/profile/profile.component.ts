@@ -4,6 +4,7 @@ import {ProfileService} from "./profile.service";
 import {AuthService} from "../../../../infrastructure/auth/auth.service";
 import {NewPasswordInfo} from "../../model/new-password-info.model";
 import {User} from "../../model/user-info.model";
+import {City, Country} from "../../../../infrastructure/auth/model/registrationInfo.model";
 
 
 @Component({
@@ -17,6 +18,11 @@ export class ProfileComponent implements OnInit{
   editPassword: boolean = false;
   userForm!: FormGroup;
   passwordForm!: FormGroup;
+  countries: Country[] = [];
+  cities: City = {
+    country: '',
+    cities: []
+  };
 
   constructor(private formBuilder: FormBuilder,private profileService:ProfileService,private authService: AuthService) {
     this.initPasswordForm();
@@ -28,6 +34,28 @@ export class ProfileComponent implements OnInit{
     console.log(this.authService.user$.value)
 
     this.getUserInfo();
+
+
+
+  }
+
+  private initCountries(): void{
+    this.authService.getCountries().subscribe({
+       next: (response) => {
+         this.countries = response;
+       }
+    });
+  }
+
+  onCountrySelected() {
+
+    this.userForm.patchValue({ city: ''});
+    this.authService.getCities(this.userForm.get('country')?.value || '').subscribe({
+        next: (response) => {
+          this.cities = response;
+          console.log(this.userForm.value.city);
+        }
+    });
   }
 
   private initUserForm(): void{
@@ -37,13 +65,14 @@ export class ProfileComponent implements OnInit{
       name: ['',Validators.required],
       surname: ['',Validators.required],
       phone: ['',Validators.required],
+      country: ['',Validators.required],
       city: ['',Validators.required],
       address: ['',Validators.required],
-      country: ['',Validators.required],
       profession: ['',Validators.required],
       penalPoints: ['',]
     });
     this.userForm.disable();
+    this.initCountries();
   }
 
   private initPasswordForm(): void{
@@ -63,9 +92,9 @@ export class ProfileComponent implements OnInit{
         name: user.name,
         surname: user.surname,
         phone: user.phone,
+        country: user.country,
         city: user.city,
         address: user.address,
-        country: user.country,
         profession: user.profession,
         penalPoints: user.penalPoints
       });

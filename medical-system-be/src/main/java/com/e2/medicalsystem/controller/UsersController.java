@@ -62,12 +62,14 @@ public class UsersController {
 
 
     @GetMapping(value = "getUserInfo/{id}")
+    @PreAuthorize("hasAuthority('ROLL_USER')")
     public ResponseEntity<UserInfoDto> getUserInfo(@PathVariable Integer id)
     {
         return new ResponseEntity<>(usersService.getUserInfo(id), HttpStatus.OK);
     }
 
     @PostMapping(value = "changePassword/{id}")
+    @PreAuthorize("hasAuthority('ROLL_USER')")
     public ResponseEntity<String> changePassword(@RequestBody PasswordChangeDto passwordChangeDto,@PathVariable Integer id)
     {
         usersService.changePassword(passwordChangeDto,id);
@@ -75,6 +77,7 @@ public class UsersController {
     }
 
     @PostMapping(value = "changeInfo/{id}")
+    @PreAuthorize("hasAuthority('ROLL_USER')")
     public ResponseEntity<String> changeInfo(@RequestBody UserInfoDto userInfoDto,@PathVariable Integer id)
     {
         usersService.changeInfo(userInfoDto,id);

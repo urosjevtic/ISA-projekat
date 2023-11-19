@@ -20,8 +20,8 @@ export class AllCompaniesComponent implements OnInit{
   applyFilters(): void{
     this.companiesFiltered = [];
     this.companies.forEach(company => {
-      if((company.name.toLowerCase().includes(this.searchFilter.toLowerCase()) ||
-         company.address.toLowerCase().includes(this.searchFilter.toLowerCase())
+      if(((company.name.toLowerCase().includes(this.searchFilter.toLowerCase()) ||
+         company.address.toLowerCase().includes(this.searchFilter.toLowerCase()))
         && company.averageRating >= this.minRating
       )
       ){

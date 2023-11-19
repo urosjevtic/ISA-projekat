@@ -1,8 +1,7 @@
 package com.e2.medicalsystem.service.impl;
 
-import com.e2.medicalsystem.dto.JwtAuthenticationRequest;
-import com.e2.medicalsystem.dto.RegistrationInfoDto;
-import com.e2.medicalsystem.dto.UserTokenState;
+import com.e2.medicalsystem.dto.*;
+import com.e2.medicalsystem.exception.InvalidPasswordException;
 import com.e2.medicalsystem.model.ERole;
 import com.e2.medicalsystem.model.User;
 import com.e2.medicalsystem.repository.UsersRepository;
@@ -126,5 +125,41 @@ public class UsersServiceImpl implements UsersService {
 
         return tokenDTO;
     }
+
+    public UserInfoDto getUserInfo(int id)
+    {
+        User user = usersRepository.findById(id).orElseThrow();
+        return new UserInfoDto(user.getEmail(),user.getUsername(),user.getName(),user.getSurname(),user.getCity(),user.getCountry(),user.getAddress(),user.getPhone(),user.getProfession(),user.getPenalPoints());
+    }
+
+    public void changePassword(PasswordChangeDto passwordChangeDto, int id)
+    {
+        User user = usersRepository.findById(id).orElseThrow();
+        if(!passwordEncoder.matches(passwordChangeDto.oldPassword,user.getPassword())) throw new InvalidPasswordException("Password you entered does not match!");
+
+        user.setPassword(passwordEncoder.encode(passwordChangeDto.newPassword));
+        usersRepository.save(user);
+
+    }
+
+    public void changeInfo(UserInfoDto userInfoDto,int id)
+    {
+        User user = usersRepository.findById(id).orElseThrow();
+        setUserInfo(user,userInfoDto);
+        usersRepository.save(user);
+    }
+
+    private void setUserInfo(User user,UserInfoDto userInfoDto)
+    {
+        user.setName(userInfoDto.name);
+        user.setSurname(userInfoDto.surname);
+        user.setCountry(userInfoDto.country);
+        user.setCity(userInfoDto.city);
+        user.setPhone(userInfoDto.phone);
+        user.setProfession(userInfoDto.profession);
+        user.setAddress(userInfoDto.address);
+    }
+
+
 
 }

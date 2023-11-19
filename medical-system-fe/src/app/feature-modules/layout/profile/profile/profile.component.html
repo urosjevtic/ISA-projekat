@@ -1,0 +1,113 @@
+<div class="profile-container">
+  <form [formGroup]="userForm">
+
+    <mat-label>Personal Info</mat-label>
+    <mat-divider></mat-divider>
+
+    <mat-form-field>
+      <mat-label>E-mail</mat-label>
+      <input matInput   formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input matInput   formControlName="username">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Penal points</mat-label>
+      <input matInput type="number"  formControlName="penalPoints">
+    </mat-form-field>
+
+
+
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput   formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Surname</mat-label>
+      <input matInput   formControlName="surname">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Phone number</mat-label>
+      <input matInput type="number"   formControlName="phone">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Country</mat-label>
+      <input matInput formControlName="country">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>City</mat-label>
+      <input matInput   formControlName="city">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Address</mat-label>
+      <input matInput   formControlName="address">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Profession</mat-label>
+      <input matInput   formControlName="profession">
+    </mat-form-field>
+
+
+    <div class="button-container">
+
+      <button mat-raised-button color="primary" (click)="enableEditInfo()" *ngIf="!editInfo">
+        Edit Info
+      </button>
+
+      <button mat-raised-button color="primary" *ngIf="editInfo" [disabled]="!userForm.valid" (click)="changeUserInfo()" >
+        Save
+      </button>
+
+      <button mat-raised-button color="warn" (click)="disableEditInfo()" *ngIf="editInfo">
+        Cancel
+      </button>
+
+    </div>
+
+  </form>
+  <form [formGroup]="passwordForm">
+
+    <mat-label>Change Password</mat-label>
+    <mat-divider></mat-divider>
+
+    <mat-form-field>
+      <mat-label>Old Password</mat-label>
+      <input matInput type="password"  formControlName="oldPassword">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>New Password</mat-label>
+      <input matInput type="password"  formControlName="newPassword">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Confirm Password</mat-label>
+      <input matInput type="password"  formControlName="confPassword">
+    </mat-form-field>
+
+    <div class="button-container">
+
+      <button mat-raised-button color="primary" (click)="enableEditPassword()" *ngIf="!editPassword">
+        Change Password
+      </button>
+
+      <button mat-raised-button color="primary" *ngIf="editPassword" [disabled]="!passwordForm.valid" (click)="changePassword()">
+        Save
+      </button>
+
+      <button mat-raised-button color="warn" (click)="disableEditPassword()" *ngIf="editPassword">
+        Cancel
+      </button>
+
+    </div>
+  </form>
+</div>

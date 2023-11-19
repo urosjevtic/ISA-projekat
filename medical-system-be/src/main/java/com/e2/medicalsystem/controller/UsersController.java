@@ -1,6 +1,8 @@
 package com.e2.medicalsystem.controller;
 
+import com.e2.medicalsystem.dto.PasswordChangeDto;
 import com.e2.medicalsystem.dto.RegistrationInfoDto;
+import com.e2.medicalsystem.dto.UserInfoDto;
 import com.e2.medicalsystem.dto.UsersDto;
 import com.e2.medicalsystem.model.User;
 import com.e2.medicalsystem.security.AuthTokenFilter;
@@ -17,6 +19,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.MediaType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +60,26 @@ public class UsersController {
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
+
+    @GetMapping(value = "getUserInfo/{id}")
+    public ResponseEntity<UserInfoDto> getUserInfo(@PathVariable Integer id)
+    {
+        return new ResponseEntity<>(usersService.getUserInfo(id), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "changePassword/{id}")
+    public ResponseEntity<String> changePassword(@RequestBody PasswordChangeDto passwordChangeDto,@PathVariable Integer id)
+    {
+        usersService.changePassword(passwordChangeDto,id);
+        return new ResponseEntity<String>("Password changed successfully!",HttpStatus.OK);
+    }
+
+    @PostMapping(value = "changeInfo/{id}")
+    public ResponseEntity<String> changeInfo(@RequestBody UserInfoDto userInfoDto,@PathVariable Integer id)
+    {
+        usersService.changeInfo(userInfoDto,id);
+        return new ResponseEntity<String>("User info changed successfully!",HttpStatus.OK);
+    }
 
     private User createNewUser(RegistrationInfoDto registrationInfoDto)
     {

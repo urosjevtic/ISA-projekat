@@ -1,7 +1,13 @@
 package com.e2.medicalsystem.dto;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
 public class PasswordChangeDto {
     public String oldPassword;
+
+    @NotEmpty
+    @Size(min = 6, message = "Password should atleast have 6 characters")
     public String newPassword;
 
     public PasswordChangeDto(String oldPassword, String newPassword) {

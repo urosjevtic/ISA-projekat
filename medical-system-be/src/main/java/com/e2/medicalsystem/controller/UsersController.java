@@ -10,6 +10,7 @@ import com.e2.medicalsystem.service.EmailSenderService;
 import com.e2.medicalsystem.service.UsersService;
 import com.e2.medicalsystem.service.impl.EmailSenderServiceImpl;
 import com.e2.medicalsystem.service.impl.UsersServiceImpl;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +71,7 @@ public class UsersController {
 
     @PostMapping(value = "changePassword/{id}")
     @PreAuthorize("hasAuthority('ROLL_USER')")
-    public ResponseEntity<String> changePassword(@RequestBody PasswordChangeDto passwordChangeDto,@PathVariable Integer id)
+    public ResponseEntity<String> changePassword(@Valid @RequestBody PasswordChangeDto passwordChangeDto,@PathVariable Integer id)
     {
         usersService.changePassword(passwordChangeDto,id);
         return new ResponseEntity<String>("Password changed successfully!",HttpStatus.OK);
@@ -78,7 +79,7 @@ public class UsersController {
 
     @PostMapping(value = "changeInfo/{id}")
     @PreAuthorize("hasAuthority('ROLL_USER')")
-    public ResponseEntity<String> changeInfo(@RequestBody UserInfoDto userInfoDto,@PathVariable Integer id)
+    public ResponseEntity<String> changeInfo(@Valid @RequestBody UserInfoDto userInfoDto, @PathVariable Integer id)
     {
         usersService.changeInfo(userInfoDto,id);
         return new ResponseEntity<String>("User info changed successfully!",HttpStatus.OK);

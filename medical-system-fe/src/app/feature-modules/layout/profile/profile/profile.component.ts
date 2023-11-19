@@ -62,9 +62,9 @@ export class ProfileComponent implements OnInit{
     this.userForm = this.formBuilder.group({
       email: ['',[Validators.required,Validators.email]],
       username: [''],
-      name: ['',Validators.required],
-      surname: ['',Validators.required],
-      phone: ['',Validators.required],
+      name: ['',[Validators.required,Validators.minLength(3)]],
+      surname: ['',[Validators.required,Validators.minLength(3)]],
+      phone: ['',[Validators.required, Validators.pattern('[0-9]{10}')]],
       country: ['',Validators.required],
       city: ['',Validators.required],
       address: ['',Validators.required],
@@ -79,7 +79,7 @@ export class ProfileComponent implements OnInit{
     this.passwordForm = this.formBuilder.group({
       oldPassword: ['',Validators.required],
       newPassword: ['',Validators.required],
-      confPassword: ['',[Validators.required,this.matchPassword('newPass')]]
+      confPassword: ['',[Validators.required,this.matchPassword('newPassword')]]
     });
     this.passwordForm.disable();
   }

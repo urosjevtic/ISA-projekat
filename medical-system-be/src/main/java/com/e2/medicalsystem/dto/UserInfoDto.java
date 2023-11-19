@@ -1,15 +1,35 @@
 package com.e2.medicalsystem.dto;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
 public class UserInfoDto {
 
     public String email;
     public String username;
+
+    @NotEmpty
+    @Size(min = 3, message = "Name should have at least 3 characters")
     public String name;
+
+    @NotEmpty
+    @Size(min = 3, message = "Surname should have at least 3 characters")
     public String surname;
+
+    @NotEmpty
     public String city;
+
+    @NotEmpty
     public String country;
+
+    @NotEmpty
     public String address;
+
+    @NotEmpty
+    @Size(min = 10, message = "Phone number should have at least 10 characters")
     public String phone;
+
+    @NotEmpty
     public String profession;
     public int penalPoints;
 

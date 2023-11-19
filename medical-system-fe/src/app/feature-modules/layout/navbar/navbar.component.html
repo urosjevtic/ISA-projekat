@@ -1,0 +1,10 @@
+<nav id='menu'>
+  <input type='checkbox' id='responsive-menu' onclick='updatemenu()'><label></label>
+  <ul>
+    <li><button [routerLink]="['/home']">Home</button></li>
+    <li><button [routerLink]="['/company']">Companies</button></li>
+    <li><button [routerLink]="['/profile']" *ngIf="user && user.username !== ''">My Profile</button></li>
+    <li><button [routerLink]="['/login']" *ngIf="user && user.username === ''">Login</button></li>
+    <li><button *ngIf="user && user.username !== ''" (click)="onLogout()">Logout</button></li>
+  </ul>
+</nav>

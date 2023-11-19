@@ -3,24 +3,38 @@ package com.e2.medicalsystem.dto;
 public class UserInfoDto {
 
     public String email;
+    public String username;
     public String name;
     public String surname;
     public String city;
     public String country;
+    public String address;
     public String phone;
     public String profession;
+    public int penalPoints;
 
-    public UserInfoDto(String email, String name, String surname, String city, String country, String phone, String profession) {
+    public UserInfoDto(String email,String username, String name, String surname, String city, String country,String address, String phone, String profession,int penalPoints) {
         this.email = email;
+        this.username = username;
         this.name = name;
         this.surname = surname;
         this.city = city;
         this.country = country;
         this.phone = phone;
         this.profession = profession;
+        this.address = address;
+        this.penalPoints = penalPoints;
     }
 
     public UserInfoDto() {
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {

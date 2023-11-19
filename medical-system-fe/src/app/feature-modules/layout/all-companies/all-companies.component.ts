@@ -21,16 +21,19 @@ export class AllCompaniesComponent implements OnInit{
     this.companiesFiltered = [];
     this.companies.forEach(company => {
       if((company.name.toLowerCase().includes(this.searchFilter.toLowerCase()) ||
-         company.description.toLowerCase().includes(this.searchFilter.toLowerCase()))
+         company.address.toLowerCase().includes(this.searchFilter.toLowerCase())
+        && company.averageRating >= this.minRating
+      )
       ){
         this.companiesFiltered.push(company)
       }
     });
-    console.log(this.companiesFiltered)
   }
 
   clearFilters(): void{
     this.companiesFiltered = this.companies;
+    this.searchFilter = '';
+    this.minRating = 0;
   }
 
   ngOnInit(): void {

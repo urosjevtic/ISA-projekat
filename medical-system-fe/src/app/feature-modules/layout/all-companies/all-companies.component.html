@@ -14,7 +14,7 @@
     <mat-label>
       Min rating
     </mat-label>
-    <mat-select>
+    <mat-select [(ngModel)]="minRating">
       <mat-option value="1">1</mat-option>
       <mat-option value="2">2</mat-option>
       <mat-option value="3">3</mat-option>
@@ -48,7 +48,7 @@
           <th>Address</th>
           <th>Rating</th>
        </tr>
- 
+
        <tr *ngFor="let company of companiesFiltered" [routerLink]="['/company', company.id]">
           <td><img [src]="company.companyLogo" alt="Company Logo"></td>
           <td>{{company.name}}</td>

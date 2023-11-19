@@ -19,6 +19,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.MediaType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,18 +67,18 @@ public class UsersController {
         return new ResponseEntity<>(usersService.getUserInfo(id), HttpStatus.OK);
     }
 
-    @PostMapping(value = "changePassword")
-    public ResponseEntity<String> changePassword(@RequestBody PasswordChangeDto passwordChangeDto)
+    @PostMapping(value = "changePassword/{id}")
+    public ResponseEntity<String> changePassword(@RequestBody PasswordChangeDto passwordChangeDto,@PathVariable Integer id)
     {
-        usersService.changePassword(passwordChangeDto,1);
-        return new ResponseEntity<>("Password changed successfully!",HttpStatus.OK);
+        usersService.changePassword(passwordChangeDto,id);
+        return new ResponseEntity<String>("Password changed successfully!",HttpStatus.OK);
     }
 
-    @PostMapping(value = "changeInfo")
-    public ResponseEntity<String> changeInfo(@RequestBody UserInfoDto userInfoDto)
+    @PostMapping(value = "changeInfo/{id}")
+    public ResponseEntity<String> changeInfo(@RequestBody UserInfoDto userInfoDto,@PathVariable Integer id)
     {
-        usersService.changeInfo(userInfoDto,1);
-        return new ResponseEntity<>("User info changed successfully!",HttpStatus.OK);
+        usersService.changeInfo(userInfoDto,id);
+        return new ResponseEntity<String>("User info changed successfully!",HttpStatus.OK);
     }
 
     private User createNewUser(RegistrationInfoDto registrationInfoDto)

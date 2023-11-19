@@ -7,6 +7,7 @@ import { AuthenticationResponse } from './model/authentication-response.model';
 import { TokenStorage } from './jwt/token.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { User } from './model/user.model';
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,9 @@ export class AuthService {
 
   private baseUrl = 'http://localhost:8080/api/';
   user$ = new BehaviorSubject<User>({id:0, username: "", role: "" });
-  constructor(private http: HttpClient, private tokenStorage: TokenStorage) { }
+  constructor(private http: HttpClient,
+              private tokenStorage: TokenStorage,
+              private router: Router) { }
 
 
   registerUser(registrationInfo: RegistrationInfo): Observable<User> {
@@ -31,6 +34,22 @@ export class AuthService {
       this.setUser();
     })
     );
+  }
+
+  logout(): void {
+    this.router.navigate(['/home']).then(_ => {
+        this.tokenStorage.clear();
+        this.user$.next({username: "", id: 0, role: "" });
+      }
+    );
+  }
+
+  checkIfUserExists(): void {
+    const accessToken = this.tokenStorage.getAccessToken();
+    if (accessToken == null) {
+      return;
+    }
+    this.setUser();
   }
 
   getUsers(): Observable<User[]>{

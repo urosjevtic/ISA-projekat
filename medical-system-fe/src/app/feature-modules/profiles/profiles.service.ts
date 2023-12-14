@@ -33,4 +33,8 @@ export class ProfilesService {
   saveAppointment(appointment: Appointment): Observable<any> {
     return this.http.post<any>(this.apiUrl + 'appointment/' + 'save', appointment);
   }
+
+  getAllAppointmentByCompanyId(companyId: number): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(this.apiUrl + 'appointment/all?companyId=' + companyId);
+  }
 }

@@ -18,6 +18,7 @@ export class CompanyComponent implements OnInit {
  
   company: CompanyProfile | undefined;
   medicalEquipments: MedicalEquipment[] = [];
+  appointmentList: Appointment[] = [];
   reservationDate: string = '';
   isEditFormVisible = false;
   stars: number[] = [1, 2, 3, 4, 5];
@@ -40,6 +41,14 @@ export class CompanyComponent implements OnInit {
       
       this.profilesService.getAllEquipmentByCompanyId(companyId)
       .subscribe(data => this.medicalEquipments = data);
+    });  
+
+    this.route.params.subscribe(params => {
+      const companyId = params['id'];
+      this.getCompanyById(companyId);
+      
+      this.profilesService.getAllAppointmentByCompanyId(companyId)
+      .subscribe(data => this.appointmentList = data);
     });  
   }
 

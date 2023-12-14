@@ -1,14 +1,14 @@
 package com.e2.medicalsystem.controller;
 
 import com.e2.medicalsystem.model.Appointment;
+import com.e2.medicalsystem.model.MedicalEquipment;
 import com.e2.medicalsystem.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "api/appointment")
@@ -25,5 +25,10 @@ public class AppointmentController {
     public ResponseEntity<String> saveAppointment(@RequestBody Appointment appointment) {
         appointmentService.saveAppointment(appointment);
         return new ResponseEntity<>("Appointment saved successfully", HttpStatus.OK);
+    }
+
+    @GetMapping("/all")
+    public List<Appointment> getAllAppointmentsByCompanyId(@RequestParam long companyId) {
+        return appointmentService.getAllAppointmentsByCompanyId(companyId);
     }
 }

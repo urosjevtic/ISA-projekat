@@ -55,11 +55,38 @@
     max-width: 300px;
     margin-top: 40px;
     margin-bottom: 40px;
+    margin-right: 40px;
   }
 
   .appointment-form h3{
-    color: #333;
+    color: whitesmoke;
+    font-size: 24px;
   }
+
+  .appointment-table{
+    font-size: 12px;
+  }
+
+  .appointment-table tr{
+    border:none;
+    background-color: white;
+    opacity: 0.4
+  }
+
+  .appointment-table th{
+    background-color: #333;
+    color: whitesmoke;
+  }
+
+ .appointment-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #232946;
+    padding: 50px;
+    border-radius: 20px;
+    margin-bottom: 40px;
+ }
   
   label {
     color: #666;

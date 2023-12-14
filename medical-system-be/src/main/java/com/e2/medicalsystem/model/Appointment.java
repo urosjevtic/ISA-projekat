@@ -14,15 +14,19 @@ public class Appointment {
     private Long adminId;
     private Date date;
     private int duration;
+    private String adminName;
+    private String adminLastName;
 
     public Appointment() {}
 
-    public Appointment(Long id, Long companyId, Long adminId, Date date, int duration) {
+    public Appointment(Long id, Long companyId, Long adminId, Date date, int duration, String adminName, String adminLastName) {
         this.id = id;
         this.companyId = companyId;
         this.adminId = adminId;
         this.date = date;
         this.duration = duration;
+        this.adminName = adminName;
+        this.adminLastName = adminLastName;
     }
 
     public Long getId() {
@@ -63,5 +67,21 @@ public class Appointment {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public String getAdminName() {
+        return adminName;
+    }
+
+    public void setAdminName(String adminName) {
+        this.adminName = adminName;
+    }
+
+    public String getAdminLastName() {
+        return adminLastName;
+    }
+
+    public void setAdminLastName(String adminLastName) {
+        this.adminLastName = adminLastName;
     }
 }

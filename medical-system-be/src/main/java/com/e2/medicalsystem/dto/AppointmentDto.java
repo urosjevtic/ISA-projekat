@@ -11,18 +11,22 @@ public class AppointmentDto {
     private Long adminId;
     private Date date;
     private int duration;
+    private String adminName;
+    private String adminLastName;
 
-    public AppointmentDto(Long id, Long companyId, Long adminId, Date date, int duration) {
+    public AppointmentDto(Long id, Long companyId, Long adminId, Date date, int duration, String adminName, String adminLastName) {
         this.id = id;
         this.companyId = companyId;
         this.adminId = adminId;
         this.date = date;
         this.duration = duration;
+        this.adminName = adminName;
+        this.adminLastName = adminLastName;
     }
 
     public AppointmentDto(Appointment appointment)
     {
-        this(appointment.getId(), appointment.getCompanyId(), appointment.getAdminId(), appointment.getDate(), appointment.getDuration());
+        this(appointment.getId(), appointment.getCompanyId(), appointment.getAdminId(), appointment.getDate(), appointment.getDuration(), appointment.getAdminName(), appointment.getAdminLastName());
     }
 
     public Long getId() {
@@ -63,5 +67,21 @@ public class AppointmentDto {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public String getAdminName() {
+        return adminName;
+    }
+
+    public void setAdminName(String adminName) {
+        this.adminName = adminName;
+    }
+
+    public String getAdminLastName() {
+        return adminLastName;
+    }
+
+    public void setAdminLastName(String adminLastName) {
+        this.adminLastName = adminLastName;
     }
 }

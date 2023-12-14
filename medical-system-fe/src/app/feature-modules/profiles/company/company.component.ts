@@ -7,6 +7,7 @@ import { Reservation } from '../model/reservation.model';
 import { MedicalEquipment } from '../model/medical-equipment.model';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { Appointment } from '../model/appointment.model';
 
 @Component({
   selector: 'app-company',
@@ -20,6 +21,15 @@ export class CompanyComponent implements OnInit {
   reservationDate: string = '';
   isEditFormVisible = false;
   stars: number[] = [1, 2, 3, 4, 5];
+
+  appointment: Appointment = {
+    companyId: 0,
+    adminId: 0,
+    date: new Date(),
+    duration: 0,
+    adminName: '',
+    adminLastName: ''
+  };
   
   constructor(private route: ActivatedRoute, private profilesService: ProfilesService, private authService: AuthService) {}
 
@@ -69,6 +79,22 @@ export class CompanyComponent implements OnInit {
     if (this.company) {
       this.profilesService.updateCompanyProfile(this.company).subscribe((response) => {
         console.log('Profil ažuriran!', response);
+      });
+    }
+  }
+
+  saveAppointment(): void {
+    if (this.company && this.appointment) {
+      const appointment: Appointment = {
+        companyId: this.company.id,
+        adminId: this.authService.user$.value.id,
+        duration: this.appointment.duration,
+        date: this.appointment.date,
+        adminName: this.appointment.adminName,
+        adminLastName: this.appointment.adminLastName,  
+      };
+      this.profilesService.saveAppointment(appointment).subscribe(savedAppointment => {
+        console.log('Termin uspešno sačuvan:', savedAppointment);
       });
     }
   }

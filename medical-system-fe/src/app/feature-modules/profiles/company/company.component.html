@@ -19,7 +19,7 @@
     <p class="address">{{ company.address }}</p>
     <p class="description">{{ company.description }}</p>
 
-    <form *ngIf="isUserCompanyAdmin()" class="reservation-form" (submit)="reserveEquipment()">
+    <form class="reservation-form" (submit)="reserveEquipment()">
       <label for="reservationDate">Scheduled equipment pickup:</label>
       <input type="date" id="reservationDate" [(ngModel)]="reservationDate" name="reservationDate" required>
       <button type="submit">Done</button>
@@ -38,6 +38,24 @@
         </tr>
       </table>
     </div>
+
+    <form *ngIf="isUserCompanyAdmin()" class="appointment-form" (submit)="saveAppointment();">  
+      <h3>Let's create possible appointments!</h3>
+
+      <label for="appointmentFirstName">First Name:</label>
+      <input type="text" id="appointmentFirstName" [(ngModel)]="appointment.adminName" name="appointmentFirstName" required>
+
+      <label for="appointmentLastName">Last Name:</label>
+      <input type="text" id="appointmentLastName" [(ngModel)]="appointment.adminLastName" name="appointmentLastName" required>
+      
+      <label for="appointmentDateTime">Choose Date:</label>
+      <input type="datetime-local" id="appointmentDateTime" [(ngModel)]="appointment.date" name="appointmentDateTime" required>
+
+      <label for="appointemntDuration">Choose Duration:</label>
+      <input type="number" id="appointemntDuration" [(ngModel)]="appointment.duration" name="appointemntDuration" required>
+
+      <button type="submit">Save</button>
+    </form>
 
     <form *ngIf="isEditFormVisible" class="edit-form" (submit)="updateProfile(); hideEditForm()">
      

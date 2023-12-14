@@ -24,20 +24,39 @@
       <input type="date" id="reservationDate" [(ngModel)]="reservationDate" name="reservationDate" required>
       <button type="submit">Done</button>
     </form>
+    <div class="equipment-tables">
+      <div class="medical-equipment-table">
+        <table cellspacing="0">
+          <tr>
+            <th>No.</th>
+            <th>Name</th>
+            <th></th>
+          </tr>
   
-    <div class="medical-equipment-table">
-      <table cellspacing="0">
-        <tr>
-          <th>No.</th>
-          <th>Name</th>
-        </tr>
-
-        <tr *ngFor="let medicalEquipment of medicalEquipments; let i = index">
-          <td>{{ i + 1 }}.</td>
-          <td>{{medicalEquipment.name}}</td>
-        </tr>
-      </table>
+          <tr *ngFor="let medicalEquipment of medicalEquipments; let i = index">
+            <td>{{ i + 1 }}.</td>
+            <td>{{medicalEquipment.name}}</td>
+            <td><button (click)="addEquipmentToOrder(medicalEquipment)">Add</button></td>
+          </tr>
+        </table>
+      </div>
+      <h1>Your order</h1>
+      <div *ngIf="userOrder && userOrder.order.length > 0" class="medical-equipment-table">
+        <table cellspacing="0">
+          <tr>
+            <th>No.</th>
+            <th>Name</th>
+          </tr>
+  
+          <tr *ngFor="let order of userOrder.order; let i = index">
+            <td>{{order.count}}</td>
+            <td>{{order.equipment.name}}</td>
+          </tr>
+        </table>
+        <button (click)="finalizeOrder()">Finalize order</button>
+      </div>
     </div>
+
 
     <form *ngIf="isEditFormVisible" class="edit-form" (submit)="updateProfile(); hideEditForm()">
      

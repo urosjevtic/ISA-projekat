@@ -131,10 +131,19 @@
     color: #ccc;
   }
 
-  .medical-equipment-table {
+  .equipment-tables{
     float: right;
     margin-right: 50px;
     margin-top: -300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .medical-equipment-table {
+    float: right;
+
+    max-height: 300px; /* Set the desired height */
+    overflow-y: auto;
   }
 
   table {

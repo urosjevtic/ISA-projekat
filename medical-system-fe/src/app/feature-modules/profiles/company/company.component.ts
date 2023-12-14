@@ -4,9 +4,11 @@ import { CompanyProfile } from '../model/company.model';
 import { LayoutService } from '../../layout/layout.service';
 import { ActivatedRoute } from '@angular/router';
 import { Reservation } from '../model/reservation.model';
-import { MedicalEquipment } from '../model/medical-equipment.model';
+import { MedicalEquipment, Order, UserOrder } from '../model/medical-equipment.model';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { OrderConformationComponent } from '../../orders/order-conformation/order-conformation.component';
 
 @Component({
   selector: 'app-company',
@@ -20,8 +22,15 @@ export class CompanyComponent implements OnInit {
   reservationDate: string = '';
   isEditFormVisible = false;
   stars: number[] = [1, 2, 3, 4, 5];
+  userOrder: UserOrder ={
+    id: 0,
+    order: []
+  };
   
-  constructor(private route: ActivatedRoute, private profilesService: ProfilesService, private authService: AuthService) {}
+  constructor(private route: ActivatedRoute, 
+    private profilesService: ProfilesService, 
+    private authService: AuthService,
+    private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -72,4 +81,30 @@ export class CompanyComponent implements OnInit {
       });
     }
   }
+
+  addEquipmentToOrder(equipment: MedicalEquipment) {
+    const newOrder: Order = {
+      equipment: equipment,
+      count: 1
+    };
+  
+    if (this.userOrder && Array.isArray(this.userOrder.order)) {
+      const existingOrder = this.userOrder.order.find(order => order.equipment === equipment);
+  
+      if (existingOrder) {
+        existingOrder.count++;
+      } else {
+        this.userOrder.order.push(newOrder);
+      }
+  
+      console.log(this.userOrder.order);
+    } else {
+      console.error("Invalid userOrder or order is not an array.");
+    }
+  }
+
+  finalizeOrder(){
+    const dialogRef = this.dialog.open(OrderConformationComponent, {})
+  }
+
 }

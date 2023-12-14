@@ -33,13 +33,15 @@ public class User implements UserDetails {
     private String profession;
     private ERole role;
 
+    private int penalPoints;
+
     private boolean enabled;
 
 
     public User() {
     }
 
-    public User(Integer id, String email, String username, String password, String name, String surname, String phone, String companyName, String city, String country, String address, String profession, boolean enabled) {
+    public User(Integer id, String email, String username, String password, String name, String surname, String phone, String companyName, String city, String country, String address, String profession, boolean enabled,int penalPoints) {
         this.id = id;
         this.email = email;
         this.username = username;
@@ -53,9 +55,10 @@ public class User implements UserDetails {
         this.address = address;
         this.profession = profession;
         this.enabled = enabled;
+        this.penalPoints = penalPoints;
     }
 
-    public User(String email, String username, String password, String name, String surname, String phone, String companyName, String city, String country, String address, String profession, boolean enabled) {
+    public User(String email, String username, String password, String name, String surname, String phone, String companyName, String city, String country, String address, String profession, boolean enabled,int penalPoints) {
         this.email = email;
         this.username = username;
         this.password = password;
@@ -68,12 +71,20 @@ public class User implements UserDetails {
         this.address = address;
         this.profession = profession;
         this.enabled = enabled;
+        this.penalPoints = penalPoints;
     }
 
     public void setUsername(String username) {
         this.username = username;
     }
 
+    public int getPenalPoints() {
+        return penalPoints;
+    }
+
+    public void setPenalPoints(int penalPoints) {
+        this.penalPoints = penalPoints;
+    }
 
     public ERole getRole() {
         return role;

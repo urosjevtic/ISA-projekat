@@ -28,6 +28,7 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.service.loginUser(loginInfo).subscribe({
         next: () => {
+          console.log(this.service.getUsers());
           this.router.navigate(['/home']);
           console.log(this.service.user$)
         },

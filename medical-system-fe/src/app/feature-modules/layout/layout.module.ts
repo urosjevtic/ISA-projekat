@@ -5,8 +5,12 @@ import { MaterialModule } from 'src/app/infrastructure/material/material.module'
 import { HomeComponent } from './home/home.component';
 import { AllCompaniesComponent } from './all-companies/all-companies.component';
 import { AppRoutingModule } from 'src/app/app-routing.module';
+import { ProfileComponent } from './profile/profile/profile.component';
+import {MatDividerModule} from "@angular/material/divider";
 import { RegisterComponent } from '../../infrastructure/auth/register/register.component';
 import { LoginComponent } from '../../infrastructure/auth/login/login.component';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {FormsModule} from "@angular/forms";
 
 
 
@@ -17,11 +21,15 @@ import { LoginComponent } from '../../infrastructure/auth/login/login.component'
     AllCompaniesComponent,
     RegisterComponent,
     LoginComponent,
+    ProfileComponent,
   ],
   imports: [
     CommonModule,
     MaterialModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatDividerModule,
+    MatAutocompleteModule,
+    FormsModule
   ],
   exports: [
     NavbarComponent

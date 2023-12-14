@@ -6,7 +6,7 @@
   <img [src]="company.companyLogo" alt="Profile Picture" class="profile-picture">
   
   <div class="edit-wrapper">
-    <button class="edit-btn" *ngIf="!isEditFormVisible" (click)="showEditForm()">Edit</button>  
+    <button class="edit-btn" *ngIf="!isEditFormVisible" [disabled]="!isUserCompanyAdmin()" (click)="showEditForm()">Edit</button>  
   </div>
 
   <div class="company-info">
@@ -19,7 +19,7 @@
     <p class="address">{{ company.address }}</p>
     <p class="description">{{ company.description }}</p>
 
-    <form class="reservation-form" (submit)="reserveEquipment()">
+    <form *ngIf="isUserCompanyAdmin()" class="reservation-form" (submit)="reserveEquipment()">
       <label for="reservationDate">Scheduled equipment pickup:</label>
       <input type="date" id="reservationDate" [(ngModel)]="reservationDate" name="reservationDate" required>
       <button type="submit">Done</button>

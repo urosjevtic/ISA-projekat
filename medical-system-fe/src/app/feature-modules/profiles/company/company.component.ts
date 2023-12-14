@@ -5,6 +5,8 @@ import { LayoutService } from '../../layout/layout.service';
 import { ActivatedRoute } from '@angular/router';
 import { Reservation } from '../model/reservation.model';
 import { MedicalEquipment } from '../model/medical-equipment.model';
+import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 
 @Component({
   selector: 'app-company',
@@ -19,7 +21,7 @@ export class CompanyComponent implements OnInit {
   isEditFormVisible = false;
   stars: number[] = [1, 2, 3, 4, 5];
   
-  constructor(private route: ActivatedRoute, private profilesService: ProfilesService) {}
+  constructor(private route: ActivatedRoute, private profilesService: ProfilesService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -28,8 +30,12 @@ export class CompanyComponent implements OnInit {
       
       this.profilesService.getAllEquipmentByCompanyId(companyId)
       .subscribe(data => this.medicalEquipments = data);
-    });
-    
+    });  
+  }
+
+  isUserCompanyAdmin(): boolean {
+    const user = this.authService.user$.value;
+    return user.role === 'ROLL_COMPANYADMIN';
   }
 
   showEditForm() {

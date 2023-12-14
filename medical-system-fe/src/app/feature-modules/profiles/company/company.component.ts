@@ -9,6 +9,7 @@ import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { OrderConformationComponent } from '../../orders/order-conformation/order-conformation.component';
+import { Appointment } from '../model/appointment.model';
 
 @Component({
   selector: 'app-company',
@@ -19,12 +20,21 @@ export class CompanyComponent implements OnInit {
  
   company: CompanyProfile | undefined;
   medicalEquipments: MedicalEquipment[] = [];
+  appointmentList: Appointment[] = [];
   reservationDate: string = '';
   isEditFormVisible = false;
   stars: number[] = [1, 2, 3, 4, 5];
   userOrder: UserOrder ={
     id: 0,
     order: []
+  }
+  appointment: Appointment = {
+    companyId: 0,
+    adminId: 0,
+    date: new Date(),
+    duration: 0,
+    adminName: '',
+    adminLastName: ''
   };
   
   constructor(private route: ActivatedRoute, 
@@ -39,6 +49,14 @@ export class CompanyComponent implements OnInit {
       
       this.profilesService.getAllEquipmentByCompanyId(companyId)
       .subscribe(data => this.medicalEquipments = data);
+    });  
+
+    this.route.params.subscribe(params => {
+      const companyId = params['id'];
+      this.getCompanyById(companyId);
+      
+      this.profilesService.getAllAppointmentByCompanyId(companyId)
+      .subscribe(data => this.appointmentList = data);
     });  
   }
 
@@ -107,4 +125,19 @@ export class CompanyComponent implements OnInit {
     const dialogRef = this.dialog.open(OrderConformationComponent, {})
   }
 
+  saveAppointment(): void {
+    if (this.company && this.appointment) {
+      const appointment: Appointment = {
+        companyId: this.company.id,
+        adminId: this.authService.user$.value.id,
+        duration: this.appointment.duration,
+        date: this.appointment.date,
+        adminName: this.appointment.adminName,
+        adminLastName: this.appointment.adminLastName,  
+      };
+      this.profilesService.saveAppointment(appointment).subscribe(savedAppointment => {
+        console.log('Termin uspešno sačuvan:', savedAppointment);
+      });
+    }
+  }
 }

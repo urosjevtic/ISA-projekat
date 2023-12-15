@@ -18,6 +18,7 @@ export class CompanyComponent implements OnInit {
  
   company: CompanyProfile | undefined;
   medicalEquipments: MedicalEquipment[] = [];
+  searchByName: string = '';
   appointmentList: Appointment[] = [];
   reservationDate: string = '';
   isEditFormVisible = false;
@@ -103,8 +104,23 @@ export class CompanyComponent implements OnInit {
         adminLastName: this.appointment.adminLastName,  
       };
       this.profilesService.saveAppointment(appointment).subscribe(savedAppointment => {
-        console.log('Termin uspešno sačuvan:', savedAppointment);
+        alert('Termin uspešno sačuvan:');
       });
+      
     }
+  }
+
+  areAllFieldsFilled(): boolean {
+    return (
+      !!this.appointment.adminName &&
+      !!this.appointment.adminLastName &&
+      !!this.appointment.date
+    );
+  }
+
+  filteredMedicalEquipments(): MedicalEquipment[] {
+    return this.medicalEquipments.filter(
+      equipment => equipment.name.toLowerCase().includes(this.searchByName.toLowerCase())
+    );
   }
 }

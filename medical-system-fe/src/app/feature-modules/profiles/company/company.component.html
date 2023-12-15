@@ -18,7 +18,7 @@
 
     <p class="address">{{ company.address }}</p>
     <p class="description">{{ company.description }}</p>
-
+   
     <form class="reservation-form" (submit)="reserveEquipment()">
       <label for="reservationDate">Scheduled equipment pickup:</label>
       <input type="date" id="reservationDate" [(ngModel)]="reservationDate" name="reservationDate" required>
@@ -26,13 +26,14 @@
     </form>
   
     <div class="medical-equipment-table">
+      <input type="text" [(ngModel)]="searchByName" placeholder="Search:" />
       <table cellspacing="0">
         <tr>
           <th>No.</th>
           <th>Name</th>
         </tr>
 
-        <tr *ngFor="let medicalEquipment of medicalEquipments; let i = index">
+        <tr *ngFor="let medicalEquipment of filteredMedicalEquipments(); let i = index">
           <td>{{ i + 1 }}.</td>
           <td>{{medicalEquipment.name}}</td>
         </tr>
@@ -55,7 +56,7 @@
         <label style="color: whitesmoke;" for="appointemntDuration">Choose Duration:</label>
         <input type="number" id="appointemntDuration" [(ngModel)]="appointment.duration" name="appointemntDuration" required>
 
-        <button type="submit">Save</button>
+        <button type="submit" [disabled]="!areAllFieldsFilled()">Save</button>
       </form>
 
       <div class="appointment-table">
@@ -80,7 +81,7 @@
     </div>
 
     <form *ngIf="isEditFormVisible" class="edit-form" (submit)="updateProfile(); hideEditForm()">
-     
+      <h3>Please, make your change!</h3>
       <label for="editName">Name:</label>
       <input type="text" id="editName" [(ngModel)]="company.name" name="editName" required>
 

@@ -139,6 +139,11 @@
     border-radius: 20px;
   }
 
+  .edit-form h3{
+    color: whitesmoke;
+    font-size: 24px;
+  }
+
   .edit-form input{
     width: 93%;
     border: none;
@@ -172,6 +177,10 @@
     float: right;
     margin-right: 50px;
     margin-top: -300px;
+  }
+
+  .medical-equipment-table input{
+    width: 50%;
   }
 
   table {

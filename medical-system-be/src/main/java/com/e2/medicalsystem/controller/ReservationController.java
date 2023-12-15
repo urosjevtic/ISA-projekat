@@ -9,6 +9,7 @@ import com.e2.medicalsystem.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,10 +30,10 @@ public class ReservationController {
         this.appointmentService = appointmentService;
     }
 
+
     @PostMapping(value = "/save")
+    @PreAuthorize("hasAuthority('ROLL_USER')")
     public ResponseEntity<String> saveReservation(@RequestBody ReservationDto reservationDto) {
-
-
         reservationService.saveReservation(reservationDto);
         return new ResponseEntity<>("Reservation saved successfully", HttpStatus.OK);
     }

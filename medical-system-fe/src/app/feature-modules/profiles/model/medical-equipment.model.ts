@@ -15,5 +15,6 @@ export interface ReservationItem{
 export interface Reservation{
     id?: number,
     reservationItems: ReservationItem[],
-    appointment: Appointment
+    appointment: Appointment,
+    reserverId: number
 }

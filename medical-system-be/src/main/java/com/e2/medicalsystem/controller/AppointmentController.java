@@ -31,4 +31,9 @@ public class AppointmentController {
     public List<Appointment> getAllAppointmentsByCompanyId(@RequestParam long companyId) {
         return appointmentService.getAllAppointmentsByCompanyId(companyId);
     }
+
+    @GetMapping("/allFree")
+    public List<Appointment> getAllFreeAppointmentsByCompanyId(@RequestParam long companyId) {
+        return appointmentService.getAllFreeAppointmentsByCompanyId(companyId);
+    }
 }

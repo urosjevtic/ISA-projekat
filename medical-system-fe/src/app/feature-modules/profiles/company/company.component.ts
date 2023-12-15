@@ -33,7 +33,8 @@ export class CompanyComponent implements OnInit {
       duration: 0,
       adminName: '',
       adminLastName: ''
-    }
+    },
+    reserverId: 0
   }
   appointment: Appointment = {
     companyId: 0,

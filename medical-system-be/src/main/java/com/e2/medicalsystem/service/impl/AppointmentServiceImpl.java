@@ -26,4 +26,9 @@ public class AppointmentServiceImpl implements AppointmentService {
     public Appointment getById(Long id) {
         return appointmentRepository.getById(id);
     }
+
+    @Override
+    public List<Appointment> getAllFreeAppointmentsByCompanyId(long companyId) {
+        return appointmentRepository.findAllByCompanyIdAndTakenFalse(companyId);
+    }
 }

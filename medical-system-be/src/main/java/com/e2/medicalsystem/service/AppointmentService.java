@@ -8,4 +8,5 @@ public interface AppointmentService {
     public void saveAppointment(Appointment appointment);
     public List<Appointment> getAllAppointmentsByCompanyId(long companyId);
     public Appointment getById(Long id);
+    public List<Appointment> getAllFreeAppointmentsByCompanyId(long companyId);
 }

@@ -36,4 +36,8 @@ export class ProfilesService {
   getAllAppointmentByCompanyId(companyId: number): Observable<Appointment[]> {
     return this.http.get<Appointment[]>(this.apiUrl + 'appointment/all?companyId=' + companyId);
   }
+
+  getAllFreeAppointmentByCompanyId(companyId: number): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(this.apiUrl + 'appointment/allFree?companyId=' + companyId);
+  }
 }

@@ -1,10 +1,11 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MedicalEquipment, Reservation, ReservationItem } from '../model/medical-equipment.model';
 import { ProfilesService } from '../profiles.service';
 import { Appointment } from '../model/appointment.model';
 import {MatSelectModule} from '@angular/material/select';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 
 @Component({
   selector: 'app-confirm-order-popup',
@@ -12,7 +13,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./confirm-order-popup.component.scss']
 })
 export class ConfirmOrderPopupComponent {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private service: ProfilesService) { 
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private service: ProfilesService, 
+  public dialogRef: MatDialogRef<ConfirmOrderPopupComponent>,
+  private authService: AuthService) { 
     this.reservation = data || { id: 0, order: [] };
     console.log(this.reservation);
   }
@@ -26,6 +29,7 @@ export class ConfirmOrderPopupComponent {
       adminLastName: ''
     },
     reservationItems: [],
+    reserverId: 0
   }
   appointments: Appointment[] = [];
 
@@ -36,7 +40,7 @@ export class ConfirmOrderPopupComponent {
   selectedAppointment: any;
 
   ngOnInit(): void{
-    this.service.getAllAppointmentByCompanyId(-2).subscribe({
+    this.service.getAllFreeAppointmentByCompanyId(-2).subscribe({
       next: (response) =>{
         this.appointments=response;
         console.log(this.appointments);
@@ -49,6 +53,7 @@ export class ConfirmOrderPopupComponent {
   createReservation(){
     var eq: MedicalEquipment[] = [];
     this.reservation.appointment = this.selectedAppointment;
+    this.reservation.reserverId = this.getUserId();
   }
 
   reserveEquipment():void{
@@ -57,9 +62,16 @@ export class ConfirmOrderPopupComponent {
     this.service.reserveEquipment(this.reservation!).subscribe({
       next: (response) =>{
         console.log(response);
+        this.close();
       }
     })
   }
 
+  close(): void{
+    this.dialogRef.close();
+  }
 
+  private getUserId(): number{
+    return this.authService.user$.value.id;
+  }
 }

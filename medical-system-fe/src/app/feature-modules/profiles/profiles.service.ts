@@ -2,8 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CompanyProfile } from './model/company.model';
 import { Observable } from 'rxjs';
-import { Reservation } from './model/reservation.model';
-import { MedicalEquipment } from './model/medical-equipment.model';
+import { MedicalEquipment, Reservation } from './model/medical-equipment.model';
 import { Appointment } from './model/appointment.model';
 
 @Injectable({
@@ -23,7 +22,7 @@ export class ProfilesService {
   }
 
   reserveEquipment(reservation: Reservation): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'userReservation/' + 'save', reservation);
+    return this.http.post<any>(this.apiUrl + 'reservation/' + 'save', reservation);
   }
 
   updateCompanyProfile(company: CompanyProfile): Observable<any> {

@@ -41,14 +41,14 @@
         </table>
       </div>
       <h1>Your order</h1>
-      <div *ngIf="userOrder && userOrder.order.length > 0" class="medical-equipment-table">
+      <div *ngIf="reservation && reservation.reservationItems.length > 0" class="medical-equipment-table">
         <table cellspacing="0">
           <tr>
             <th>No.</th>
             <th>Name</th>
           </tr>
   
-          <tr *ngFor="let order of userOrder.order; let i = index">
+          <tr *ngFor="let order of reservation.reservationItems; let i = index">
             <td>{{order.count}}</td>
             <td>{{order.equipment.name}}</td>
           </tr>

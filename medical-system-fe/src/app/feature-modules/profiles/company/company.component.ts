@@ -3,8 +3,7 @@ import { ProfilesService } from '../profiles.service';
 import { CompanyProfile } from '../model/company.model';
 import { LayoutService } from '../../layout/layout.service';
 import { ActivatedRoute } from '@angular/router';
-import { Reservation } from '../model/reservation.model';
-import { MedicalEquipment, Order, UserOrder } from '../model/medical-equipment.model';
+import { MedicalEquipment, Reservation, ReservationItem } from '../model/medical-equipment.model';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -24,9 +23,17 @@ export class CompanyComponent implements OnInit {
   reservationDate: string = '';
   isEditFormVisible = false;
   stars: number[] = [1, 2, 3, 4, 5];
-  userOrder: UserOrder ={
+  reservation: Reservation ={
     id: 0,
-    order: []
+    reservationItems: [],
+    appointment: {
+      companyId: 0,
+      adminId: 0,
+      date: new Date(),
+      duration: 0,
+      adminName: '',
+      adminLastName: ''
+    }
   }
   appointment: Appointment = {
     companyId: 0,
@@ -102,21 +109,21 @@ export class CompanyComponent implements OnInit {
   }
 
   addEquipmentToOrder(equipment: MedicalEquipment) {
-    const newOrder: Order = {
+    const reservationItem: ReservationItem = {
       equipment: equipment,
       count: 1
     };
   
-    if (this.userOrder && Array.isArray(this.userOrder.order)) {
-      const existingOrder = this.userOrder.order.find(order => order.equipment === equipment);
+    if (this.reservation && Array.isArray(this.reservation.reservationItems)) {
+      const existingOrder = this.reservation.reservationItems.find(order => order.equipment === equipment);
   
       if (existingOrder) {
         existingOrder.count++;
       } else {
-        this.userOrder.order.push(newOrder);
+        this.reservation.reservationItems.push(reservationItem);
       }
   
-      console.log(this.userOrder.order);
+      console.log(this.reservation.reservationItems);
     } else {
       console.error("Invalid userOrder or order is not an array.");
     }
@@ -124,7 +131,7 @@ export class CompanyComponent implements OnInit {
 
   finalizeOrder(){
     const dialogRef = this.dialog.open(ConfirmOrderPopupComponent, {
-      data: this.userOrder,
+      data: this.reservation,
     })
   }
 

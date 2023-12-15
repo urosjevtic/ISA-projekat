@@ -1,5 +1,6 @@
 package com.e2.medicalsystem.model;
 
+import com.e2.medicalsystem.dto.MedicalEquipmentDto;
 import jakarta.persistence.*;
 
 @Entity
@@ -21,6 +22,13 @@ public class MedicalEquipment {
         this.name = name;
         this.description = description;
         this.companyId = companyId;
+    }
+
+    public MedicalEquipment(MedicalEquipmentDto medicalEquipmentDto){
+        this.id = medicalEquipmentDto.getId();
+        this.name = medicalEquipmentDto.getName();
+        this.description = medicalEquipmentDto.getDescription();
+        this.companyId = getCompanyId();
     }
 
     public Integer getId() {

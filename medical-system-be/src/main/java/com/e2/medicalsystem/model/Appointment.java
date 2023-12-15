@@ -1,5 +1,6 @@
 package com.e2.medicalsystem.model;
 
+import com.e2.medicalsystem.dto.AppointmentDto;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -27,6 +28,16 @@ public class Appointment {
         this.duration = duration;
         this.adminName = adminName;
         this.adminLastName = adminLastName;
+    }
+
+    public Appointment(AppointmentDto appointmentDto){
+        this.id = appointmentDto.getId();
+        this.companyId = appointmentDto.getCompanyId();
+        this.adminId = appointmentDto.getAdminId();
+        this.date = appointmentDto.getDate();
+        this.duration = appointmentDto.getDuration();
+        this.adminName = appointmentDto.getAdminName();
+        this.adminName = appointmentDto.getAdminLastName();
     }
 
     public Long getId() {

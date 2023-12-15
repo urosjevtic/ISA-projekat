@@ -1,7 +1,6 @@
 package com.e2.medicalsystem.dto;
 
 import com.e2.medicalsystem.model.Appointment;
-import com.e2.medicalsystem.model.Reservation;
 
 import java.util.Date;
 
@@ -14,6 +13,7 @@ public class AppointmentDto {
     private String adminName;
     private String adminLastName;
 
+    public AppointmentDto(){}
     public AppointmentDto(Long id, Long companyId, Long adminId, Date date, int duration, String adminName, String adminLastName) {
         this.id = id;
         this.companyId = companyId;

@@ -1,3 +1,5 @@
+import { Appointment } from "./appointment.model";
+
 export interface MedicalEquipment{
     id: number
     name: string,
@@ -5,12 +7,13 @@ export interface MedicalEquipment{
     companyId: number,
 }
 
-export interface Order{
+export interface ReservationItem{
     equipment: MedicalEquipment,
     count: number
 }
 
-export interface UserOrder{
-    id: number,
-    order: Order[];
+export interface Reservation{
+    id?: number,
+    reservationItems: ReservationItem[],
+    appointment: Appointment
 }

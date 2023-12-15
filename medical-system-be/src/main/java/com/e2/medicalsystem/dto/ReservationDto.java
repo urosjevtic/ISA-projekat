@@ -2,6 +2,7 @@ package com.e2.medicalsystem.dto;
 
 import com.e2.medicalsystem.model.Reservation;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,6 +18,7 @@ public class ReservationDto {
         this.id = reservation.getId();
         this.appointment = new AppointmentDto(reservation.getAppointment());
         this.reserverId = reservation.getReserverId();
+        this.reservationItems = new ArrayList<>();
         for (var item:
              reservation.getReservationItems()) {
             this.reservationItems.add(new ReservationItemDto(item));

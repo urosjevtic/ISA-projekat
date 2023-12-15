@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,5 +33,18 @@ public class ReservationController {
     public ResponseEntity<String> saveReservation(@RequestBody ReservationDto reservationDto) {
         reservationService.saveReservation(reservationDto);
         return new ResponseEntity<>("Reservation saved successfully", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/userReservation")
+    @PreAuthorize("hasAuthority('ROLL_USER')")
+    public ResponseEntity<List<ReservationDto>> getUserReservation(@RequestParam long userId){
+        List<Reservation> allReservations = reservationService.getAllReservationsByReserverId(userId);
+        List<ReservationDto> allReservationsDto = new ArrayList<>();
+        for (var res:
+             allReservations) {
+            allReservationsDto.add(new ReservationDto(res));
+        }
+
+        return new ResponseEntity<>(allReservationsDto, HttpStatus.OK);
     }
 }

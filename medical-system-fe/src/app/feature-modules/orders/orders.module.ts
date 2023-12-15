@@ -1,19 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { UserReservationsComponent } from './user-reservations/user-reservations.component';
+import { MaterialModule } from 'src/app/infrastructure/material/material.module';
 import { MatDialogModule } from '@angular/material/dialog';
-import { ConfirmOrderPopupComponent } from '../profiles/confirm-order-popup/confirm-order-popup.component';
+import { FormsModule } from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [
-    ConfirmOrderPopupComponent
+    UserReservationsComponent
   ],
   imports: [
-    CommonModule,
+    CommonModule, 
     FormsModule,
-    MatDialogModule
+    MatDialogModule,
+    MaterialModule,
   ]
 })
 export class OrdersModule { }

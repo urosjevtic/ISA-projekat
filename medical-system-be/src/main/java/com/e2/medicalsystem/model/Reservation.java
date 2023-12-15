@@ -12,7 +12,7 @@ public class Reservation {
     @OneToOne
     private Appointment appointment;
     @Column(name = "reservationItems")
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<ReservationItem> reservationItems;
     @Column(name = "reserverId")
     private Long reserverId;

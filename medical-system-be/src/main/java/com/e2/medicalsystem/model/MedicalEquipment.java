@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 public class MedicalEquipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
     private String name;
     private String description;
     private long companyId;
@@ -16,18 +16,18 @@ public class MedicalEquipment {
 
     }
 
-    public MedicalEquipment(Integer id, String name, String description, long companyId) {
+    public MedicalEquipment(int id, String name, String description, long companyId) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.companyId = companyId;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

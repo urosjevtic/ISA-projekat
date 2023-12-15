@@ -123,4 +123,15 @@ export class CompanyComponent implements OnInit {
       equipment => equipment.name.toLowerCase().includes(this.searchByName.toLowerCase())
     );
   }
+
+  deleteMedicalEquipment(id: number): void {
+    this.profilesService.deleteEquipmentById(id).subscribe(
+      () => {
+          alert('Uspešno uklonjeno!');
+      },
+      (error) => {
+        console.error('Failed to delete medical equipment:', error);
+      }
+    );
+  }
 }

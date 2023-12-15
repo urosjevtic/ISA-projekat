@@ -23,7 +23,7 @@ export class ProfilesService {
   }
 
   reserveEquipment(reservation: Reservation): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'reservation/' + 'save', reservation);
+    return this.http.post<any>(this.apiUrl + 'userReservation/' + 'save', reservation);
   }
 
   updateCompanyProfile(company: CompanyProfile): Observable<any> {

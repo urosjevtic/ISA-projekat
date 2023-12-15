@@ -1,15 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OrderConformationComponent } from './order-conformation/order-conformation.component';
+import { FormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmOrderPopupComponent } from '../profiles/confirm-order-popup/confirm-order-popup.component';
 
 
 
 @NgModule({
   declarations: [
-    OrderConformationComponent
+    ConfirmOrderPopupComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
+    MatDialogModule
   ]
 })
 export class OrdersModule { }

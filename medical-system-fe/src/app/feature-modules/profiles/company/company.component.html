@@ -19,7 +19,7 @@
     <p class="address">{{ company.address }}</p>
     <p class="description">{{ company.description }}</p>
 
-    <form class="reservation-form" (submit)="reserveEquipment()">
+    <form class="reservation-form">
       <label for="reservationDate">Scheduled equipment pickup:</label>
       <input type="date" id="reservationDate" [(ngModel)]="reservationDate" name="reservationDate" required>
       <button type="submit">Done</button>

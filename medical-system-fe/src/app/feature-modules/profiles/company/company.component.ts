@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ProfilesService } from '../profiles.service';
 import { CompanyProfile } from '../model/company.model';
 import { LayoutService } from '../../layout/layout.service';
@@ -8,8 +8,8 @@ import { MedicalEquipment, Order, UserOrder } from '../model/medical-equipment.m
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { MatDialog } from '@angular/material/dialog';
-import { OrderConformationComponent } from '../../orders/order-conformation/order-conformation.component';
 import { Appointment } from '../model/appointment.model';
+import { ConfirmOrderPopupComponent } from '../confirm-order-popup/confirm-order-popup.component';
 
 @Component({
   selector: 'app-company',
@@ -40,7 +40,8 @@ export class CompanyComponent implements OnInit {
   constructor(private route: ActivatedRoute, 
     private profilesService: ProfilesService, 
     private authService: AuthService,
-    private dialog: MatDialog) {}
+    private dialog: MatDialog,
+    ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -79,7 +80,7 @@ export class CompanyComponent implements OnInit {
     });
   }
 
-  reserveEquipment() {
+  /*reserveEquipment() {
     if (this.company && this.reservationDate) {
       const reservation: Reservation = {
         companyId: this.company.id,
@@ -90,7 +91,7 @@ export class CompanyComponent implements OnInit {
         console.log('Rezervacija uspešna!', response);
       });
     }
-  }
+  }*/
 
   updateProfile() {
     if (this.company) {
@@ -122,7 +123,9 @@ export class CompanyComponent implements OnInit {
   }
 
   finalizeOrder(){
-    const dialogRef = this.dialog.open(OrderConformationComponent, {})
+    const dialogRef = this.dialog.open(ConfirmOrderPopupComponent, {
+      data: this.userOrder,
+    })
   }
 
   saveAppointment(): void {

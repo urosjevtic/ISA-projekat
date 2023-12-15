@@ -1,4 +1,4 @@
-package com.e2.medicalsystem.service;
+package com.e2.medicalsystem.service.impl;
 
 import com.e2.medicalsystem.model.Reservation;
 import com.e2.medicalsystem.repository.ReservationRepository;

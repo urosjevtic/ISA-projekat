@@ -1,5 +1,8 @@
+import { Appointment } from "./appointment.model"
+import { MedicalEquipment, Order } from "./medical-equipment.model"
+
 export interface Reservation {
     id?: number
-    companyId: number;
-    date: Date;
+    appointment: Appointment,
+    equipment: MedicalEquipment[]
 }

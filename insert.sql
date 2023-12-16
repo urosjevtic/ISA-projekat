@@ -56,6 +56,6 @@ INSERT INTO public.country_cities(
 
 INSERT INTO public.users(
 	id, address, city, company_name, country, email, enabled, name, password, penal_points, phone, profession, role, surname, username)
-	VALUES (-1, 'Address1', 'Boston', 'UnitedHealth Group', 'USA', 'filipdjokic2001@gmail.com', TRUE, 'user1', '$2a$10$ddmk2X3.TMlr4aWVlVzYd.gX/KKjY8TfPAb5sKb.FCWklcWTqhn1S', 1, 0113133130, 'profession1', 0, 'user1', 'user1'),
-           (-2, 'Address2', 'Toronto', 'CVS Health', 'Canada', 'filipdjokic2001@gmail.com', TRUE, 'user2', '$2a$10$ddmk2X3.TMlr4aWVlVzYd.gX/KKjY8TfPAb5sKb.FCWklcWTqhn1S', 2, 0113133130, 'profession2', 1, 'user2', 'user2'),
-           (-3, 'Address3', 'Ottawa', 'McKesson', 'Mexico', 'filipdjokic2001@gmail.com', TRUE, 'user3', '$2a$10$ddmk2X3.TMlr4aWVlVzYd.gX/KKjY8TfPAb5sKb.FCWklcWTqhn1S', 3, 0113133130, 'profession3', 2, 'user3', 'user3');
+	VALUES (-1, 'Address1', 'Boston', 'UnitedHealth Group', 'USA', 'filipdjokic2001@gmail.com', TRUE, 'user1', '$2a$10$ddmk2X3.TMlr4aWVlVzYd.gX/KKjY8TfPAb5sKb.FCWklcWTqhn1S', 1, 6113133130, 'profession1', 0, 'user1', 'user1'),
+           (-2, 'Address2', 'Toronto', 'CVS Health', 'Canada', 'filipdjokic2001@gmail.com', TRUE, 'user2', '$2a$10$ddmk2X3.TMlr4aWVlVzYd.gX/KKjY8TfPAb5sKb.FCWklcWTqhn1S', 2, 6113133130, 'profession2', 1, 'user2', 'user2'),
+           (-3, 'Address3', 'Ottawa', 'McKesson', 'Mexico', 'filipdjokic2001@gmail.com', TRUE, 'user3', '$2a$10$ddmk2X3.TMlr4aWVlVzYd.gX/KKjY8TfPAb5sKb.FCWklcWTqhn1S', 3, 6113133130, 'profession3', 2, 'user3', 'user3');

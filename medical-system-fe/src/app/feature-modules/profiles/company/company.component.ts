@@ -28,7 +28,7 @@ export class CompanyComponent implements OnInit {
     companyId: 0,
     adminId: 0,
     date: new Date(),
-    duration: 0,
+    duration: 1,
     adminName: '',
     adminLastName: ''
   };

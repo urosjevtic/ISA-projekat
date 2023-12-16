@@ -59,3 +59,9 @@ INSERT INTO public.users(
 	VALUES (-1, 'Address1', 'Boston', 'UnitedHealth Group', 'USA', 'filipdjokic2001@gmail.com', TRUE, 'user1', '$2a$10$ddmk2X3.TMlr4aWVlVzYd.gX/KKjY8TfPAb5sKb.FCWklcWTqhn1S', 1, 6113133130, 'profession1', 0, 'user1', 'user1'),
            (-2, 'Address2', 'Toronto', 'CVS Health', 'Canada', 'filipdjokic2001@gmail.com', TRUE, 'user2', '$2a$10$ddmk2X3.TMlr4aWVlVzYd.gX/KKjY8TfPAb5sKb.FCWklcWTqhn1S', 2, 6113133130, 'profession2', 1, 'user2', 'user2'),
            (-3, 'Address3', 'Ottawa', 'McKesson', 'Mexico', 'filipdjokic2001@gmail.com', TRUE, 'user3', '$2a$10$ddmk2X3.TMlr4aWVlVzYd.gX/KKjY8TfPAb5sKb.FCWklcWTqhn1S', 3, 6113133130, 'profession3', 2, 'user3', 'user3');
+
+INSERT INTO public.appointments(
+	id, admin_id, admin_last_name, admin_name, company_id, date, duration)
+	VALUES (-1, -3, 'Jevtic', 'Uros', -1, '2023-12-20 10:00:00', 1),
+           (-2, -3, 'Boskovic', 'Marko', -1, '2023-12-21 11:00:00', 2),
+           (-3, -3, 'Djokic', 'Filip', -1, '2023-12-22 12:00:00', 3);

@@ -1,17 +1,16 @@
 package com.e2.medicalsystem.controller;
 
 import com.e2.medicalsystem.dto.ReservationDto;
-import com.e2.medicalsystem.model.Appointment;
-import com.e2.medicalsystem.model.Reservation;
-import com.e2.medicalsystem.model.ReservationItem;
-import com.e2.medicalsystem.service.AppointmentService;
-import com.e2.medicalsystem.service.ReservationService;
+import com.e2.medicalsystem.model.*;
+import com.e2.medicalsystem.service.*;
+import com.google.zxing.WriterException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,19 +19,26 @@ import java.util.List;
 public class ReservationController {
     private ReservationService reservationService;
     private AppointmentService appointmentService;
+    private QrCodeService qrCodeService;
+    private EmailSenderService emailSenderService;
+    private UsersService usersService;
     @Autowired
-    public ReservationController(ReservationService reservationService, AppointmentService appointmentService)
+    public ReservationController(ReservationService reservationService, AppointmentService appointmentService,
+                                 QrCodeService qrCodeService, EmailSenderService emailSenderService, UsersService usersService)
     {
         this.reservationService = reservationService;
         this.appointmentService = appointmentService;
+        this.qrCodeService = qrCodeService;
+        this.emailSenderService = emailSenderService;
+        this.usersService = usersService;
     }
 
 
     @PostMapping(value = "/save")
     @PreAuthorize("hasAuthority('ROLL_USER')")
-    public ResponseEntity<String> saveReservation(@RequestBody ReservationDto reservationDto) {
-        reservationService.saveReservation(reservationDto);
-        return new ResponseEntity<>("Reservation saved successfully", HttpStatus.OK);
+    public ResponseEntity<ReservationDto> saveReservation(@RequestBody ReservationDto reservationDto) {
+        ReservationDto reservation = new ReservationDto(reservationService.saveReservation(reservationDto));
+        return new ResponseEntity<>(reservation, HttpStatus.OK);
     }
 
     @GetMapping(value = "/userReservation")
@@ -46,5 +52,47 @@ public class ReservationController {
         }
 
         return new ResponseEntity<>(allReservationsDto, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/generate-and-send-email")
+    public ResponseEntity<String> generateQrCodeAndSendEmail(@RequestParam int senderId,
+                                                             @RequestParam long reservationId) throws WriterException, IOException
+    {
+        Reservation reservation = reservationService.getReservationById(reservationId);
+        StringBuilder contentBuilder = new StringBuilder();
+        List<ReservationItem> equipment = reservation.getReservationItems();
+
+        String content = createQrContent(reservation);
+        // Generate QR Code bytes
+        byte[] qrCodeBytes = qrCodeService.generateQrCode(content, 200, 200);
+
+        // Send email with QR Code
+        User user = usersService.getUserById(senderId);
+        String email = user.getEmail();
+
+        emailSenderService.sendEmailWithQrCode(email, "Reservation number " + reservation.getId(), content, qrCodeBytes);
+
+        return ResponseEntity.ok("Email sent successfully!");
+    }
+
+    private String createQrContent(Reservation reservation){
+        StringBuilder contentBuilder = new StringBuilder();
+        contentBuilder.append("Reservation number: ");
+        contentBuilder.append((reservation.getId()));
+        contentBuilder.append(", pickup date: ");
+        contentBuilder.append(reservation.getAppointment().getDate());
+        contentBuilder.append(": \n");
+        for (var reservationItem:
+             reservation.getReservationItems()) {
+            contentBuilder.append("*");
+            contentBuilder.append(reservationItem.getEquipment().getName());
+            contentBuilder.append("(");
+            contentBuilder.append(reservationItem.getCount());
+            contentBuilder.append(")\n");
+        }
+        contentBuilder.append(("\n\n Thank you for ordering"));
+
+        return contentBuilder.toString();
     }
 }

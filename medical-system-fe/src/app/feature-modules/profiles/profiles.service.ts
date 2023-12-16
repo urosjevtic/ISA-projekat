@@ -21,7 +21,7 @@ export class ProfilesService {
     return this.http.get<MedicalEquipment[]>(this.apiUrl + 'equipment/all?companyId=' + companyId);
   }
 
-  reserveEquipment(reservation: Reservation): Observable<any> {
+  reserveEquipment(reservation: Reservation): Observable<Reservation> {
     return this.http.post<any>(this.apiUrl + 'reservation/' + 'save', reservation);
   }
 
@@ -39,5 +39,9 @@ export class ProfilesService {
 
   getAllFreeAppointmentByCompanyId(companyId: number): Observable<Appointment[]> {
     return this.http.get<Appointment[]>(this.apiUrl + 'appointment/allFree?companyId=' + companyId);
+  }
+
+  sendReservationQrCode(senderId: number, reservationId: number):Observable<any>{
+    return this.http.get<Appointment[]>(this.apiUrl + 'reservation/generate-and-send-email?senderId='+senderId+'&reservationId='+reservationId);
   }
 }

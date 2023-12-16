@@ -16,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -59,10 +60,12 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setReserverId(reservationDto.getReserverId());
         return reservationRepository.save(reservation);
     }
-
+    @Transactional
     @Override
     public Reservation getReservationById(Long id) {
-        return reservationRepository.getById(id);
+        Optional<Reservation> optionalReservation = reservationRepository.findById(id);
+        Reservation reservation = optionalReservation.orElseThrow(() -> new RuntimeException("Reservation not present"));
+        return reservation;
     }
 
     @Override

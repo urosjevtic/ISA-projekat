@@ -62,6 +62,7 @@ export class ConfirmOrderPopupComponent {
     this.service.reserveEquipment(this.reservation!).subscribe({
       next: (response) =>{
         console.log(response);
+        this.service.sendReservationQrCode(this.getUserId(), response.id!).subscribe({});
         this.close();
       }
     })

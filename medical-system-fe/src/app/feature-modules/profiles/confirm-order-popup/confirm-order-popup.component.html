@@ -16,7 +16,9 @@
       <mat-form-field>
         <mat-label>Choose appointment</mat-label>
         <mat-select [(ngModel)]="selectedAppointment" formControlName="appointment">
-          <mat-option *ngFor="let appointment of appointments" [value]="appointment">Date: {{appointment.date}}, Duration: {{appointment.duration}} min</mat-option>
+          <mat-option *ngFor="let appointment of appointments" [value]="appointment">
+            Date: {{ appointment.date | date:'dd.MM.yyyy' }}, Duration: {{ appointment.duration }} min
+          </mat-option>
         </mat-select>
       </mat-form-field>
     </form>

@@ -1,6 +1,8 @@
 package com.e2.medicalsystem.model;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
 
+import java.sql.Time;
 import java.util.List;
 
 @Entity
@@ -15,22 +17,44 @@ public class CompanyProfile {
     private double AverageRating;
     private String Description;
     private String CompanyLogo;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<User> CompanyAdmins;
+
+    private Time WrkHrFrom;
+
+    private Time WrkHrTo;
 
     public CompanyProfile() {}
 
-    public CompanyProfile(List<User> companyAdmins) {
-        CompanyAdmins = companyAdmins;
-    }
-
-    public CompanyProfile(long id, String name, String address, double averageRating, String description, String companyLogo) {
+    public CompanyProfile(long id, String name, String address, double averageRating, String description, String companyLogo, Time wrkHrFrom, Time wrkHrTo) {
         Id = id;
         Name = name;
         Address = address;
         AverageRating = averageRating;
         Description = description;
         CompanyLogo = companyLogo;
+        WrkHrFrom = wrkHrFrom;
+        WrkHrTo = wrkHrTo;
+    }
+    public CompanyProfile(List<User> companyAdmins) {
+        CompanyAdmins = companyAdmins;
+    }
+
+
+    public Time getWrkHrFrom() {
+        return WrkHrFrom;
+    }
+
+    public void setWrkHrFrom(Time wrkHrFrom) {
+        WrkHrFrom = wrkHrFrom;
+    }
+
+    public Time getWrkHrTo() {
+        return WrkHrTo;
+    }
+
+    public void setWrkHrTo(Time wrkHrTo) {
+        WrkHrTo = wrkHrTo;
     }
 
     public long getId() {

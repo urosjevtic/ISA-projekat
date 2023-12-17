@@ -4,6 +4,8 @@ import { CompanyProfile } from './model/company.model';
 import { Observable } from 'rxjs';
 import { MedicalEquipment, Reservation } from './model/medical-equipment.model';
 import { Appointment } from './model/appointment.model';
+import {DatePipe} from "@angular/common";
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +13,8 @@ import { Appointment } from './model/appointment.model';
 export class ProfilesService {
   private apiUrl = 'http://localhost:8080/api/';
 
-  constructor(private http: HttpClient) {}
-  
+  constructor(private http: HttpClient,private datePipe:DatePipe) {}
+
   getCompanyById(id: number): Observable<CompanyProfile> {
     return this.http.get<CompanyProfile>(this.apiUrl + 'company/' + id);
   }
@@ -47,5 +49,16 @@ export class ProfilesService {
 
   sendReservationQrCode(senderId: number, reservationId: number):Observable<any>{
     return this.http.get<Appointment[]>(this.apiUrl + 'reservation/generate-and-send-email?senderId='+senderId+'&reservationId='+reservationId);
+  }
+
+  getFreeCustomAppointments(companyId: number,date: Date): Observable<Appointment[]>{
+    const formattedDate: string = this.datePipe.transform(date, 'yyyy-MM-dd')!;
+    console.log(formattedDate);
+    return this.http.get<Appointment[]>(this.apiUrl + `appointment/free?companyId=${companyId}&date=${formattedDate}`);
+  }
+
+  reserveCustom(reservation: Reservation): Observable<Reservation>{
+
+    return this.http.post<Reservation>(this.apiUrl + `reservation/saveCustomReservation`,reservation);
   }
 }

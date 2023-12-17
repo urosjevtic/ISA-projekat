@@ -5,6 +5,9 @@ import { LayoutModule } from './feature-modules/layout/layout.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ProfilesModule } from './feature-modules/profiles/profiles.module';
 import { OrdersModule } from './feature-modules/orders/orders.module';
+import {MatNativeDateModule} from '@angular/material/core';
+import {DatePipe} from "@angular/common";
+
 
 @NgModule({
   declarations: [
@@ -16,9 +19,10 @@ import { OrdersModule } from './feature-modules/orders/orders.module';
     HttpClientModule,
     LayoutModule,
     ProfilesModule,
-    OrdersModule
+    OrdersModule,
+    MatNativeDateModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -15,11 +15,11 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ConfirmOrderPopupComponent {
   company: number = 0;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, 
-  private service: ProfilesService, 
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+  private service: ProfilesService,
   public dialogRef: MatDialogRef<ConfirmOrderPopupComponent>,
   private authService: AuthService,
-  private route: ActivatedRoute) { 
+  private route: ActivatedRoute) {
     this.reservation = data.reservation || { id: 0, order: [] };
     this.company = data.company;
     console.log(this.reservation);
@@ -37,12 +37,17 @@ export class ConfirmOrderPopupComponent {
     reserverId: 0
   }
   appointments: Appointment[] = [];
+  customAppointments: Appointment[] = [];
+  todayDate = new Date();
 
 
   reservationForm = new FormGroup({
     appointment: new FormControl('', [Validators.required]),
+    date: new FormControl('',[Validators.required]),
+    customAppointment: new FormControl('', [Validators.required])
   });
   selectedAppointment: any;
+  selectedCustom: any;
 
   ngOnInit(): void{
     this.service.getAllFreeAppointmentByCompanyId(this.data.company.id).subscribe({
@@ -50,7 +55,7 @@ export class ConfirmOrderPopupComponent {
         this.appointments=response;
         console.log(this.appointments);
       }
-      
+
     })
   }
 
@@ -61,7 +66,25 @@ export class ConfirmOrderPopupComponent {
     this.reservation.reserverId = this.getUserId();
   }
 
+  createCustomReservation() {
+    this.reservation.appointment = this.selectedCustom;
+    this.reservation.reserverId = this.getUserId();
+  }
+
   reserveEquipment():void{
+    if(this.reservationForm.get('appointment')?.value === "CUSTOM"){
+
+      this.createCustomReservation();
+      this.service.reserveCustom(this.reservation).subscribe({
+        next: (response) => {
+          alert("Reservation made successfully!");
+          this.service.sendReservationQrCode(this.getUserId(),response.id!).subscribe({});
+          this.close();
+        }
+      });
+
+    }else
+    {
     console.log(this.selectedAppointment);
     this.createReservation();
     this.service.reserveEquipment(this.reservation!).subscribe({
@@ -70,7 +93,9 @@ export class ConfirmOrderPopupComponent {
         this.service.sendReservationQrCode(this.getUserId(), response.id!).subscribe({});
         this.close();
       }
-    })
+    });
+
+    }
   }
 
   close(): void{
@@ -80,4 +105,16 @@ export class ConfirmOrderPopupComponent {
   private getUserId(): number{
     return this.authService.user$.value.id;
   }
+
+  choseDate(event:any){
+    const date = event.value;
+    console.log(this.data.company.id)
+    this.service.getFreeCustomAppointments(this.data.company.id,date).subscribe((result)=>
+    {
+      this.customAppointments = result;
+      console.log(result);
+    });
+  }
+
+
 }

@@ -39,6 +39,10 @@ export class ProfilesService {
     return this.http.get<Appointment[]>(this.apiUrl + 'appointment/all?companyId=' + companyId);
   }
 
+  deleteEquipmentById(id: number): Observable<void> {
+    return this.http.delete<void>(this.apiUrl + 'equipment/' + id);
+  }
+  
   getAllFreeAppointmentByCompanyId(companyId: number): Observable<Appointment[]> {
     return this.http.get<Appointment[]>(this.apiUrl + 'appointment/allFree?companyId=' + companyId);
   }

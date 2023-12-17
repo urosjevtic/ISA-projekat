@@ -16,6 +16,8 @@ public class CompanyProfile {
     private double AverageRating;
     private String Description;
     private String CompanyLogo;
+    @OneToMany
+    private List<User> CompanyAdmins;
 
     private Time WrkHrFrom;
 
@@ -33,6 +35,10 @@ public class CompanyProfile {
         WrkHrFrom = wrkHrFrom;
         WrkHrTo = wrkHrTo;
     }
+    public CompanyProfile(List<User> companyAdmins) {
+        CompanyAdmins = companyAdmins;
+    }
+
 
     public Time getWrkHrFrom() {
         return WrkHrFrom;
@@ -96,6 +102,14 @@ public class CompanyProfile {
 
     public void setCompanyLogo(String companyLogo) {
         CompanyLogo = companyLogo;
+    }
+
+    public List<User> getCompanyAdmins() {
+        return CompanyAdmins;
+    }
+
+    public void setCompanyAdmins(List<User> companyAdmins) {
+        CompanyAdmins = companyAdmins;
     }
 
 }

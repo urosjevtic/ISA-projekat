@@ -31,13 +31,13 @@
         <tr>
           <th>No.</th>
           <th>Name</th>
-          <th></th>
+          <th *ngIf="isUserCompanyAdmin()"></th>
         </tr>
 
         <tr *ngFor="let medicalEquipment of filteredMedicalEquipments(); let i = index">
           <td>{{ i + 1 }}.</td>
           <td>{{medicalEquipment.name}}</td>
-          <td>
+          <td *ngIf="isUserCompanyAdmin()">
             <button class="remove-btn" (click)="deleteMedicalEquipment(medicalEquipment.id)">Remove</button>
           </td>
         </tr>

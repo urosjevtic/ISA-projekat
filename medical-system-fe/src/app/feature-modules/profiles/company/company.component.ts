@@ -4,7 +4,6 @@ import { CompanyProfile } from '../model/company.model';
 import { LayoutService } from '../../layout/layout.service';
 import { ActivatedRoute } from '@angular/router';
 import { MedicalEquipment, Reservation, ReservationItem } from '../model/medical-equipment.model';
-import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Appointment } from '../model/appointment.model';

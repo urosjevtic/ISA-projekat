@@ -15,8 +15,14 @@ public class CompanyProfile {
     private double AverageRating;
     private String Description;
     private String CompanyLogo;
+    @OneToMany
+    private List<User> CompanyAdmins;
 
     public CompanyProfile() {}
+
+    public CompanyProfile(List<User> companyAdmins) {
+        CompanyAdmins = companyAdmins;
+    }
 
     public CompanyProfile(long id, String name, String address, double averageRating, String description, String companyLogo) {
         Id = id;
@@ -73,6 +79,14 @@ public class CompanyProfile {
 
     public void setCompanyLogo(String companyLogo) {
         CompanyLogo = companyLogo;
+    }
+
+    public List<User> getCompanyAdmins() {
+        return CompanyAdmins;
+    }
+
+    public void setCompanyAdmins(List<User> companyAdmins) {
+        CompanyAdmins = companyAdmins;
     }
 
 }

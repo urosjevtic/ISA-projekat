@@ -23,7 +23,6 @@
     padding: 50px;
     padding-top: 90px;
     flex: 1;
-
   }
   
   h2 {
@@ -86,7 +85,7 @@
     padding: 50px;
     border-radius: 20px;
     margin-bottom: 40px;
-    margin-top: 200px;
+    margin-top: 250px;
  }
   
   label {
@@ -177,6 +176,7 @@
   .equipment-tables{
     float: right;
     margin-top: -350px;
+    font-size: 12px;
   }
 
   .medical-equipment-table .remove-btn{
@@ -187,22 +187,18 @@
   .medical-equipment-table input{
     width: 50%;
     margin-right: 50px;
-    margin-top: -300px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
+
   .medical-equipment-table {
     float: right;
-
-    max-height: 300px; /* Set the desired height */
-    overflow-y: auto;
   }
 
   table {
     width: 100%;
     border-collapse: collapse;
-    
   }
   
   th, td {

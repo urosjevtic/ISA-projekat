@@ -24,39 +24,31 @@
       <input type="date" id="reservationDate" [(ngModel)]="reservationDate" name="reservationDate" required>
       <button type="submit">Done</button>
     </form>
+
     <div class="equipment-tables">
       <div class="medical-equipment-table">
+        <input type="text" [(ngModel)]="searchByName" placeholder="Search:" />
         <table cellspacing="0">
           <tr>
             <th>No.</th>
             <th>Name</th>
             <th></th>
+            <th *ngIf="isUserCompanyAdmin()"></th>
           </tr>
-  
-    <div class="medical-equipment-table">
-      <input type="text" [(ngModel)]="searchByName" placeholder="Search:" />
-      <table cellspacing="0">
-        <tr>
-          <th>No.</th>
-          <th>Name</th>
-          <th *ngIf="isUserCompanyAdmin()"></th>
-        </tr>
 
-        <tr *ngFor="let medicalEquipment of filteredMedicalEquipments(); let i = index">
-          <td>{{ i + 1 }}.</td>
-          <td>{{medicalEquipment.name}}</td>
-          <td *ngIf="isUserCompanyAdmin()">
-            <button class="remove-btn" (click)="deleteMedicalEquipment(medicalEquipment.id)">Remove</button>
-          </td>
-        </tr>
-      </table>
-          <tr *ngFor="let medicalEquipment of medicalEquipments; let i = index">
+          <tr *ngFor="let medicalEquipment of filteredMedicalEquipments(); let i = index">
             <td>{{ i + 1 }}.</td>
-            <td>{{medicalEquipment.name}}</td>
-            <td><button (click)="addEquipmentToOrder(medicalEquipment)">Add</button></td>
+            <td>{{medicalEquipment.name}}</td>  
+            <td>
+              <button (click)="addEquipmentToOrder(medicalEquipment)">Add</button>
+            </td>
+            <td *ngIf="isUserCompanyAdmin()">
+              <button class="remove-btn" (click)="deleteMedicalEquipment(medicalEquipment.id)">Remove</button>
+            </td>
           </tr>
         </table>
       </div>
+
       <h1>Your order</h1>
       <div *ngIf="reservation && reservation.reservationItems.length > 0" class="medical-equipment-table">
         <table cellspacing="0">

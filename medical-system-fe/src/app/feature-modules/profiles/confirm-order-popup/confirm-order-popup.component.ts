@@ -6,6 +6,7 @@ import { Appointment } from '../model/appointment.model';
 import {MatSelectModule} from '@angular/material/select';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-confirm-order-popup',
@@ -13,10 +14,14 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
   styleUrls: ['./confirm-order-popup.component.scss']
 })
 export class ConfirmOrderPopupComponent {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private service: ProfilesService,
+  company: number = 0;
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, 
+  private service: ProfilesService, 
   public dialogRef: MatDialogRef<ConfirmOrderPopupComponent>,
-  private authService: AuthService) {
-    this.reservation = data || { id: 0, order: [] };
+  private authService: AuthService,
+  private route: ActivatedRoute) { 
+    this.reservation = data.reservation || { id: 0, order: [] };
+    this.company = data.company;
     console.log(this.reservation);
   }
   reservation: Reservation ={
@@ -45,7 +50,7 @@ export class ConfirmOrderPopupComponent {
   selectedCustom: any;
 
   ngOnInit(): void{
-    this.service.getAllFreeAppointmentByCompanyId(-2).subscribe({
+    this.service.getAllFreeAppointmentByCompanyId(this.data.company.id).subscribe({
       next: (response) =>{
         this.appointments=response;
         console.log(this.appointments);

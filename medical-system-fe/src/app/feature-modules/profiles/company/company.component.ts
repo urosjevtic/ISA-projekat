@@ -44,16 +44,19 @@ export class CompanyComponent implements OnInit {
     adminName: '',
     adminLastName: ''
   };
+  companyId: number = 0;
   
   constructor(private route: ActivatedRoute, 
     private profilesService: ProfilesService, 
     private authService: AuthService,
     private dialog: MatDialog,
+    
     ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const companyId = params['id'];
+      this.companyId = companyId;
       this.getCompanyById(companyId);
       
       this.profilesService.getAllEquipmentByCompanyId(companyId)
@@ -132,8 +135,10 @@ export class CompanyComponent implements OnInit {
 
   finalizeOrder(){
     const dialogRef = this.dialog.open(ConfirmOrderPopupComponent, {
-      data: this.reservation,
-    })
+      data: {
+        reservation: this.reservation,
+        company: this.company
+    }})
   }
 
   saveAppointment(): void {
@@ -153,6 +158,10 @@ export class CompanyComponent implements OnInit {
     }
   }
 
+  isUser(): boolean {
+    const user = this.authService.user$.value;
+    return user.role === 'ROLL_USER';
+  }
   areAllFieldsFilled(): boolean {
     return (
       !!this.appointment.adminName &&

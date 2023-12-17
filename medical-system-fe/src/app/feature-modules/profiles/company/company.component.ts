@@ -4,7 +4,6 @@ import { CompanyProfile } from '../model/company.model';
 import { LayoutService } from '../../layout/layout.service';
 import { ActivatedRoute } from '@angular/router';
 import { MedicalEquipment, Reservation, ReservationItem } from '../model/medical-equipment.model';
-import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Appointment } from '../model/appointment.model';
@@ -19,6 +18,7 @@ export class CompanyComponent implements OnInit {
  
   company: CompanyProfile | undefined;
   medicalEquipments: MedicalEquipment[] = [];
+  searchByName: string = '';
   appointmentList: Appointment[] = [];
   reservationDate: string = '';
   isEditFormVisible = false;
@@ -40,7 +40,7 @@ export class CompanyComponent implements OnInit {
     companyId: 0,
     adminId: 0,
     date: new Date(),
-    duration: 0,
+    duration: 1,
     adminName: '',
     adminLastName: ''
   };
@@ -152,13 +152,38 @@ export class CompanyComponent implements OnInit {
         adminLastName: this.appointment.adminLastName,  
       };
       this.profilesService.saveAppointment(appointment).subscribe(savedAppointment => {
-        console.log('Termin uspešno sačuvan:', savedAppointment);
+        alert('Termin uspešno sačuvan:');
       });
+      
     }
   }
 
   isUser(): boolean {
     const user = this.authService.user$.value;
     return user.role === 'ROLL_USER';
+  }
+  areAllFieldsFilled(): boolean {
+    return (
+      !!this.appointment.adminName &&
+      !!this.appointment.adminLastName &&
+      !!this.appointment.date
+    );
+  }
+
+  filteredMedicalEquipments(): MedicalEquipment[] {
+    return this.medicalEquipments.filter(
+      equipment => equipment.name.toLowerCase().includes(this.searchByName.toLowerCase())
+    );
+  }
+
+  deleteMedicalEquipment(id: number): void {
+    this.profilesService.deleteEquipmentById(id).subscribe(
+      () => {
+          alert('Uspešno uklonjeno!');
+      },
+      (error) => {
+        console.error('Failed to delete medical equipment:', error);
+      }
+    );
   }
 }

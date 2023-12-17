@@ -1,5 +1,6 @@
 package com.e2.medicalsystem.controller;
 
+import com.e2.medicalsystem.dto.AppointmentDto;
 import com.e2.medicalsystem.dto.ReservationDto;
 import com.e2.medicalsystem.model.*;
 import com.e2.medicalsystem.service.*;
@@ -47,12 +48,13 @@ public class ReservationController {
         List<Reservation> allReservations = reservationService.getAllReservationsByReserverId(userId);
         List<ReservationDto> allReservationsDto = new ArrayList<>();
         for (var res:
-             allReservations) {
+                allReservations) {
             allReservationsDto.add(new ReservationDto(res));
         }
 
         return new ResponseEntity<>(allReservationsDto, HttpStatus.OK);
     }
+
 
 
     @GetMapping("/generate-and-send-email")
@@ -76,15 +78,15 @@ public class ReservationController {
         return ResponseEntity.ok("Email sent successfully!");
     }
 
-    private String createQrContent(Reservation reservation){
+    private String createQrContent(Reservation reservation) {
         StringBuilder contentBuilder = new StringBuilder();
         contentBuilder.append("Reservation number: ");
         contentBuilder.append((reservation.getId()));
         contentBuilder.append(", pickup date: ");
         contentBuilder.append(reservation.getAppointment().getDate());
         contentBuilder.append(": \n");
-        for (var reservationItem:
-             reservation.getReservationItems()) {
+        for (var reservationItem :
+                reservation.getReservationItems()) {
             contentBuilder.append("*");
             contentBuilder.append(reservationItem.getEquipment().getName());
             contentBuilder.append("(");
@@ -94,5 +96,39 @@ public class ReservationController {
         contentBuilder.append(("\n\n Thank you for ordering"));
 
         return contentBuilder.toString();
+    }
+
+    @PostMapping(value = "/saveCustomReservation")
+    public ResponseEntity<ReservationDto> saveCustomReservation(@RequestBody ReservationDto reservationDto){
+
+        AppointmentDto appointmentDto = reservationDto.getAppointment();
+
+
+        Appointment appointment = new Appointment(appointmentDto.getId(),
+                appointmentDto.getCompanyId(),
+                appointmentDto.getAdminId(),
+                appointmentDto.getDate(),
+                appointmentDto.getDuration(),
+                appointmentDto.getAdminName(),
+                appointmentDto.getAdminLastName(),
+                false
+        );
+
+
+        appointment = appointmentService.saveAppointment(appointment);
+
+
+        appointmentDto.setId(appointment.getId());
+
+        reservationDto.setAppointment(appointmentDto);
+
+        Reservation reservation = reservationService.saveReservation(reservationDto);
+
+        appointment.setTaken(true);
+        appointmentService.saveAppointment(appointment);
+
+        reservationDto.setId(reservation.getId());
+        return new ResponseEntity<>(reservationDto, HttpStatus.OK);
+
     }
 }

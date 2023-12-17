@@ -8,7 +8,8 @@ public class MedicalEquipmentDto {
     private String description;
     private long companyId;
 
-    public MedicalEquipmentDto(int id, String name, String description, long companyId) {
+    public MedicalEquipmentDto(){}
+    public MedicalEquipmentDto(Integer id, String name, String description, long companyId) {
         this.id = id;
         this.name = name;
         this.description = description;

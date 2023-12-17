@@ -1,5 +1,6 @@
 package com.e2.medicalsystem.model;
 
+import com.e2.medicalsystem.dto.AppointmentDto;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -16,10 +17,11 @@ public class Appointment {
     private int duration;
     private String adminName;
     private String adminLastName;
+    private boolean taken;
 
     public Appointment() {}
 
-    public Appointment(Long id, Long companyId, Long adminId, Date date, int duration, String adminName, String adminLastName) {
+    public Appointment(Long id, Long companyId, Long adminId, Date date, int duration, String adminName, String adminLastName, boolean taken) {
         this.id = id;
         this.companyId = companyId;
         this.adminId = adminId;
@@ -27,6 +29,25 @@ public class Appointment {
         this.duration = duration;
         this.adminName = adminName;
         this.adminLastName = adminLastName;
+        this.taken = taken;
+    }
+
+    public Appointment(AppointmentDto appointmentDto){
+        this.id = appointmentDto.getId();
+        this.companyId = appointmentDto.getCompanyId();
+        this.adminId = appointmentDto.getAdminId();
+        this.date = appointmentDto.getDate();
+        this.duration = appointmentDto.getDuration();
+        this.adminName = appointmentDto.getAdminName();
+        this.adminName = appointmentDto.getAdminLastName();
+    }
+
+    public boolean isTaken() {
+        return taken;
+    }
+
+    public void setTaken(boolean taken) {
+        this.taken = taken;
     }
 
     public Long getId() {

@@ -1,7 +1,6 @@
 package com.e2.medicalsystem.dto;
 
 import com.e2.medicalsystem.model.Appointment;
-import com.e2.medicalsystem.model.Reservation;
 
 import java.util.Date;
 
@@ -13,8 +12,10 @@ public class AppointmentDto {
     private int duration;
     private String adminName;
     private String adminLastName;
+    private boolean taken;
 
-    public AppointmentDto(Long id, Long companyId, Long adminId, Date date, int duration, String adminName, String adminLastName) {
+    public AppointmentDto(){}
+    public AppointmentDto(Long id, Long companyId, Long adminId, Date date, int duration, String adminName, String adminLastName, boolean taken) {
         this.id = id;
         this.companyId = companyId;
         this.adminId = adminId;
@@ -22,11 +23,12 @@ public class AppointmentDto {
         this.duration = duration;
         this.adminName = adminName;
         this.adminLastName = adminLastName;
+        this.taken = taken;
     }
 
     public AppointmentDto(Appointment appointment)
     {
-        this(appointment.getId(), appointment.getCompanyId(), appointment.getAdminId(), appointment.getDate(), appointment.getDuration(), appointment.getAdminName(), appointment.getAdminLastName());
+        this(appointment.getId(), appointment.getCompanyId(), appointment.getAdminId(), appointment.getDate(), appointment.getDuration(), appointment.getAdminName(), appointment.getAdminLastName(), appointment.isTaken());
     }
 
     public Long getId() {

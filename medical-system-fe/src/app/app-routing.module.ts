@@ -7,6 +7,7 @@ import { CompanyComponent } from './feature-modules/profiles/company/company.com
 import { RegisterComponent } from './infrastructure/auth/register/register.component';
 import { LoginComponent } from './infrastructure/auth/login/login.component';
 import { AuthGuard } from './infrastructure/auth/auth.guard';
+import { UserReservationsComponent } from './feature-modules/orders/user-reservations/user-reservations.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -14,7 +15,8 @@ const routes: Routes = [
   {path: 'company/:id', component: CompanyComponent },
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]}
+  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+  {path: 'my-reservations', component: UserReservationsComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

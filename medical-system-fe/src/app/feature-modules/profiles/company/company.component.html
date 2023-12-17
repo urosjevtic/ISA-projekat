@@ -18,12 +18,20 @@
 
     <p class="address">{{ company.address }}</p>
     <p class="description">{{ company.description }}</p>
-   
-    <form class="reservation-form" (submit)="reserveEquipment()">
+
+    <form class="reservation-form">
       <label for="reservationDate">Scheduled equipment pickup:</label>
       <input type="date" id="reservationDate" [(ngModel)]="reservationDate" name="reservationDate" required>
       <button type="submit">Done</button>
     </form>
+    <div class="equipment-tables">
+      <div class="medical-equipment-table">
+        <table cellspacing="0">
+          <tr>
+            <th>No.</th>
+            <th>Name</th>
+            <th></th>
+          </tr>
   
     <div class="medical-equipment-table">
       <input type="text" [(ngModel)]="searchByName" placeholder="Search:" />
@@ -42,6 +50,28 @@
           </td>
         </tr>
       </table>
+          <tr *ngFor="let medicalEquipment of medicalEquipments; let i = index">
+            <td>{{ i + 1 }}.</td>
+            <td>{{medicalEquipment.name}}</td>
+            <td><button (click)="addEquipmentToOrder(medicalEquipment)">Add</button></td>
+          </tr>
+        </table>
+      </div>
+      <h1>Your order</h1>
+      <div *ngIf="reservation && reservation.reservationItems.length > 0" class="medical-equipment-table">
+        <table cellspacing="0">
+          <tr>
+            <th>No.</th>
+            <th>Name</th>
+          </tr>
+  
+          <tr *ngFor="let order of reservation.reservationItems; let i = index">
+            <td>{{order.count}}</td>
+            <td>{{order.equipment.name}}</td>
+          </tr>
+        </table>
+        <button (click)="finalizeOrder()">Finalize order</button>
+      </div>
     </div>
 
     <div *ngIf="isUserCompanyAdmin()" class="appointment-wrapper">

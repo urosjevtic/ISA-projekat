@@ -15,7 +15,7 @@ import { ConfirmOrderPopupComponent } from '../confirm-order-popup/confirm-order
   styleUrls: ['./company.component.scss']
 })
 export class CompanyComponent implements OnInit {
- 
+
   company: CompanyProfile | undefined;
   medicalEquipments: MedicalEquipment[] = [];
   searchByName: string = '';
@@ -45,12 +45,12 @@ export class CompanyComponent implements OnInit {
     adminLastName: ''
   };
   companyId: number = 0;
-  
-  constructor(private route: ActivatedRoute, 
-    private profilesService: ProfilesService, 
+
+  constructor(private route: ActivatedRoute,
+    private profilesService: ProfilesService,
     private authService: AuthService,
     private dialog: MatDialog,
-    
+
     ) {}
 
   ngOnInit(): void {
@@ -58,18 +58,18 @@ export class CompanyComponent implements OnInit {
       const companyId = params['id'];
       this.companyId = companyId;
       this.getCompanyById(companyId);
-      
+
       this.profilesService.getAllEquipmentByCompanyId(companyId)
       .subscribe(data => this.medicalEquipments = data);
-    });  
+    });
 
     this.route.params.subscribe(params => {
       const companyId = params['id'];
       this.getCompanyById(companyId);
-      
+
       this.profilesService.getAllAppointmentByCompanyId(companyId)
       .subscribe(data => this.appointmentList = data);
-    });  
+    });
   }
 
   isUserCompanyAdmin(): boolean {
@@ -117,16 +117,16 @@ export class CompanyComponent implements OnInit {
       equipment: equipment,
       count: 1
     };
-  
+
     if (this.reservation && Array.isArray(this.reservation.reservationItems)) {
       const existingOrder = this.reservation.reservationItems.find(order => order.equipment === equipment);
-  
+
       if (existingOrder) {
         existingOrder.count++;
       } else {
         this.reservation.reservationItems.push(reservationItem);
       }
-  
+
       console.log(this.reservation.reservationItems);
     } else {
       console.error("Invalid userOrder or order is not an array.");
@@ -135,6 +135,7 @@ export class CompanyComponent implements OnInit {
 
   finalizeOrder(){
     const dialogRef = this.dialog.open(ConfirmOrderPopupComponent, {
+      height: '70%',
       data: {
         reservation: this.reservation,
         company: this.company
@@ -149,12 +150,12 @@ export class CompanyComponent implements OnInit {
         duration: this.appointment.duration,
         date: this.appointment.date,
         adminName: this.appointment.adminName,
-        adminLastName: this.appointment.adminLastName,  
+        adminLastName: this.appointment.adminLastName,
       };
       this.profilesService.saveAppointment(appointment).subscribe(savedAppointment => {
         alert('Termin uspešno sačuvan:');
       });
-      
+
     }
   }
 
@@ -186,4 +187,6 @@ export class CompanyComponent implements OnInit {
       }
     );
   }
+
+
 }

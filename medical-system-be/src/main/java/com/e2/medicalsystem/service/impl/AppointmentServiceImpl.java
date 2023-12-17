@@ -2,6 +2,8 @@ package com.e2.medicalsystem.service.impl;
 
 import com.e2.medicalsystem.model.Appointment;
 import com.e2.medicalsystem.model.CompanyProfile;
+import com.e2.medicalsystem.model.ERole;
+import com.e2.medicalsystem.model.User;
 import com.e2.medicalsystem.repository.AppointmentRepository;
 import com.e2.medicalsystem.repository.CompanyProfileRepository;
 import com.e2.medicalsystem.repository.UsersRepository;
@@ -55,7 +57,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                 stream().filter(x -> forDate.isEqual( x.getDate().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate())).toList();
 
         CompanyProfile company = companyProfileRepository.findById(companyId).orElse(new CompanyProfile());
-
+        List<User> companyAdmins = company.getCompanyAdmins();
 
         LocalTime wrkHrFrom;
         wrkHrFrom = company.getWrkHrFrom().toLocalTime();
@@ -71,23 +73,36 @@ public class AppointmentServiceImpl implements AppointmentService {
 
             conflict = false;
 
+            List<User> freeAdmins = new ArrayList<>(companyAdmins);
+
             for (Appointment app:
-                 appointments) {
+                 appointments)
+            {
                 if(isTimeConflicted(currentTime,
                                     currentTime.plusMinutes(15),
                                     convertToLocalTime(app.getDate()),
                                     convertToLocalTime(app.getDate()).plusMinutes(app.getDuration())) )
                 {
-                    if(!app.isTaken()) freeAppointments.add(app);
-                    conflict = true;
+                    if(!app.isTaken())
+                    {
+                        freeAppointments.add(app);
+                    }
+                    freeAdmins = freeAdmins.stream().filter(x -> x.getId() != app.getAdminId().longValue()).toList();
                 }
+
+
             }
+
+
+            if(freeAdmins.isEmpty()) conflict = true;
 
             currentTime = currentTime.plusMinutes(15);
             if(conflict) continue;
 
             LocalDateTime date = forDate.atTime(currentTime.minusMinutes(15));
-            Appointment freeApp = new Appointment(0L,companyId,0L,convertToDate(date),15,"NONE","NONE",false);
+            User companyAdmin = freeAdmins.stream().findFirst().orElse(new User());
+
+            Appointment freeApp = new Appointment(0L,companyId,companyAdmin.getId().longValue(),convertToDate(date),15,companyAdmin.getName(), companyAdmin.getSurname(), false);
             freeAppointments.add(freeApp);
 
         }

@@ -45,6 +45,6 @@
   </form>
 
 
-  <button (click)="reserveEquipment()">Finish</button>
+  <button (click)="reserveEquipment()" [disabled]="(selectedAppointment === 'CUSTOM' && selectedCustom === undefined) || selectedAppointment === undefined ">Finish</button>
   <button (click)="close()" style="margin-top: 10px;">Cancel</button>
 </div>

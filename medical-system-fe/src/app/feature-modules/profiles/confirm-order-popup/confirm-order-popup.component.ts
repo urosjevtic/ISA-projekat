@@ -15,11 +15,11 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ConfirmOrderPopupComponent {
   company: number = 0;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, 
-  private service: ProfilesService, 
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+  private service: ProfilesService,
   public dialogRef: MatDialogRef<ConfirmOrderPopupComponent>,
   private authService: AuthService,
-  private route: ActivatedRoute) { 
+  private route: ActivatedRoute) {
     this.reservation = data.reservation || { id: 0, order: [] };
     this.company = data.company;
     console.log(this.reservation);
@@ -108,7 +108,8 @@ export class ConfirmOrderPopupComponent {
 
   choseDate(event:any){
     const date = event.value;
-    this.service.getFreeCustomAppointments(-2,date).subscribe((result)=>
+    console.log(this.data.company.id)
+    this.service.getFreeCustomAppointments(this.data.company.id,date).subscribe((result)=>
     {
       this.customAppointments = result;
       console.log(result);

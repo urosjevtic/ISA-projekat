@@ -1,5 +1,6 @@
 package com.e2.medicalsystem.model;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
 
 import java.sql.Time;
 import java.util.List;
@@ -16,7 +17,7 @@ public class CompanyProfile {
     private double AverageRating;
     private String Description;
     private String CompanyLogo;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<User> CompanyAdmins;
 
     private Time WrkHrFrom;

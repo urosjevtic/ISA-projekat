@@ -60,14 +60,10 @@ public class ReservationController {
                                                              @RequestParam long reservationId) throws WriterException, IOException
     {
         Reservation reservation = reservationService.getReservationById(reservationId);
-        StringBuilder contentBuilder = new StringBuilder();
-        List<ReservationItem> equipment = reservation.getReservationItems();
 
         String content = createQrContent(reservation);
-        // Generate QR Code bytes
         byte[] qrCodeBytes = qrCodeService.generateQrCode(content, 200, 200);
 
-        // Send email with QR Code
         User user = usersService.getUserById(senderId);
         String email = user.getEmail();
 

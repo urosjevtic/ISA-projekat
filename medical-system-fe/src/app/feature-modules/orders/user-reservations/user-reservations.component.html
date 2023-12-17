@@ -1,0 +1,25 @@
+<div class="filter-container"> 
+  <div class="table-companies">
+      <div class="header">
+          My Reservations
+      </div>
+  
+      <table cellspacing="0">
+         <tr>
+            <th>Date</th>
+            <th>Equipment</th>
+            <th>Duration</th>
+         </tr>
+  
+         <tr *ngFor="let reservation of reservations">
+            <td>{{ reservation.appointment.date | date:'dd.MM.yyyy' }}</td>
+            <td>
+               <span *ngFor="let reservationItem of reservation.reservationItems; let last = last">
+                 {{reservationItem.equipment.name}}({{reservationItem.count}}){{!last ? ', ' : ''}}
+               </span>
+             </td>
+            <td>{{reservation.appointment.duration}} min</td>
+         </tr>
+      </table>
+  </div>
+  

@@ -1,0 +1,29 @@
+<div class="cover">
+    <h1>Finalize order</h1>
+    <div class="medical-equipment-table">
+      <table cellspasing="0">
+        <tr>
+          <th>Name</th>
+          <th>Count</th>
+        </tr>
+        <tr *ngFor="let order of reservation.reservationItems">
+          <td>{{order.equipment.name}}</td>
+          <td>{{order.count}}</td>
+        </tr>
+      </table>
+    </div>
+    <form [formGroup]="reservationForm">
+      <mat-form-field>
+        <mat-label>Choose appointment</mat-label>
+        <mat-select [(ngModel)]="selectedAppointment" formControlName="appointment">
+          <mat-option *ngFor="let appointment of appointments" [value]="appointment">
+            Date: {{ appointment.date | date:'dd.MM.yyyy' }}, Duration: {{ appointment.duration }} min
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+
+    
+    <button (click)="reserveEquipment()">Finish</button>
+    <button (click)="close()" style="margin-top: 10px;">Cancel</button>
+</div>

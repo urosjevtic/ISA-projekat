@@ -48,6 +48,7 @@ public class ReservationServiceImpl implements ReservationService {
         }
         appointment.setTaken(true);
         appointmentRepository.save(appointment);
+
         reservation.setAppointment(appointment);
         List<ReservationItem> reservationItems = new ArrayList<>();
         for (var item:
@@ -69,6 +70,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    @Transactional
     public void deleteReservation(Long id) {
         Reservation reservation = reservationRepository.getById(id);
         reservationRepository.delete(reservation);

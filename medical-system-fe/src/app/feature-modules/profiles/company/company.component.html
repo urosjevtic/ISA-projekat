@@ -38,10 +38,8 @@
 
           <tr *ngFor="let medicalEquipment of filteredMedicalEquipments(); let i = index">
             <td>{{ i + 1 }}.</td>
-            <td>{{medicalEquipment.name}}</td>  
-            <td>
-              <button (click)="addEquipmentToOrder(medicalEquipment)">Add</button>
-            </td>
+            <td>{{medicalEquipment.name}}</td>
+            <td *ngIf="isUser()"><button (click)="addEquipmentToOrder(medicalEquipment)">Add</button></td>
             <td *ngIf="isUserCompanyAdmin()">
               <button class="remove-btn" (click)="deleteMedicalEquipment(medicalEquipment.id)">Remove</button>
             </td>

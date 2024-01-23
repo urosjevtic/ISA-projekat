@@ -1,6 +1,7 @@
 package com.e2.medicalsystem.controller;
 
 import com.e2.medicalsystem.dto.AppointmentDto;
+import com.e2.medicalsystem.dto.LatLng;
 import com.e2.medicalsystem.dto.ReservationDto;
 import com.e2.medicalsystem.model.*;
 import com.e2.medicalsystem.service.*;
@@ -8,11 +9,16 @@ import com.google.zxing.WriterException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.user.SimpUser;
+import org.springframework.messaging.simp.user.SimpUserRegistry;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -23,15 +29,27 @@ public class ReservationController {
     private QrCodeService qrCodeService;
     private EmailSenderService emailSenderService;
     private UsersService usersService;
+
+    private SimulatorService simulatorService;
+
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
+
+    @Autowired
+    private  SimpUserRegistry simpUserRegistry;
+
+
+
     @Autowired
     public ReservationController(ReservationService reservationService, AppointmentService appointmentService,
-                                 QrCodeService qrCodeService, EmailSenderService emailSenderService, UsersService usersService)
+                                 QrCodeService qrCodeService, EmailSenderService emailSenderService, UsersService usersService, SimulatorService simulatorService)
     {
         this.reservationService = reservationService;
         this.appointmentService = appointmentService;
         this.qrCodeService = qrCodeService;
         this.emailSenderService = emailSenderService;
         this.usersService = usersService;
+        this.simulatorService = simulatorService;
     }
 
 
@@ -126,5 +144,22 @@ public class ReservationController {
         reservationDto.setId(reservation.getId());
         return new ResponseEntity<>(reservationDto, HttpStatus.OK);
 
+    }
+
+    @PostMapping(value = "/startSimulator")
+    public ResponseEntity<String> StartSimulator(@RequestBody List<LatLng> coordinates)
+    {
+        simulatorService.StartSimulator(coordinates);
+        return ResponseEntity.ok("Simulator started successfully!");
+    }
+
+    @GetMapping(value="/sendMsg")
+    public ResponseEntity<String> SendMessage()
+    {
+        simpMessagingTemplate.convertAndSendToUser("user1","/queue/simulator","cum");
+
+        Collection<SimpUser> users = simpUserRegistry.getUsers();
+
+        return ResponseEntity.ok("Message sent!");
     }
 }

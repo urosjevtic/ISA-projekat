@@ -7,11 +7,13 @@ import { ProfilesModule } from './feature-modules/profiles/profiles.module';
 import { OrdersModule } from './feature-modules/orders/orders.module';
 import {MatNativeDateModule} from '@angular/material/core';
 import {DatePipe} from "@angular/common";
+import { MapComponent } from './infrastructure/map/map.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    MapComponent,
   ],
   imports: [
     AppRoutingModule,

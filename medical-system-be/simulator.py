@@ -5,6 +5,9 @@ import time
 
 def main():
 
+    forUser = sys.argv[1]
+    refreshRate = sys.argv[2]
+
     json_data = sys.stdin.readline()
 
     data = json.loads(json_data)
@@ -17,11 +20,10 @@ def main():
 
     topic = 'simulator'
 
-    for ind,tmp in enumerate(data):
-        if(ind%10==0):          
+    for ind,tmp in enumerate(data):         
             producer.produce(topic, key=None, value=json.dumps(tmp))
             producer.flush()
-            time.sleep(5)
+            time.sleep(float(refreshRate))
 
     sys.exit(0)
 

@@ -24,17 +24,15 @@ public class SimulatorServiceImpl implements SimulatorService {
     public SimulatorServiceImpl() {
     }
 
-    public void StartSimulator(List<LatLng> coordinates)
+    public void StartSimulator(List<LatLng> coordinates,String forUser,String refreshRate)
     {
         StartKafka();
 
         try {
 
-
-
             registry.getListenerContainer("simulatorListener").start();
 
-            ProcessBuilder processBuilder = new ProcessBuilder("python", "simulator.py");
+            ProcessBuilder processBuilder = new ProcessBuilder("python", "simulator.py",forUser,refreshRate);
 
             Process process = processBuilder.start();
 

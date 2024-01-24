@@ -30,26 +30,21 @@ public class ReservationController {
     private EmailSenderService emailSenderService;
     private UsersService usersService;
 
-    private SimulatorService simulatorService;
 
-    @Autowired
-    private SimpMessagingTemplate simpMessagingTemplate;
 
-    @Autowired
-    private  SimpUserRegistry simpUserRegistry;
 
 
 
     @Autowired
     public ReservationController(ReservationService reservationService, AppointmentService appointmentService,
-                                 QrCodeService qrCodeService, EmailSenderService emailSenderService, UsersService usersService, SimulatorService simulatorService)
+                                 QrCodeService qrCodeService, EmailSenderService emailSenderService, UsersService usersService)
     {
         this.reservationService = reservationService;
         this.appointmentService = appointmentService;
         this.qrCodeService = qrCodeService;
         this.emailSenderService = emailSenderService;
         this.usersService = usersService;
-        this.simulatorService = simulatorService;
+
     }
 
 
@@ -144,22 +139,5 @@ public class ReservationController {
         reservationDto.setId(reservation.getId());
         return new ResponseEntity<>(reservationDto, HttpStatus.OK);
 
-    }
-
-    @PostMapping(value = "/startSimulator")
-    public ResponseEntity<String> StartSimulator(@RequestBody List<LatLng> coordinates)
-    {
-        simulatorService.StartSimulator(coordinates);
-        return ResponseEntity.ok("Simulator started successfully!");
-    }
-
-    @GetMapping(value="/sendMsg")
-    public ResponseEntity<String> SendMessage()
-    {
-        simpMessagingTemplate.convertAndSendToUser("user1","/queue/simulator","cum");
-
-        Collection<SimpUser> users = simpUserRegistry.getUsers();
-
-        return ResponseEntity.ok("Message sent!");
     }
 }

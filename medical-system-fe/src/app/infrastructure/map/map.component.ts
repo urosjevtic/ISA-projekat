@@ -3,6 +3,7 @@ import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import {SimulatorService} from "./simulator.service";
 import {Coordinates} from "./model/coordinates.model";
+import {AuthService} from "../auth/auth.service";
 
 @Component({
   selector: 'app-map',
@@ -15,7 +16,8 @@ export class MapComponent implements OnInit {
   private coordinates: any;
   private truck!: L.Marker;
 
-  constructor(private simulator:SimulatorService) {
+  constructor(private simulator:SimulatorService,
+              private authService:AuthService) {
   }
   ngOnInit() {
     this.initMap();
@@ -78,6 +80,11 @@ export class MapComponent implements OnInit {
     this.simulator.getCoordinates().subscribe((coordinates:Coordinates) =>{
       if(coordinates.lat != 0) this.truck.setLatLng([coordinates.lat,coordinates.lng]);
     });
+  }
+
+  startSimulator()
+  {
+    this.simulator.startSimulator(this.coordinates,this.authService.user$.getValue().username,"0.5").subscribe((message)=> console.log(message));
   }
 
 

@@ -5,6 +5,8 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {AuthService} from "../auth/auth.service";
 import {TokenStorage} from "../auth/jwt/token.service";
 import {Coordinates} from "./model/coordinates.model";
+import {AuthenticationResponse} from "../auth/model/authentication-response.model";
+import {HttpClient} from "@angular/common/http";
 
 
 @Injectable({
@@ -13,11 +15,14 @@ import {Coordinates} from "./model/coordinates.model";
 export class SimulatorService{
   private stompClient: any;
   private sessionId: any;
+  private baseUrl = 'http://localhost:8080/api/simulator/';
+
   private coordinates : BehaviorSubject<Coordinates> = new BehaviorSubject<Coordinates>(new class implements Coordinates{
     lat: number = 0;
     lng: number = 0;
   });
-  constructor(private tokenStorage:TokenStorage) {
+  constructor(private tokenStorage:TokenStorage,
+              private http: HttpClient) {
     this.initWSConnection();
   }
 
@@ -34,7 +39,7 @@ export class SimulatorService{
 
     this.stompClient.connect(headers, (frame: any) => {
       console.log('WebSocket connection successful:', frame);
-      this.stompClient.subscribe('/user/queue/message', (message:any) => {
+      this.stompClient.subscribe('/user/queue/simulator', (message:any) => {
         let newCoordinates : Coordinates = JSON.parse(message.body);
         this.coordinates.next(newCoordinates);
       })
@@ -48,6 +53,11 @@ export class SimulatorService{
   getCoordinates()
   {
     return this.coordinates.asObservable();
+  }
+
+  startSimulator(coordinates:any,forUser:string,refreshRate:string)
+  {
+    return this.http.post<String>(this.baseUrl + `start?user=${forUser}&refreshRate=${refreshRate}`, coordinates);
   }
 
 }

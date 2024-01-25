@@ -9,6 +9,7 @@
             <th>Date</th>
             <th>Equipment</th>
             <th>Duration</th>
+            <th></th>
          </tr>
   
          <tr *ngFor="let reservation of reservations">
@@ -19,6 +20,7 @@
                </span>
              </td>
             <td>{{reservation.appointment.duration}} min</td>
+            <td><button mat-flat-button color="warn" (click)="cancelReservation(reservation)">Cancel reservation</button></td>
          </tr>
       </table>
   </div>

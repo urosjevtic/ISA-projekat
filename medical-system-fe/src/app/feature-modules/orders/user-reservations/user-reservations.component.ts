@@ -13,10 +13,15 @@ export class UserReservationsComponent {
   constructor(private service: OrdersService, private authService: AuthService){}
 
   reservations: Reservation[] = [];
+  userId: any = null;
 
   ngOnInit():void{
-    const userId = this.getUserId();
-    this.service.getReservationsByUserId(userId).subscribe({
+    this.userId = this.getUserId();
+    this.getAllReservations();
+  }
+
+  private getAllReservations(){
+    this.service.getReservationsByUserId(this.userId).subscribe({
       next: (response) => {
         console.log(response);
         this.reservations = response;
@@ -24,9 +29,19 @@ export class UserReservationsComponent {
     })
   }
 
-
   
   private getUserId(): number{
     return this.authService.user$.value.id;
+  }
+
+  cancelReservation(reservation: any){
+    this.service.cancelReservation(reservation.id, this.userId).subscribe({
+      next: (response) =>{
+        console.log(response);
+        this.getAllReservations();
+      }
+    })
+
+
   }
 }

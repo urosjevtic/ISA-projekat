@@ -95,6 +95,7 @@ public class ReservationController {
     }
 
     @PostMapping(value = "/saveCustomReservation")
+    @PreAuthorize("hasAuthority('ROLL_USER')")
     public ResponseEntity<ReservationDto> saveCustomReservation(@RequestBody ReservationDto reservationDto){
 
         AppointmentDto appointmentDto = reservationDto.getAppointment();
@@ -126,5 +127,17 @@ public class ReservationController {
         reservationDto.setId(reservation.getId());
         return new ResponseEntity<>(reservationDto, HttpStatus.OK);
 
+    }
+
+    @DeleteMapping(value = "/{userId}/{reservationId}")
+    @PreAuthorize("hasAuthority('ROLL_USER')")
+    public ResponseEntity<Object> cancelReservation(@PathVariable Long userId,@PathVariable Long reservationId){
+        try{
+            ReservationDto reservation = reservationService.cancelReservation(reservationId, userId);
+            return new ResponseEntity<>(reservation, HttpStatus.OK);
+        }
+        catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }

@@ -20,7 +20,8 @@ def main():
 
     topic = 'simulator'
 
-    for ind,tmp in enumerate(data):         
+    for ind,tmp in enumerate(data):
+            tmp["user"] = forUser         
             producer.produce(topic, key=None, value=json.dumps(tmp))
             producer.flush()
             time.sleep(float(refreshRate))

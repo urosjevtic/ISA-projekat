@@ -1,4 +1,5 @@
 package com.e2.medicalsystem.model;
+import com.e2.medicalsystem.dto.LatLng;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Fetch;
 
@@ -24,9 +25,13 @@ public class CompanyProfile {
 
     private Time WrkHrTo;
 
+    private Float lat;
+
+    private Float lng;
+
     public CompanyProfile() {}
 
-    public CompanyProfile(long id, String name, String address, double averageRating, String description, String companyLogo, Time wrkHrFrom, Time wrkHrTo) {
+    public CompanyProfile(long id, String name, String address, double averageRating, String description, String companyLogo, Time wrkHrFrom, Time wrkHrTo,Float Lat,Float Lng) {
         Id = id;
         Name = name;
         Address = address;
@@ -35,11 +40,29 @@ public class CompanyProfile {
         CompanyLogo = companyLogo;
         WrkHrFrom = wrkHrFrom;
         WrkHrTo = wrkHrTo;
+        lat = Lat;
+        lng = Lng;
     }
     public CompanyProfile(List<User> companyAdmins) {
         CompanyAdmins = companyAdmins;
     }
 
+
+    public Float getLat() {
+        return lat;
+    }
+
+    public void setLat(Float lat) {
+        this.lat = lat;
+    }
+
+    public Float getLng() {
+        return lng;
+    }
+
+    public void setLng(Float lng) {
+        this.lng = lng;
+    }
 
     public Time getWrkHrFrom() {
         return WrkHrFrom;

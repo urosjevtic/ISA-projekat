@@ -15,7 +15,7 @@ import {HttpClient} from "@angular/common/http";
 export class SimulatorService{
   private stompClient: any;
   private sessionId: any;
-  private baseUrl = 'http://localhost:8080/api/simulator/';
+  private baseUrl = 'http://localhost:8080/api/';
 
   private coordinates : BehaviorSubject<Coordinates> = new BehaviorSubject<Coordinates>(new class implements Coordinates{
     lat: number = 0;
@@ -57,7 +57,17 @@ export class SimulatorService{
 
   startSimulator(coordinates:any,forUser:string,refreshRate:string)
   {
-    return this.http.post<String>(this.baseUrl + `start?user=${forUser}&refreshRate=${refreshRate}`, coordinates);
+    return this.http.post<String>(this.baseUrl + `simulator/start?user=${forUser}&refreshRate=${refreshRate}`, coordinates);
+  }
+
+  getCompanyCoords(companyId: number)
+  {
+    return this.http.get<Coordinates>(this.baseUrl + `company/coordinates/${companyId}`);
+  }
+
+  markAsReserved(reservationId: number)
+  {
+    return this.http.get<String>(this.baseUrl + `reservation/finishDelivery/${reservationId}`);
   }
 
 }

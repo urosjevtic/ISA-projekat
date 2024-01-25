@@ -18,7 +18,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'my-reservations', component: UserReservationsComponent, canActivate: [AuthGuard]},
-  {path: 'map', component: MapComponent}
+  {path: 'map/:reservationId/:companyId', component: MapComponent}
 ];
 
 @NgModule({

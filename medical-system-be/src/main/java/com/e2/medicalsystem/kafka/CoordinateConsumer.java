@@ -1,5 +1,6 @@
 package com.e2.medicalsystem.kafka;
 
+import com.e2.medicalsystem.dto.KafkaCoords;
 import com.e2.medicalsystem.dto.LatLng;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,9 @@ public class CoordinateConsumer {
 
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            LatLng latLng = objectMapper.readValue(message,LatLng.class);
-            simpMessagingTemplate.convertAndSendToUser("user1","/queue/simulator",latLng);
+            KafkaCoords coords = objectMapper.readValue(message, KafkaCoords.class);
+            LatLng latLng = new LatLng(coords.getLat(),coords.getLng());
+            simpMessagingTemplate.convertAndSendToUser(coords.getUser(),"/queue/simulator",latLng);
 
         } catch (Exception e) {
             e.printStackTrace();

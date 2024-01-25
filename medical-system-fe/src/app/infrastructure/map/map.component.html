@@ -1,2 +1,11 @@
-<div id="map" style="height: 800px;"></div>
-<button mat-raised-button color="primary" (click)="startSimulator()">Start Simulator</button>
+<div id="map"></div>
+<div class="simulator-container">
+
+<mat-form-field class="example-full-width">
+  <mat-label>Refresh rate</mat-label>
+  <input matInput type="number" step="0.1" min="0.0" [(ngModel)]="refreshRate" >
+</mat-form-field>
+<button mat-raised-button color="primary" (click)="startSimulator()" [disabled]="simulatorStarted">Start Simulator</button>
+</div>
+
+

@@ -6,6 +6,7 @@ import com.e2.medicalsystem.dto.ReservationDto;
 import com.e2.medicalsystem.model.*;
 import com.e2.medicalsystem.service.*;
 import com.google.zxing.WriterException;
+import jakarta.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -139,5 +140,12 @@ public class ReservationController {
         reservationDto.setId(reservation.getId());
         return new ResponseEntity<>(reservationDto, HttpStatus.OK);
 
+    }
+
+    @GetMapping("finishDelivery/{id}")
+    public Response finishDelivery(@PathVariable long id)
+    {
+        reservationService.finishDelivery(id);
+        return Response.ok().build();
     }
 }

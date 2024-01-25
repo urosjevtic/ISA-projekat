@@ -1,5 +1,6 @@
 package com.e2.medicalsystem.service.impl;
 
+import com.e2.medicalsystem.dto.LatLng;
 import com.e2.medicalsystem.dto.ReservationDto;
 import com.e2.medicalsystem.model.Appointment;
 import com.e2.medicalsystem.model.Reservation;
@@ -16,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -79,5 +81,17 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public List<Reservation> getAllReservationsByReserverId(Long reserverId){
         return reservationRepository.findAllByReserverId(reserverId);
+    }
+
+
+    @Override
+    @Transactional
+    public void finishDelivery(Long id)
+    {
+        Reservation reservation = reservationRepository.getReferenceById(id);
+        if(!Objects.equals(reservation.getId(), id)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Reservation does not exist!");
+        reservation.setDelivered(true);
+        reservationRepository.save(reservation);
+
     }
 }

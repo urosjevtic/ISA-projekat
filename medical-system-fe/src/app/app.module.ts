@@ -9,6 +9,8 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {DatePipe} from "@angular/common";
 import { MapComponent } from './infrastructure/map/map.component';
 import {MatButtonModule} from "@angular/material/button";
+import {MatInputModule} from "@angular/material/input";
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -16,16 +18,18 @@ import {MatButtonModule} from "@angular/material/button";
     AppComponent,
     MapComponent,
   ],
-    imports: [
-        AppRoutingModule,
-        LayoutModule,
-        HttpClientModule,
-        LayoutModule,
-        ProfilesModule,
-        OrdersModule,
-        MatNativeDateModule,
-        MatButtonModule
-    ],
+  imports: [
+    AppRoutingModule,
+    LayoutModule,
+    HttpClientModule,
+    LayoutModule,
+    ProfilesModule,
+    OrdersModule,
+    MatNativeDateModule,
+    MatButtonModule,
+    MatInputModule,
+    FormsModule
+  ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
 })

@@ -9,7 +9,7 @@ import { Reservation } from '../../profiles/model/medical-equipment.model';
   styleUrls: ['./user-reservations.component.scss']
 })
 export class UserReservationsComponent {
-  
+
   constructor(private service: OrdersService, private authService: AuthService){}
 
   reservations: Reservation[] = [];

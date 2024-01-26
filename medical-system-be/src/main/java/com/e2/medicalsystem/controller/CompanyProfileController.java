@@ -1,6 +1,7 @@
 package com.e2.medicalsystem.controller;
 
 import com.e2.medicalsystem.dto.CompanyProfileDto;
+import com.e2.medicalsystem.dto.LatLng;
 import com.e2.medicalsystem.model.CompanyProfile;
 import com.e2.medicalsystem.service.CompanyProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +53,14 @@ public class CompanyProfileController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("coordinates/{id}")
+    public ResponseEntity<LatLng> getCompanyCoordinates(@PathVariable long id)
+    {
+        CompanyProfile company = companyProfileService.getCompanyById(id);
+        LatLng coordinates = new LatLng(company.getLat(), company.getLng());
+
+        return ResponseEntity.ok(coordinates);
     }
 }

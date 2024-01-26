@@ -34,7 +34,8 @@ export class CompanyComponent implements OnInit {
       adminName: '',
       adminLastName: ''
     },
-    reserverId: 0
+    reserverId: 0,
+    delivered: false
   }
   appointment: Appointment = {
     companyId: 0,

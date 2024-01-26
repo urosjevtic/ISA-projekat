@@ -16,5 +16,6 @@ export interface Reservation{
     id?: number,
     reservationItems: ReservationItem[],
     appointment: Appointment,
-    reserverId: number
+    reserverId: number,
+    delivered: boolean
 }

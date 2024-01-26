@@ -1,18 +1,25 @@
 package com.e2.medicalsystem.controller;
 
 import com.e2.medicalsystem.dto.AppointmentDto;
+import com.e2.medicalsystem.dto.LatLng;
 import com.e2.medicalsystem.dto.ReservationDto;
 import com.e2.medicalsystem.model.*;
 import com.e2.medicalsystem.service.*;
 import com.google.zxing.WriterException;
+import jakarta.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.user.SimpUser;
+import org.springframework.messaging.simp.user.SimpUserRegistry;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -23,6 +30,12 @@ public class ReservationController {
     private QrCodeService qrCodeService;
     private EmailSenderService emailSenderService;
     private UsersService usersService;
+
+
+
+
+
+
     @Autowired
     public ReservationController(ReservationService reservationService, AppointmentService appointmentService,
                                  QrCodeService qrCodeService, EmailSenderService emailSenderService, UsersService usersService)
@@ -32,6 +45,7 @@ public class ReservationController {
         this.qrCodeService = qrCodeService;
         this.emailSenderService = emailSenderService;
         this.usersService = usersService;
+
     }
 
 
@@ -139,5 +153,10 @@ public class ReservationController {
         catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    @GetMapping("finishDelivery/{id}")
+    public Response finishDelivery(@PathVariable long id)
+    {
+        reservationService.finishDelivery(id);
+        return Response.ok().build();
     }
 }

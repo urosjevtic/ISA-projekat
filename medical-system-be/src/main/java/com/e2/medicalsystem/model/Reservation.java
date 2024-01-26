@@ -1,6 +1,7 @@
 package com.e2.medicalsystem.model;
 
 import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 
@@ -17,20 +18,31 @@ public class Reservation {
     @Column(name = "reserverId")
     private Long reserverId;
 
-
+    @Column(columnDefinition = "boolean default false")
+    private boolean isDelivered;
     public Reservation(){}
 
-    public Reservation(Long id, Appointment appointment, List<ReservationItem> reservationItems, Long reserverId) {
+    public Reservation(Long id, Appointment appointment, List<ReservationItem> reservationItems, Long reserverId,boolean isDelivered) {
         this.id = id;
         this.appointment = appointment;
         this.reservationItems = reservationItems;
         this.reserverId = reserverId;
+        this.isDelivered = isDelivered;
     }
 
-    public Reservation(Appointment appointment, List<ReservationItem> reservationItems, Long reserverId) {
+    public Reservation(Appointment appointment, List<ReservationItem> reservationItems, Long reserverId,boolean isDelivered) {
         this.appointment = appointment;
         this.reservationItems = reservationItems;
         this.reserverId = reserverId;
+        this.isDelivered = isDelivered;
+    }
+
+    public boolean isDelivered() {
+        return isDelivered;
+    }
+
+    public void setDelivered(boolean delivered) {
+        isDelivered = delivered;
     }
 
     public Long getId() {

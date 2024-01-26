@@ -1,5 +1,6 @@
 package com.e2.medicalsystem.service.impl;
 
+import com.e2.medicalsystem.dto.LatLng;
 import com.e2.medicalsystem.dto.ReservationDto;
 import com.e2.medicalsystem.model.Appointment;
 import com.e2.medicalsystem.model.Reservation;
@@ -22,6 +23,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -119,6 +121,15 @@ public class ReservationServiceImpl implements ReservationService {
         else{
             throw new IllegalArgumentException("Invalid operation: You can't do this");
         }
+
+    @Override
+    @Transactional
+    public void finishDelivery(Long id)
+    {
+        Reservation reservation = reservationRepository.getReferenceById(id);
+        if(!Objects.equals(reservation.getId(), id)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Reservation does not exist!");
+        reservation.setDelivered(true);
+        reservationRepository.save(reservation);
 
     }
 }

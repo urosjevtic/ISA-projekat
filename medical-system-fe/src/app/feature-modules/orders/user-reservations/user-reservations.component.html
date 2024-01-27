@@ -23,6 +23,7 @@
            <td>
              <button [disabled]="reservation.delivered" mat-raised-button color="primary" routerLink='/map/{{reservation.id}}/{{reservation.reservationItems[0].equipment.companyId}}'>Begin delivery</button>
            </td>
+            <td><button mat-flat-button color="warn" (click)="cancelReservation(reservation)">Cancel reservation</button></td>
          </tr>
       </table>
   </div>

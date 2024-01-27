@@ -102,25 +102,25 @@ public class ReservationServiceImpl implements ReservationService {
 
         Date currentDateAsDate = Date.from(currentDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-        if(reservation.getAppointment().getDate().after(currentDateAsDate)){
+        if (reservation.getAppointment().getDate().after(currentDateAsDate)) {
             Appointment appointment = appointmentRepository.getById(reservation.getAppointment().getId());
             reservationRepository.delete(reservation);
             appointment.setTaken(false);
             appointmentRepository.save(appointment);
             long timeDifference = reservation.getAppointment().getDate().getTime() - currentDateAsDate.getTime();
-            long timeDifferenceSeconds = timeDifference/ (60 * 60 * 1000);
-            if(timeDifferenceSeconds < 24){
-                user.setPenalPoints(user.getPenalPoints()+2);
-            }else{
-                user.setPenalPoints(user.getPenalPoints()+2);
+            long timeDifferenceSeconds = timeDifference / (60 * 60 * 1000);
+            if (timeDifferenceSeconds < 24) {
+                user.setPenalPoints(user.getPenalPoints() + 2);
+            } else {
+                user.setPenalPoints(user.getPenalPoints() + 2);
 
             }
             usersRepository.save(user);
             return reservationDto;
-        }
-        else{
+        } else {
             throw new IllegalArgumentException("Invalid operation: You can't do this");
         }
+    }
 
     @Override
     @Transactional

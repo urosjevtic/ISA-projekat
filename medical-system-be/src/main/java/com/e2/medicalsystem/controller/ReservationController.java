@@ -145,14 +145,15 @@ public class ReservationController {
 
     @DeleteMapping(value = "/{userId}/{reservationId}")
     @PreAuthorize("hasAuthority('ROLL_USER')")
-    public ResponseEntity<Object> cancelReservation(@PathVariable Long userId,@PathVariable Long reservationId){
-        try{
+    public ResponseEntity<Object> cancelReservation(@PathVariable Long userId,@PathVariable Long reservationId) {
+        try {
             ReservationDto reservation = reservationService.cancelReservation(reservationId, userId);
             return new ResponseEntity<>(reservation, HttpStatus.OK);
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
+
     @GetMapping("finishDelivery/{id}")
     public Response finishDelivery(@PathVariable long id)
     {

@@ -32,7 +32,7 @@
           <tr>
             <th>No.</th>
             <th>Name</th>
-            <th></th>
+            <th *ngIf="!isUserCompanyAdmin()"></th>
             <th *ngIf="isUserCompanyAdmin()"></th>
           </tr>
 
@@ -90,7 +90,8 @@
             <th>First Name</th>
             <th>Last Name</th>
             <th>Appointment Date/Time</th>
-            <th>Duration(h)</th>
+            <th>Duration(min)</th>
+            <th></th>
           </tr>
 
           <tr *ngFor="let appointment of appointmentList; let i = index">
@@ -99,6 +100,9 @@
             <td>{{appointment.adminLastName}}</td>
             <td>{{appointment.date | date: 'medium' }}</td>
             <td>{{appointment.duration}}</td>
+            <td *ngIf="isUserCompanyAdmin()">
+              <button class="remove-btn">Finish</button>
+            </td>
           </tr>
         </table>
       </div>

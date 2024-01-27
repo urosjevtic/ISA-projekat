@@ -12,6 +12,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 
+import { SimulatorsModule } from './feature-modules/simulators/simulators.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {FormsModule} from "@angular/forms";
     MatNativeDateModule,
     MatButtonModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    SimulatorsModule,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

@@ -9,6 +9,7 @@ import { LoginComponent } from './infrastructure/auth/login/login.component';
 import { AuthGuard } from './infrastructure/auth/auth.guard';
 import { UserReservationsComponent } from './feature-modules/orders/user-reservations/user-reservations.component';
 import {MapComponent} from "./infrastructure/map/map.component";
+import { ContractSimulatorComponent } from './feature-modules/simulators/contract-simulator/contract-simulator.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -18,7 +19,8 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'my-reservations', component: UserReservationsComponent, canActivate: [AuthGuard]},
-  {path: 'map/:reservationId/:companyId', component: MapComponent}
+  {path: 'map/:reservationId/:companyId', component: MapComponent},
+  {path: 'contract-simulator', component: ContractSimulatorComponent},
 ];
 
 @NgModule({

@@ -1,0 +1,60 @@
+<form [formGroup]="contractForm">
+    <h1>Enter contract info</h1>
+    <mat-form-field>
+        <mat-label>Enter your username</mat-label>
+        <input formControlName="username" matInput required>
+    </mat-form-field>
+    <hr>
+    <mat-form-field>
+        <mat-label>Enter start delivery date</mat-label>
+        <input formControlName="startDate" type="date" matInput  required>
+    </mat-form-field>
+    <hr>
+    <mat-form-field>
+        <mat-label>Select company</mat-label>
+        <mat-select formControlName="companyName">
+          <mat-option value="Kompanija 1">Kompanija 1</mat-option>
+          <mat-option value="Kompanija 2">Kompanija 2</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <button (click)="patchValue()">Click</button>
+    <table *ngIf="selectedCompany === 'Kompanija 1'">
+        <tr>
+            <th>Naziv opreme</th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>Lek 11</td>
+            <td><button (click)="addEquipment('lek11')">Add</button></td>
+        </tr>
+        <tr>
+            <td>Lek 12</td>
+            <td><button (click)="addEquipment('lek12')">Add</button></td>
+        </tr>
+        <tr>
+            <td>Lek 13</td>
+            <td><button (click)="addEquipment('lek13')">Add</button></td>
+        </tr>
+    </table>
+
+    <table *ngIf="selectedCompany === 'Kompanija 2'">
+        <tr>
+            <th>Naziv opreme</th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>Lek 21</td>
+            <td><button (click)="addEquipment('lek21')">Add</button></td>
+        </tr>
+        <tr>
+            <td>Lek 22</td>
+            <td><button (click)="addEquipment('lek22')">Add</button></td>
+        </tr>
+        <tr>
+            <td>Lek 23</td>
+            <td><button (click)="addEquipment('lek23')">Add</button></td>
+        </tr>
+    </table>
+
+    <button (click)="finishContract()">Finnish</button>
+</form>

@@ -7,11 +7,16 @@ import { ProfilesModule } from './feature-modules/profiles/profiles.module';
 import { OrdersModule } from './feature-modules/orders/orders.module';
 import {MatNativeDateModule} from '@angular/material/core';
 import {DatePipe} from "@angular/common";
+import { MapComponent } from './infrastructure/map/map.component';
+import {MatButtonModule} from "@angular/material/button";
+import {MatInputModule} from "@angular/material/input";
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    MapComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -20,7 +25,10 @@ import {DatePipe} from "@angular/common";
     LayoutModule,
     ProfilesModule,
     OrdersModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatButtonModule,
+    MatInputModule,
+    FormsModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

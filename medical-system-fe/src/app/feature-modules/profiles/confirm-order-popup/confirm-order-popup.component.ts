@@ -34,7 +34,8 @@ export class ConfirmOrderPopupComponent {
       adminLastName: ''
     },
     reservationItems: [],
-    reserverId: 0
+    reserverId: 0,
+    delivered: false
   }
   appointments: Appointment[] = [];
   customAppointments: Appointment[] = [];

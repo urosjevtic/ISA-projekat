@@ -4,6 +4,7 @@ import { UserReservationsComponent } from './user-reservations/user-reservations
 import { MaterialModule } from 'src/app/infrastructure/material/material.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
+import {RouterLink} from "@angular/router";
 
 
 
@@ -11,11 +12,12 @@ import { FormsModule } from '@angular/forms';
   declarations: [
     UserReservationsComponent
   ],
-  imports: [
-    CommonModule, 
-    FormsModule,
-    MatDialogModule,
-    MaterialModule,
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        MatDialogModule,
+        MaterialModule,
+        RouterLink,
+    ]
 })
 export class OrdersModule { }

@@ -13,6 +13,8 @@ public class ReservationDto {
     private List<ReservationItemDto> reservationItems;
     private Long reserverId;
 
+    private boolean isDelivered;
+
     public ReservationDto(){}
     public ReservationDto(Reservation reservation){
         this.id = reservation.getId();
@@ -23,8 +25,16 @@ public class ReservationDto {
              reservation.getReservationItems()) {
             this.reservationItems.add(new ReservationItemDto(item));
         }
+        this.isDelivered = reservation.isDelivered();
     }
 
+    public boolean isDelivered() {
+        return isDelivered;
+    }
+
+    public void setDelivered(boolean delivered) {
+        isDelivered = delivered;
+    }
 
     public Long getId() {
         return id;

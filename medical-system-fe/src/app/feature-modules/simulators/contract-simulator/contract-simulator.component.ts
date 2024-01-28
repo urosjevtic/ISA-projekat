@@ -22,11 +22,15 @@ export class ContractSimulatorComponent {
   }
 
   receivedMessage: any;
-  message: string = "Hello world";
+  allInfo: string[] = [];
+  message: any;
+  selectedEquipment: string[] = [];
+
   constructor(private simulatorService: SimulatorService) {
     this.simulatorService.getMessage().subscribe((message) => {
       this.receivedMessage = message;
       console.log(this.receivedMessage);
+      this.allInfo.push(this.generateOrderStatusMessage(this.receivedMessage));
     });
   }
 
@@ -35,7 +39,27 @@ export class ContractSimulatorComponent {
     this.message = '';
   }
 
-  selectedEquipment: string[] = [];
+  generateOrderStatusMessage(orderInfoString: string): string {
+    let orderInfo = JSON.parse(orderInfoString);
+    let statusMessage: string;
+
+    switch (orderInfo.status) {
+      case "Canceled":
+        statusMessage = "canceled";
+        break;
+      case "Delivering":
+        statusMessage = "started delivering";
+        break;
+      case "Finished":
+        statusMessage = "has finished delivering";
+        break;
+      default:
+        statusMessage = "status not recognized";
+    }
+
+    return `Order for ${orderInfo.username} from ${orderInfo.company} that contains ${orderInfo.equipment.join(', ')} has been ${statusMessage}.`;
+  }
+
   selectedCompany: string = '';
   contractForm = new FormGroup({
     username: new FormControl('', [Validators.required]),
@@ -51,7 +75,10 @@ export class ContractSimulatorComponent {
   }
 
   addEquipment(equipmentName: string){
-    this.newContract.equipment.push(equipmentName);
+    if (!this.newContract.equipment.includes(equipmentName)) {
+      this.newContract.equipment.push(equipmentName);
+      this.selectedEquipment.push(equipmentName);
+    }
   }
 
   finishContract(){

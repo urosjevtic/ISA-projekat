@@ -3,6 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { Contract } from '../model/contract.model';
 import { SimulatorService } from '../simulator.service';
+import { Observable } from 'rxjs';
+import { Stomp } from '@stomp/stompjs';
+import * as SockJS from 'sockjs-client';
 
 @Component({
   selector: 'app-contract-simulator',
@@ -10,15 +13,28 @@ import { SimulatorService } from '../simulator.service';
   styleUrls: ['./contract-simulator.component.scss']
 })
 export class ContractSimulatorComponent {
+
   newContract: Contract = {
     username: '',
     startDate: new Date(),
     companyName: '',
     equipment: []
   }
-  constructor(private simulatorService: SimulatorService) {
 
+  receivedMessage: any;
+  message: string = "Hello world";
+  constructor(private simulatorService: SimulatorService) {
+    this.simulatorService.getMessage().subscribe((message) => {
+      this.receivedMessage = message;
+      console.log(this.receivedMessage);
+    });
   }
+
+  sendMessage() {
+    this.simulatorService.sendMessage(this.message);
+    this.message = '';
+  }
+
   selectedEquipment: string[] = [];
   selectedCompany: string = '';
   contractForm = new FormGroup({

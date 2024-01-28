@@ -12,7 +12,18 @@ public class ContractServiceImpl implements ContractService {
     @Autowired
     private ContractRepository contractRepository;
 
+    @Override
     public Contract saveContract(Contract contract) {
         return contractRepository.save(contract);
+    }
+
+    @Override
+    public void updateContract(Contract contract) {
+        contractRepository.save(contract);
+    }
+
+    @Override
+    public Contract findByCompanyName(String companyName) {
+        return contractRepository.findByCompanyName(companyName);
     }
 }

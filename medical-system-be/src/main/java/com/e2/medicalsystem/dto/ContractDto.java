@@ -7,72 +7,52 @@ import java.util.Date;
 import java.util.List;
 
 public class ContractDto {
-    private long Id;
-    private String Username;
-    private Date ContractStartDate;
-    private int DeliveryTimeMinutes;
-    private String CompanyName;
-    private List<MedicalEquipment> EquipmentName;
 
-    public ContractDto(long id, String username, Date contractStartDate, int deliveryTimeMinutes, String companyName, List<MedicalEquipment> equipmentName) {
-        Id = id;
-        Username = username;
-        ContractStartDate = contractStartDate;
-        DeliveryTimeMinutes = deliveryTimeMinutes;
-        CompanyName = companyName;
-        EquipmentName = equipmentName;
-    }
+    public String username;
+    public Date startDate;
+    public String companyName;
+    public List<String> equipment;
 
-    public ContractDto(Contract contract)
-    {
-        this(contract.getId(), contract.getUsername(), contract.getContractStartDate(), contract.getDeliveryTimeMinutes(), contract.getCompanyName(), contract.getEquipmentName());
-    }
-
-    public long getId() {
-        return Id;
-    }
-
-    public void setId(long id) {
-        Id = id;
+    public ContractDto() {}
+    public ContractDto(String username, Date startDate, String companyName, List<String> equipment) {
+        this.username = username;
+        this.startDate = startDate;
+        this.companyName = companyName;
+        this.equipment = equipment;
     }
 
     public String getUsername() {
-        return Username;
+        return username;
     }
 
     public void setUsername(String username) {
-        Username = username;
+        this.username = username;
     }
 
-    public Date getContractStartDate() {
-        return ContractStartDate;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setContractStartDate(Date contractStartDate) {
-        ContractStartDate = contractStartDate;
-    }
-
-    public int getDeliveryTimeMinutes() {
-        return DeliveryTimeMinutes;
-    }
-
-    public void setDeliveryTimeMinutes(int deliveryTimeMinutes) {
-        DeliveryTimeMinutes = deliveryTimeMinutes;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
     public String getCompanyName() {
-        return CompanyName;
+        return companyName;
     }
 
     public void setCompanyName(String companyName) {
-        CompanyName = companyName;
+        this.companyName = companyName;
     }
 
-    public List<MedicalEquipment> getEquipmentName() {
-        return EquipmentName;
+    public List<String> getEquipment() {
+        return equipment;
     }
 
-    public void setEquipmentName(List<MedicalEquipment> equipmentName) {
-        EquipmentName = equipmentName;
+    public void setEquipment(List<String> equipment) {
+        this.equipment = equipment;
     }
 }
+
+
+

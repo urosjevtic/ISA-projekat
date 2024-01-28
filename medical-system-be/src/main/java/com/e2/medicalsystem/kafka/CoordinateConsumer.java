@@ -20,11 +20,9 @@ public class CoordinateConsumer {
 
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
+    @Autowired
     private ContractService contractService;
     @KafkaListener(id="simulatorListener",topics = "simulator", groupId = "simulator",
-            containerFactory = "kafkaListenerContainerFactory",autoStartup = "false")
-
-    @KafkaListener(id="contractListener",topics = "contract", groupId = "contract",
             containerFactory = "kafkaListenerContainerFactory",autoStartup = "false")
 
     public void listenSimulator(String message)
@@ -39,16 +37,49 @@ public class CoordinateConsumer {
             e.printStackTrace();
         }
     }
+    @KafkaListener(id="contractListener",topics = "contract", groupId = "contract",
+            containerFactory = "kafkaListenerContainerFactory",autoStartup = "true")
 
     public void listenContract(String message) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             ContractDto contractDto = objectMapper.readValue(message, ContractDto.class);
-
-            System.out.println("Received ContractDto: " + contractDto.toString());
+            saveOrUpdateContractInDatabase(contractDto);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void saveOrUpdateContractInDatabase(ContractDto contractDto) {
+        Contract existingContract = contractService.findByCompanyName(contractDto.getCompanyName());
+
+        if (existingContract != null) {
+            updateExistingContract(existingContract, contractDto);
+        } else {
+            createNewContract(contractDto);
+        }
+    }
+
+    private void updateExistingContract(Contract existingContract, ContractDto contractDto) {
+        existingContract.setStartDate(contractDto.getStartDate());
+        existingContract.setUsername(contractDto.getUsername());
+        existingContract.setEquipment(contractDto.getEquipment());
+
+        contractService.updateContract(existingContract);
+    }
+
+    private void createNewContract(ContractDto contractDto) {
+        Contract newContract = convertDtoToEntity(contractDto);
+        contractService.saveContract(newContract);
+    }
+
+    private Contract convertDtoToEntity(ContractDto contractDto) {
+        Contract contract = new Contract();
+        contract.setUsername(contractDto.getUsername());
+        contract.setStartDate(contractDto.getStartDate());
+        contract.setCompanyName(contractDto.getCompanyName());
+        contract.setEquipment(contractDto.getEquipment());
+        return contract;
     }
 }

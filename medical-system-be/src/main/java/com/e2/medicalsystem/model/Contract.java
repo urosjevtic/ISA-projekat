@@ -12,22 +12,21 @@ public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;
-    private String Username;
-    private Date ContractStartDate;
-    private int DeliveryTimeMinutes;
-    private String CompanyName;
-    @OneToMany(fetch = FetchType.EAGER)
-    private List<MedicalEquipment> EquipmentName;
+
+    public String username;
+    public Date startDate;
+    public String companyName;
+    @ElementCollection
+    public List<String> equipment;
 
     public Contract() {}
 
-    public Contract(long id, String username, Date contractStartDate, int deliveryTimeMinutes, String companyName, List<MedicalEquipment> equipmentName) {
+    public Contract(long id, String username, Date startDate, String companyName, List<String> equipment) {
         Id = id;
-        Username = username;
-        ContractStartDate = contractStartDate;
-        DeliveryTimeMinutes = deliveryTimeMinutes;
-        CompanyName = companyName;
-        EquipmentName = equipmentName;
+        this.username = username;
+        this.startDate = startDate;
+        this.companyName = companyName;
+        this.equipment = equipment;
     }
 
     public long getId() {
@@ -39,42 +38,34 @@ public class Contract {
     }
 
     public String getUsername() {
-        return Username;
+        return username;
     }
 
     public void setUsername(String username) {
-        Username = username;
+        this.username = username;
     }
 
-    public Date getContractStartDate() {
-        return ContractStartDate;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setContractStartDate(Date contractStartDate) {
-        ContractStartDate = contractStartDate;
-    }
-
-    public int getDeliveryTimeMinutes() {
-        return DeliveryTimeMinutes;
-    }
-
-    public void setDeliveryTimeMinutes(int deliveryTimeMinutes) {
-        DeliveryTimeMinutes = deliveryTimeMinutes;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
     public String getCompanyName() {
-        return CompanyName;
+        return companyName;
     }
 
     public void setCompanyName(String companyName) {
-        CompanyName = companyName;
+        this.companyName = companyName;
     }
 
-    public List<MedicalEquipment> getEquipmentName() {
-        return EquipmentName;
+    public List<String> getEquipment() {
+        return equipment;
     }
 
-    public void setEquipmentName(List<MedicalEquipment> equipmentName) {
-        EquipmentName = equipmentName;
+    public void setEquipment(List<String> equipment) {
+        this.equipment = equipment;
     }
 }

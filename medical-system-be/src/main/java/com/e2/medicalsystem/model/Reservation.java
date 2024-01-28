@@ -1,24 +1,48 @@
 package com.e2.medicalsystem.model;
 
 import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Value;
 
-import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = "reservations")
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long companyId;
-    private Date date;
+    @OneToOne
+    private Appointment appointment;
+    @Column(name = "reservationItems")
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<ReservationItem> reservationItems;
+    @Column(name = "reserverId")
+    private Long reserverId;
 
-    public Reservation() {}
+    @Column(columnDefinition = "boolean default false")
+    private boolean isDelivered;
+    public Reservation(){}
 
-    public Reservation(Long id, Long companyId, Date date) {
+    public Reservation(Long id, Appointment appointment, List<ReservationItem> reservationItems, Long reserverId,boolean isDelivered) {
         this.id = id;
-        this.companyId = companyId;
-        this.date = date;
+        this.appointment = appointment;
+        this.reservationItems = reservationItems;
+        this.reserverId = reserverId;
+        this.isDelivered = isDelivered;
+    }
+
+    public Reservation(Appointment appointment, List<ReservationItem> reservationItems, Long reserverId,boolean isDelivered) {
+        this.appointment = appointment;
+        this.reservationItems = reservationItems;
+        this.reserverId = reserverId;
+        this.isDelivered = isDelivered;
+    }
+
+    public boolean isDelivered() {
+        return isDelivered;
+    }
+
+    public void setDelivered(boolean delivered) {
+        isDelivered = delivered;
     }
 
     public Long getId() {
@@ -29,19 +53,27 @@ public class Reservation {
         this.id = id;
     }
 
-    public Long getCompanyId() {
-        return companyId;
+    public Appointment getAppointment() {
+        return appointment;
     }
 
-    public void setCompanyId(Long companyId) {
-        this.companyId = companyId;
+    public void setAppointment(Appointment appointment) {
+        this.appointment = appointment;
     }
 
-    public Date getDate() {
-        return date;
+    public List<ReservationItem> getReservationItems() {
+        return reservationItems;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setReservationItems(List<ReservationItem> reservationItems) {
+        this.reservationItems = reservationItems;
+    }
+
+    public Long getReserverId() {
+        return reserverId;
+    }
+
+    public void setReserverId(Long reserverId) {
+        this.reserverId = reserverId;
     }
 }

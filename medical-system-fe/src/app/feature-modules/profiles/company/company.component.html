@@ -18,29 +18,94 @@
 
     <p class="address">{{ company.address }}</p>
     <p class="description">{{ company.description }}</p>
-
-    <form *ngIf="isUserCompanyAdmin()" class="reservation-form" (submit)="reserveEquipment()">
+<!--
+    <form class="reservation-form">
       <label for="reservationDate">Scheduled equipment pickup:</label>
       <input type="date" id="reservationDate" [(ngModel)]="reservationDate" name="reservationDate" required>
       <button type="submit">Done</button>
     </form>
-  
-    <div class="medical-equipment-table">
-      <table cellspacing="0">
-        <tr>
-          <th>No.</th>
-          <th>Name</th>
-        </tr>
+-->
+    <div class="equipment-tables">
+      <div class="medical-equipment-table">
+        <input type="text" [(ngModel)]="searchByName" placeholder="Search:" />
+        <table cellspacing="0">
+          <tr>
+            <th>No.</th>
+            <th>Name</th>
+            <th></th>
+            <th *ngIf="isUserCompanyAdmin()"></th>
+          </tr>
 
-        <tr *ngFor="let medicalEquipment of medicalEquipments; let i = index">
-          <td>{{ i + 1 }}.</td>
-          <td>{{medicalEquipment.name}}</td>
-        </tr>
-      </table>
+          <tr *ngFor="let medicalEquipment of filteredMedicalEquipments(); let i = index">
+            <td>{{ i + 1 }}.</td>
+            <td>{{medicalEquipment.name}}</td>
+            <td *ngIf="isUser()"><button (click)="addEquipmentToOrder(medicalEquipment)">Add</button></td>
+            <td *ngIf="isUserCompanyAdmin()">
+              <button class="remove-btn" (click)="deleteMedicalEquipment(medicalEquipment.id)">Remove</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <h1>Your order</h1>
+      <div *ngIf="reservation && reservation.reservationItems.length > 0" class="medical-equipment-table">
+        <table cellspacing="0">
+          <tr>
+            <th>No.</th>
+            <th>Name</th>
+          </tr>
+  
+          <tr *ngFor="let order of reservation.reservationItems; let i = index">
+            <td>{{order.count}}</td>
+            <td>{{order.equipment.name}}</td>
+          </tr>
+        </table>
+        <button (click)="finalizeOrder()">Finalize order</button>
+      </div>
+    </div>
+
+    <div *ngIf="isUserCompanyAdmin()" class="appointment-wrapper">
+      <form class="appointment-form" (submit)="saveAppointment();">  
+        <h3>Let's create appointments!</h3>
+
+        <label style="color: whitesmoke;" for="appointmentFirstName">First Name:</label>
+        <input type="text" id="appointmentFirstName" [(ngModel)]="appointment.adminName" name="appointmentFirstName" required>
+
+        <label style="color: whitesmoke;" for="appointmentLastName">Last Name:</label>
+        <input type="text" id="appointmentLastName" [(ngModel)]="appointment.adminLastName" name="appointmentLastName" required>
+        
+        <label style="color: whitesmoke;" for="appointmentDateTime">Choose Date:</label>
+        <input type="datetime-local" id="appointmentDateTime" [(ngModel)]="appointment.date" name="appointmentDateTime" required>
+
+        <label style="color: whitesmoke;" for="appointemntDuration">Choose Duration:</label>
+        <input type="number" id="appointemntDuration" min="1" [(ngModel)]="appointment.duration" name="appointemntDuration" required>
+
+        <button type="submit" [disabled]="!areAllFieldsFilled()">Save</button>
+      </form>
+
+      <div class="appointment-table">
+        <table cellspacing="0">
+          <tr>
+            <th>No.</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Appointment Date/Time</th>
+            <th>Duration(h)</th>
+          </tr>
+
+          <tr *ngFor="let appointment of appointmentList; let i = index">
+            <td>{{ i + 1 }}.</td>
+            <td>{{appointment.adminName}}</td>
+            <td>{{appointment.adminLastName}}</td>
+            <td>{{appointment.date | date: 'medium' }}</td>
+            <td>{{appointment.duration}}</td>
+          </tr>
+        </table>
+      </div>
     </div>
 
     <form *ngIf="isEditFormVisible" class="edit-form" (submit)="updateProfile(); hideEditForm()">
-     
+      <h3>Please, make your change!</h3>
       <label for="editName">Name:</label>
       <input type="text" id="editName" [(ngModel)]="company.name" name="editName" required>
 

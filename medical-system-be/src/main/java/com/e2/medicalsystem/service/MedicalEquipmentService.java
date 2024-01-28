@@ -18,4 +18,8 @@ public class MedicalEquipmentService {
     public List<MedicalEquipment> getAllEquipmentByCompanyId(long companyId) {
         return medicalEquipmentRepository.findAllByCompanyId(companyId);
     }
+
+    public void deleteEquipmentById(int id) {
+        medicalEquipmentRepository.deleteById(id);
+    }
 }

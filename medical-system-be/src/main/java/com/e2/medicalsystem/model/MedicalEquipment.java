@@ -1,12 +1,13 @@
 package com.e2.medicalsystem.model;
 
+import com.e2.medicalsystem.dto.MedicalEquipmentDto;
 import jakarta.persistence.*;
 
 @Entity
 public class MedicalEquipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
     private String name;
     private String description;
     private long companyId;
@@ -16,18 +17,25 @@ public class MedicalEquipment {
 
     }
 
-    public MedicalEquipment(Integer id, String name, String description, long companyId) {
+    public MedicalEquipment(int id, String name, String description, long companyId) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.companyId = companyId;
     }
 
+    public MedicalEquipment(MedicalEquipmentDto medicalEquipmentDto){
+        this.id = medicalEquipmentDto.getId();
+        this.name = medicalEquipmentDto.getName();
+        this.description = medicalEquipmentDto.getDescription();
+        this.companyId = getCompanyId();
+    }
+
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

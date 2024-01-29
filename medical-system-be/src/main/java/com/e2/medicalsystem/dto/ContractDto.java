@@ -14,6 +14,7 @@ public class ContractDto {
     public List<String> equipment;
 
     public ContractDto() {}
+
     public ContractDto(String username, Date startDate, String companyName, List<String> equipment) {
         this.username = username;
         this.startDate = startDate;
@@ -21,6 +22,12 @@ public class ContractDto {
         this.equipment = equipment;
     }
 
+    public ContractDto(Contract contract) {
+        this.username = contract.getUsername();
+        this.startDate = contract.getStartDate();
+        this.companyName = contract.getCompanyName();
+        this.equipment = contract.getEquipment();
+    }
     public String getUsername() {
         return username;
     }

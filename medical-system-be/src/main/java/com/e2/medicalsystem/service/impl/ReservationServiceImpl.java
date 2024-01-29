@@ -132,15 +132,4 @@ public class ReservationServiceImpl implements ReservationService {
             throw new IllegalArgumentException("Invalid operation: You can't do this");
         }
     }
-
-    @Override
-    @Transactional
-    public void finishDelivery(Long id)
-    {
-        Reservation reservation = reservationRepository.getReferenceById(id);
-        if(!Objects.equals(reservation.getId(), id)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Reservation does not exist!");
-        reservation.setDelivered(true);
-        reservationRepository.save(reservation);
-
-    }
 }

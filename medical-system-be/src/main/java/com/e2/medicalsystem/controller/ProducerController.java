@@ -21,6 +21,6 @@ public class ProducerController {
     public void produce(@RequestBody ProducerDto producerDto) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonContract = objectMapper.writeValueAsString(producerDto);
-        template.send("contractResponse", jsonContract);
+        template.send("contractDelivery", jsonContract);
     }
 }

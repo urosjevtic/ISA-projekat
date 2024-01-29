@@ -52,7 +52,8 @@ public class CoordinateConsumer {
     }
 
     private void saveOrUpdateContractInDatabase(ContractDto contractDto) {
-        Contract existingContract = contractService.findByCompanyName(contractDto.getCompanyName());
+        Contract existingContract = contractService.findByUsernameAndCompanyName(
+                contractDto.getUsername(),  contractDto.getCompanyName());
 
         if (existingContract != null) {
             updateExistingContract(existingContract, contractDto);
@@ -65,6 +66,7 @@ public class CoordinateConsumer {
         existingContract.setStartDate(contractDto.getStartDate());
         existingContract.setUsername(contractDto.getUsername());
         existingContract.setEquipment(contractDto.getEquipment());
+        existingContract.setCompanyName(contractDto.getCompanyName());
 
         contractService.updateContract(existingContract);
     }

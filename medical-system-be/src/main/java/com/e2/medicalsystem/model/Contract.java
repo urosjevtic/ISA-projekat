@@ -16,7 +16,8 @@ public class Contract {
     public String username;
     public Date startDate;
     public String companyName;
-    @ElementCollection
+    //@ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     public List<String> equipment;
 
     public Contract() {}

@@ -8,6 +8,7 @@ import com.e2.medicalsystem.service.*;
 import com.google.zxing.WriterException;
 import jakarta.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
@@ -51,9 +52,14 @@ public class ReservationController {
 
     @PostMapping(value = "/save")
     @PreAuthorize("hasAuthority('ROLL_USER')")
-    public ResponseEntity<ReservationDto> saveReservation(@RequestBody ReservationDto reservationDto) {
+    public ResponseEntity<?> saveReservation(@RequestBody ReservationDto reservationDto) {
+        try{
         ReservationDto reservation = new ReservationDto(reservationService.saveReservation(reservationDto));
         return new ResponseEntity<>(reservation, HttpStatus.OK);
+        }
+        catch(OptimisticLockingFailureException o) {
+            return new ResponseEntity<>(HttpStatus.TOO_MANY_REQUESTS);
+        }
     }
 
     @GetMapping(value = "/userReservation")
@@ -159,6 +165,8 @@ public class ReservationController {
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }catch(OptimisticLockingFailureException o) {
+            return new ResponseEntity<>(HttpStatus.TOO_MANY_REQUESTS);
         }
     }
 }

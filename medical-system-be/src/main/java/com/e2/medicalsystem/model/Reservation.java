@@ -13,13 +13,16 @@ public class Reservation {
     @OneToOne
     private Appointment appointment;
     @Column(name = "reservationItems")
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<ReservationItem> reservationItems;
     @Column(name = "reserverId")
     private Long reserverId;
 
     @Column(columnDefinition = "boolean default false")
     private boolean isDelivered;
+
+    @Version
+    private Long version;
     public Reservation(){}
 
     public Reservation(Long id, Appointment appointment, List<ReservationItem> reservationItems, Long reserverId,boolean isDelivered) {

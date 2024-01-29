@@ -12,6 +12,8 @@ public class MedicalEquipment {
     private String description;
     private long companyId;
     private int count;
+    @Version
+    private Long version;
 
     public MedicalEquipment()
     {

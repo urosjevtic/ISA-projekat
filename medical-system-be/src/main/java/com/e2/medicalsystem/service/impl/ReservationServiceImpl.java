@@ -62,18 +62,19 @@ public class ReservationServiceImpl implements ReservationService {
         List<ReservationItem> reservationItems = new ArrayList<>();
         for (var item:
                 reservationDto.getReservationItems()) {
+
             ReservationItem reservationItem = new ReservationItem(item);
+            reservationItem.setEquipment(medicalEquipmentRepository.getByIdWithOptimisticLocking(item.getEquipment().getId()));
+            MedicalEquipment equipment = reservationItem.getEquipment();
             reservationItemRepository.save(reservationItem);
             reservationItems.add(reservationItem);
+            updateEquipment(reservationItem.getEquipment(), reservationItem.getCount(), true);
         }
         reservation.setReservationItems(reservationItems);
         reservation.setReserverId(reservationDto.getReserverId());
-        for(ReservationItem item : reservationItems){
-            updateEquipment(item.getEquipment(), item.getCount(), true);
-        }
+
         return reservationRepository.save(reservation);
     }
-
 
     private void updateEquipment(MedicalEquipment equipment, int count, boolean lowering){
         Optional<MedicalEquipment> optionalEquipment = medicalEquipmentRepository.findById(equipment.getId());

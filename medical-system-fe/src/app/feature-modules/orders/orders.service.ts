@@ -20,4 +20,8 @@ export class OrdersService {
     return this.http.delete<Reservation>(this.apiUrl + 'reservation/' + userId + "/" + reservationId)
   }
 
+  getAllContracts(): Observable<any> {
+    return this.http.get<any[]>(this.apiUrl + 'contract/all');
+  }
+
 }

@@ -1,0 +1,17 @@
+<div *ngIf="isUserCompanyAdmin()" class="contract-table">
+  <table cellspacing="0">
+      <tr>
+          <th>No.</th>
+          <th>Company Name</th>
+          <th>Username</th>
+          <th>Start Date</th>
+      </tr>
+
+      <tr *ngFor="let contract of contractList; let i = index">
+          <td>{{ i + 1 }}.</td>
+          <td>{{contract.companyName}}</td>
+          <td>{{contract.username}}</td>
+          <td>{{contract.startDate | date: 'medium' }}</td>
+      </tr>
+  </table>
+</div>

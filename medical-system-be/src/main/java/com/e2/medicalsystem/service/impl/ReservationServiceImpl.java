@@ -92,6 +92,17 @@ public class ReservationServiceImpl implements ReservationService {
         return reservationRepository.findAllByReserverId(reserverId);
     }
 
+
+    @Override
+    @Transactional
+    public void finishDelivery(Long id)
+    {
+        Reservation reservation = reservationRepository.getReferenceById(id);
+        if(!Objects.equals(reservation.getId(), id)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Reservation does not exist!");
+        reservation.setDelivered(true);
+        reservationRepository.save(reservation);
+    }
+
     @Override
     @Transactional
     public ReservationDto cancelReservation(Long reservationId, Long userId) {

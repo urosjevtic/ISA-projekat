@@ -1,60 +1,125 @@
-<form [formGroup]="contractForm">
-    <h1>Enter contract info</h1>
-    <mat-form-field>
-        <mat-label>Enter your username</mat-label>
-        <input formControlName="username" matInput required>
-    </mat-form-field>
-    <hr>
-    <mat-form-field>
-        <mat-label>Enter start delivery date</mat-label>
-        <input formControlName="startDate" type="date" matInput  required>
-    </mat-form-field>
-    <hr>
-    <mat-form-field>
-        <mat-label>Select company</mat-label>
-        <mat-select formControlName="companyName">
-          <mat-option value="Kompanija 1">Kompanija 1</mat-option>
-          <mat-option value="Kompanija 2">Kompanija 2</mat-option>
-        </mat-select>
-    </mat-form-field>
-    <button (click)="patchValue()">Click</button>
-    <table *ngIf="selectedCompany === 'Kompanija 1'">
-        <tr>
-            <th>Naziv opreme</th>
-            <th></th>
-        </tr>
-        <tr>
-            <td>Lek 11</td>
-            <td><button (click)="addEquipment('lek11')">Add</button></td>
-        </tr>
-        <tr>
-            <td>Lek 12</td>
-            <td><button (click)="addEquipment('lek12')">Add</button></td>
-        </tr>
-        <tr>
-            <td>Lek 13</td>
-            <td><button (click)="addEquipment('lek13')">Add</button></td>
-        </tr>
-    </table>
+<div class="main">
+    <div class="contract-form">
+        <form [formGroup]="contractForm">
+            <h1>Enter contract info</h1>
+            <mat-form-field>
+                <mat-label>Enter your username</mat-label>
+                <input formControlName="username" matInput required>
+            </mat-form-field>
+            <hr>
+            <mat-form-field>
+                <mat-label>Enter start delivery date</mat-label>
+                <input formControlName="startDate" type="date" matInput  required>
+            </mat-form-field>
+            <hr>
+            <mat-form-field>
+                <mat-label>Select company</mat-label>
+                <mat-select formControlName="companyName">
+                  <mat-option value="UnitedHealth Group">UnitedHealth Group</mat-option>
+                  <mat-option value="CVS Health">CVS Health</mat-option>
+                  <mat-option value="McKesson">McKesson</mat-option>
+                  <mat-option value="Cigna Global® Health Insurance">Cigna Global® Health Insurance</mat-option>
+                  <mat-option value="Cardinal Health">Cardinal Health</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button (click)="patchValue()">Select company</button>
+            <table *ngIf="selectedCompany === 'UnitedHealth Group'">
+                <tr>
+                    <th>Naziv opreme</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>Vitamin D</td>
+                    <td><button (click)="addEquipment('Vitamin D')">Add</button></td>
+                </tr>
+                <tr>
+                    <td>Amoxicillin</td>
+                    <td><button (click)="addEquipment('Amoxicillin')">Add</button></td>
+                </tr>
+                <tr>
+                    <td>Levothyroxine</td>
+                    <td><button (click)="addEquipment('Levothyroxine')">Add</button></td>
+                </tr>
+                <tr>
+                    <td>Lisinopril</td>
+                    <td><button (click)="addEquipment('Lisinopril')">Add</button></td>
+                </tr>
+                <tr>
+                    <td>Ibuprofen</td>
+                    <td><button (click)="addEquipment('Ibuprofen')">Add</button></td>
+                </tr>
+            </table>
+        
+            <table *ngIf="selectedCompany === 'CVS Health'">
+                <tr>
+                    <th>Naziv opreme</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>Gabapentin</td>
+                    <td><button (click)="addEquipment('Gabapentin')">Add</button></td>
+                </tr>
+                <tr>
+                    <td>Benzonatate</td>
+                    <td><button (click)="addEquipment('Benzonatate')">Add</button></td>
+                </tr>
+                <tr>
+                    <td>Alprazolam</td>
+                    <td><button (click)="addEquipment('Alprazolam')">Add</button></td>
+                </tr>
+                <tr>
+                    <td>Cyclobenzaprine</td>
+                    <td><button (click)="addEquipment('Cyclobenzaprine')">Add</button></td>
+                </tr>
+            </table>
 
-    <table *ngIf="selectedCompany === 'Kompanija 2'">
-        <tr>
-            <th>Naziv opreme</th>
-            <th></th>
-        </tr>
-        <tr>
-            <td>Lek 21</td>
-            <td><button (click)="addEquipment('lek21')">Add</button></td>
-        </tr>
-        <tr>
-            <td>Lek 22</td>
-            <td><button (click)="addEquipment('lek22')">Add</button></td>
-        </tr>
-        <tr>
-            <td>Lek 23</td>
-            <td><button (click)="addEquipment('lek23')">Add</button></td>
-        </tr>
-    </table>
+            <table *ngIf="selectedCompany === 'McKesson'">
+                <tr>
+                    <th>Naziv opreme</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>Metformin</td>
+                    <td><button (click)="addEquipment('Metformin')">Add</button></td>
+                </tr>
+                <tr>
+                    <td>Folic Acid</td>
+                    <td><button (click)="addEquipment('Folic Acid')">Add</button></td>
+                </tr>
+                <tr>
+                    <td>Trazodone</td>
+                    <td><button (click)="addEquipment('Trazodone')">Add</button></td>
+                </tr>
+                <tr>
+                    <td>Sertraline</td>
+                    <td><button (click)="addEquipment('Sertraline')">Add</button></td>
+                </tr>
+            </table>
 
-    <button (click)="finishContract()">Finnish</button>
-</form>
+            <table *ngIf="selectedCompany === 'Cigna Global® Health Insurance'">
+                <tr>
+                    <th>Naziv opreme</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>Sertraline</td>
+                    <td><button (click)="addEquipment('Sertraline')">Add</button></td>
+                </tr>
+                <tr>
+                    <td>Omeprazole</td>
+                    <td><button (click)="addEquipment('Omeprazole')">Add</button></td>
+                </tr>
+                <tr>
+                    <td>Meloxicam</td>
+                    <td><button (click)="addEquipment('Meloxicam')">Add</button></td>
+                </tr>
+            </table>
+            <p *ngFor="let eq of selectedEquipment">{{eq}} </p>
+            <button (click)="finishContract()">Finnish</button>
+        </form>
+    </div>
+    <div class="info-board">
+        <h1 style="justify-content: center;">Info board</h1>
+        <p *ngFor="let item of allInfo">{{ item }}</p>
+    </div>
+</div>

@@ -143,6 +143,13 @@ public class ReservationController {
 
     }
 
+    @GetMapping("finishDelivery/{id}")
+    public Response finishDelivery(@PathVariable long id)
+    {
+        reservationService.finishDelivery(id);
+        return Response.ok().build();
+    }
+    
     @DeleteMapping(value = "/{userId}/{reservationId}")
     @PreAuthorize("hasAuthority('ROLL_USER')")
     public ResponseEntity<Object> cancelReservation(@PathVariable Long userId,@PathVariable Long reservationId) {
@@ -152,12 +159,5 @@ public class ReservationController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-    }
-
-    @GetMapping("finishDelivery/{id}")
-    public Response finishDelivery(@PathVariable long id)
-    {
-        reservationService.finishDelivery(id);
-        return Response.ok().build();
     }
 }

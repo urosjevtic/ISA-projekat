@@ -65,36 +65,30 @@ public class ReservationServiceImpl implements ReservationService {
 
             ReservationItem reservationItem = new ReservationItem(item);
             reservationItem.setEquipment(medicalEquipmentRepository.getByIdWithOptimisticLocking(item.getEquipment().getId()));
-            MedicalEquipment equipment = reservationItem.getEquipment();
             reservationItemRepository.save(reservationItem);
             reservationItems.add(reservationItem);
             updateEquipment(reservationItem.getEquipment(), reservationItem.getCount(), true);
         }
         reservation.setReservationItems(reservationItems);
         reservation.setReserverId(reservationDto.getReserverId());
+        reservation.setCanceled(false);
 
         return reservationRepository.save(reservation);
     }
 
     private void updateEquipment(MedicalEquipment equipment, int count, boolean lowering){
-        Optional<MedicalEquipment> optionalEquipment = medicalEquipmentRepository.findById(equipment.getId());
-        if(optionalEquipment.isPresent()){
-            MedicalEquipment eq = optionalEquipment.get();
             if(lowering){
-                if(eq.getCount() - count > 0){
-                    eq.setCount(eq.getCount() - count);
-                    medicalEquipmentRepository.save(eq);
+                if(equipment.getCount() - count > 0){
+                    equipment.setCount(equipment.getCount() - count);
+                    medicalEquipmentRepository.save(equipment);
                 }else {
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not enough equipment");
                 }
             }else{
-                eq.setCount(eq.getCount() + count);
-                medicalEquipmentRepository.save(eq);
+                equipment.setCount(equipment.getCount() + count);
+                medicalEquipmentRepository.save(equipment);
             }
 
-        }else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No such equipment");
-        }
     }
     @Transactional
     @Override
@@ -144,7 +138,8 @@ public class ReservationServiceImpl implements ReservationService {
 
 
             Appointment appointment = appointmentRepository.getById(reservation.getAppointment().getId());
-            reservationRepository.delete(reservation);
+            reservation.setCanceled(true);
+            reservationRepository.save(reservation);
             appointment.setTaken(false);
             appointmentRepository.save(appointment);
             long timeDifference = reservation.getAppointment().getDate().getTime() - currentDateAsDate.getTime();

@@ -18,5 +18,6 @@ export interface Reservation{
     reservationItems: ReservationItem[],
     appointment: Appointment,
     reserverId: number,
-    delivered: boolean
+    delivered: boolean,
+    canceled?: boolean
 }

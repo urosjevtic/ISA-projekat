@@ -21,23 +21,25 @@ public class Reservation {
     @Column(columnDefinition = "boolean default false")
     private boolean isDelivered;
 
-    @Version
-    private Long version;
+    @Column(name = "canceled")
+    private boolean canceled;
     public Reservation(){}
 
-    public Reservation(Long id, Appointment appointment, List<ReservationItem> reservationItems, Long reserverId,boolean isDelivered) {
+    public Reservation(Long id, Appointment appointment, List<ReservationItem> reservationItems, Long reserverId,boolean isDelivered, boolean canceled) {
         this.id = id;
         this.appointment = appointment;
         this.reservationItems = reservationItems;
         this.reserverId = reserverId;
         this.isDelivered = isDelivered;
+        this.canceled = canceled;
     }
 
-    public Reservation(Appointment appointment, List<ReservationItem> reservationItems, Long reserverId,boolean isDelivered) {
+    public Reservation(Appointment appointment, List<ReservationItem> reservationItems, Long reserverId,boolean isDelivered, boolean canceled) {
         this.appointment = appointment;
         this.reservationItems = reservationItems;
         this.reserverId = reserverId;
         this.isDelivered = isDelivered;
+        this.canceled = canceled;
     }
 
     public boolean isDelivered() {
@@ -46,6 +48,14 @@ public class Reservation {
 
     public void setDelivered(boolean delivered) {
         isDelivered = delivered;
+    }
+
+    public boolean isCanceled() {
+        return canceled;
+    }
+
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
     }
 
     public Long getId() {

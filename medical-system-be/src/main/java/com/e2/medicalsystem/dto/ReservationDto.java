@@ -14,6 +14,7 @@ public class ReservationDto {
     private Long reserverId;
 
     private boolean isDelivered;
+    private boolean canceled;
 
     public ReservationDto(){}
     public ReservationDto(Reservation reservation){
@@ -26,6 +27,7 @@ public class ReservationDto {
             this.reservationItems.add(new ReservationItemDto(item));
         }
         this.isDelivered = reservation.isDelivered();
+        this.canceled = reservation.isCanceled();
     }
 
     public boolean isDelivered() {
@@ -66,5 +68,13 @@ public class ReservationDto {
 
     public void setReserverId(Long reserverId) {
         this.reserverId = reserverId;
+    }
+
+    public boolean isCanceled() {
+        return canceled;
+    }
+
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
     }
 }

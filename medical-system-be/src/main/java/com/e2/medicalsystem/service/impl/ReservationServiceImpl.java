@@ -2,14 +2,8 @@ package com.e2.medicalsystem.service.impl;
 
 import com.e2.medicalsystem.dto.LatLng;
 import com.e2.medicalsystem.dto.ReservationDto;
-import com.e2.medicalsystem.model.Appointment;
-import com.e2.medicalsystem.model.Reservation;
-import com.e2.medicalsystem.model.ReservationItem;
-import com.e2.medicalsystem.model.User;
-import com.e2.medicalsystem.repository.AppointmentRepository;
-import com.e2.medicalsystem.repository.ReservationItemRepository;
-import com.e2.medicalsystem.repository.ReservationRepository;
-import com.e2.medicalsystem.repository.UsersRepository;
+import com.e2.medicalsystem.model.*;
+import com.e2.medicalsystem.repository.*;
 import com.e2.medicalsystem.service.ReservationService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,16 +25,18 @@ public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
     private final ReservationItemRepository reservationItemRepository;
     private final AppointmentRepository appointmentRepository;
+    private final MedicalEquipmentRepository medicalEquipmentRepository;
 
     private final UsersRepository usersRepository;
 
     @Autowired
-    public ReservationServiceImpl(ReservationRepository reservationRepository, ReservationItemRepository reservationItemRepository, AppointmentRepository appointmentRepository, UsersRepository usersRepository)
+    public ReservationServiceImpl(ReservationRepository reservationRepository, ReservationItemRepository reservationItemRepository, AppointmentRepository appointmentRepository, UsersRepository usersRepository, MedicalEquipmentRepository medicalEquipmentRepository)
     {
         this.reservationRepository = reservationRepository;
         this.reservationItemRepository = reservationItemRepository;
         this.appointmentRepository = appointmentRepository;
         this.usersRepository = usersRepository;
+        this.medicalEquipmentRepository = medicalEquipmentRepository;
     }
 
 
@@ -59,6 +55,8 @@ public class ReservationServiceImpl implements ReservationService {
         }
         appointment.setTaken(true);
         appointmentRepository.save(appointment);
+        List<ReservationItem> items = reservation.getReservationItems();
+
 
         reservation.setAppointment(appointment);
         List<ReservationItem> reservationItems = new ArrayList<>();
@@ -70,7 +68,32 @@ public class ReservationServiceImpl implements ReservationService {
         }
         reservation.setReservationItems(reservationItems);
         reservation.setReserverId(reservationDto.getReserverId());
+        for(ReservationItem item : reservationItems){
+            updateEquipment(item.getEquipment(), item.getCount(), true);
+        }
         return reservationRepository.save(reservation);
+    }
+
+
+    private void updateEquipment(MedicalEquipment equipment, int count, boolean lowering){
+        Optional<MedicalEquipment> optionalEquipment = medicalEquipmentRepository.findById(equipment.getId());
+        if(optionalEquipment.isPresent()){
+            MedicalEquipment eq = optionalEquipment.get();
+            if(lowering){
+                if(eq.getCount() - count > 0){
+                    eq.setCount(eq.getCount() - count);
+                    medicalEquipmentRepository.save(eq);
+                }else {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not enough equipment");
+                }
+            }else{
+                eq.setCount(eq.getCount() + count);
+                medicalEquipmentRepository.save(eq);
+            }
+
+        }else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No such equipment");
+        }
     }
     @Transactional
     @Override
@@ -114,6 +137,11 @@ public class ReservationServiceImpl implements ReservationService {
         Date currentDateAsDate = Date.from(currentDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
         if(reservation.getAppointment().getDate().after(currentDateAsDate)){
+            for(ReservationItem item :reservation.getReservationItems()){
+                updateEquipment(item.getEquipment(), item.getCount(), false);
+            }
+
+
             Appointment appointment = appointmentRepository.getById(reservation.getAppointment().getId());
             reservationRepository.delete(reservation);
             appointment.setTaken(false);

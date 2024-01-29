@@ -5,6 +5,7 @@ export interface MedicalEquipment{
     name: string,
     description: string,
     companyId: number,
+    count?: number
 }
 
 export interface ReservationItem{

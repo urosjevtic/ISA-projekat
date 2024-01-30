@@ -16,3 +16,6 @@ Frontend se pokreće sa komandom:
   ```
 
 Ostali dokumenti i uputstva za pokretanje ostalih delova aplikacije nalaze se u folderu **Documentation**
+
+### Powered by
+[![TeckStack](https://skillicons.dev/icons?i=html,css,ts,angular,spring,postgres,kafka)](https://skillicons.dev)

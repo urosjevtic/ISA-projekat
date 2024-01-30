@@ -11,7 +11,7 @@ public class ReservationItem {
     private Long id;
     @Column(name = "count")
     private int count;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private MedicalEquipment equipment;
 
     public ReservationItem(){}

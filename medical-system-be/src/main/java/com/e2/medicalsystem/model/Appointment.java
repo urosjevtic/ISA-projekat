@@ -19,6 +19,9 @@ public class Appointment {
     private String adminLastName;
     private boolean taken;
 
+    @Version
+    private Long version;
+
     public Appointment() {}
 
     public Appointment(Long id, Long companyId, Long adminId, Date date, int duration, String adminName, String adminLastName, boolean taken) {

@@ -5,6 +5,7 @@ export interface MedicalEquipment{
     name: string,
     description: string,
     companyId: number,
+    count?: number
 }
 
 export interface ReservationItem{
@@ -17,5 +18,6 @@ export interface Reservation{
     reservationItems: ReservationItem[],
     appointment: Appointment,
     reserverId: number,
-    delivered: boolean
+    delivered: boolean,
+    canceled?: boolean
 }

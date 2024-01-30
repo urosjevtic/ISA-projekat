@@ -7,18 +7,20 @@ public class MedicalEquipmentDto {
     private String name;
     private String description;
     private long companyId;
+    private int count;
 
     public MedicalEquipmentDto(){}
-    public MedicalEquipmentDto(Integer id, String name, String description, long companyId) {
+    public MedicalEquipmentDto(Integer id, String name, String description, long companyId, int count) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.companyId = companyId;
+        this.count = count;
     }
 
     public MedicalEquipmentDto(MedicalEquipment medicalEquipment)
     {
-        this(medicalEquipment.getId(), medicalEquipment.getName(), medicalEquipment.getDescription(), medicalEquipment.getCompanyId());
+        this(medicalEquipment.getId(), medicalEquipment.getName(), medicalEquipment.getDescription(), medicalEquipment.getCompanyId(), medicalEquipment.getCount());
     }
 
     public int getId() {
@@ -51,5 +53,13 @@ public class MedicalEquipmentDto {
 
     public void setCompanyId(long companyId) {
         this.companyId = companyId;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

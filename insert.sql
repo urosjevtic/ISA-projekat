@@ -7,22 +7,22 @@ INSERT INTO public.companies(
            (-5, 'Cardinal Health Media Relations 7000 Cardinal Place Dublin, OH 43017', 3.3, 'https://companieslogo.com/img/orig/CAH-8e1f7039.png?t=1681966045', 'Headquartered in Dublin, Ohio, Cardinal Health, Inc. (NYSE: CAH) is a distributor of pharmaceuticals, a global manufacturer and distributor of medical and laboratory products, and a provider of performance and data solutions for healthcare facilities.', 'Cardinal Health', '08:00:00', '15:00:00');
 
 INSERT INTO public.medical_equipment(
-	id, company_id, description, name)
-	VALUES (-1, -1, 'Vitamin D', 'Vitamin D'),
-           (-2, -1, 'Amoxicillin', 'Amoxicillin'),
-           (-3, -1, 'Levothyroxine', 'Levothyroxine'),
-           (-4, -1, 'Lisinopril', 'Lisinopril'),
-           (-5, -1, 'Ibuprofen', 'Ibuprofen'),
-           (-6, -2, 'Gabapentin', 'Gabapentin'),
-           (-7, -2, 'Benzonatate', 'Benzonatate'),
-           (-8, -2, 'Alprazolam', 'Alprazolam'),
-           (-9, -2, 'Cyclobenzaprine', 'Cyclobenzaprine'),
-           (-10, -3, 'Metformin', 'Metformin'),
-           (-11, -3, 'Folic Acid', 'Folic Acid'),
-           (-12, -3, 'Trazodone', 'Trazodone'),
-           (-13, -4, 'Sertraline', 'Sertraline'),
-           (-14, -4, 'Omeprazole', 'Omeprazole'),
-           (-15, -5, 'Meloxicam', 'Meloxicam');
+	id, company_id, description, name, count)
+	VALUES (-1, -1, 'Vitamin D', 'Vitamin D', 100),
+           (-2, -1, 'Amoxicillin', 'Amoxicillin', 152),
+           (-3, -1, 'Levothyroxine', 'Levothyroxine', 3),
+           (-4, -1, 'Lisinopril', 'Lisinopril', 511),
+           (-5, -1, 'Ibuprofen', 'Ibuprofen', 14),
+           (-6, -2, 'Gabapentin', 'Gabapentin',512),
+           (-7, -2, 'Benzonatate', 'Benzonatate',125),
+           (-8, -2, 'Alprazolam', 'Alprazolam', 544),
+           (-9, -2, 'Cyclobenzaprine', 'Cyclobenzaprine', 877),
+           (-10, -3, 'Metformin', 'Metformin', 3),
+           (-11, -3, 'Folic Acid', 'Folic Acid',2),
+           (-12, -3, 'Trazodone', 'Trazodone', 12),
+           (-13, -4, 'Sertraline', 'Sertraline', 15),
+           (-14, -4, 'Omeprazole', 'Omeprazole', 11),
+           (-15, -5, 'Meloxicam', 'Meloxicam', 111);
 
 INSERT INTO public.country(
 	id, name)

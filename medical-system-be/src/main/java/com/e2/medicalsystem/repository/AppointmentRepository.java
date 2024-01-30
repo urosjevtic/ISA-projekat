@@ -19,4 +19,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     @Lock(LockModeType.OPTIMISTIC)
     @Query("SELECT a FROM Appointment a WHERE a.id = :id")
     Appointment getByIdWithOptimisticLocking(@Param("id") int id);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("SELECT a FROM Appointment a WHERE a.companyId = :companyId")
+    List<Appointment> findAllByCompanyIdWithLock(@Param("companyId") Long companyId);
 }

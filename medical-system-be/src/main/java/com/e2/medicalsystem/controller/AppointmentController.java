@@ -25,8 +25,13 @@ public class AppointmentController {
 
     @PostMapping(value = "/save")
     public ResponseEntity<String> saveAppointment(@RequestBody Appointment appointment) {
-        appointmentService.saveAppointment(appointment);
-        return new ResponseEntity<>("Appointment saved successfully", HttpStatus.OK);
+        try{
+            appointmentService.saveAppointment(appointment);
+            return new ResponseEntity<>("Appointment saved successfully", HttpStatus.OK);
+        }catch (RuntimeException ex){
+            return new ResponseEntity<>("Appointment already exist", HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @GetMapping("/all")

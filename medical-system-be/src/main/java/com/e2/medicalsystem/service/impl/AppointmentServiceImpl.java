@@ -8,6 +8,7 @@ import com.e2.medicalsystem.repository.AppointmentRepository;
 import com.e2.medicalsystem.repository.CompanyProfileRepository;
 import com.e2.medicalsystem.repository.UsersRepository;
 import com.e2.medicalsystem.service.AppointmentService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +33,19 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Autowired
     private UsersRepository usersRepository;
 
+    @Transactional
     public Appointment saveAppointment(Appointment appointment) {
+        checkIfAppointmentDateTaken(appointment);
         return appointmentRepository.save(appointment);
+    }
+
+    private void checkIfAppointmentDateTaken(Appointment appointment){
+        List<Appointment> appointments = appointmentRepository.findAllByCompanyIdWithLock(appointment.getCompanyId());
+        for(Appointment app: appointments){
+            if(app.getDate().compareTo(appointment.getDate()) == 0){
+                throw new RuntimeException("Termin vec zauzet");
+            }
+        }
     }
 
     public List<Appointment> getAllAppointmentsByCompanyId(long companyId) {

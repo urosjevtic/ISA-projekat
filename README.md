@@ -15,4 +15,4 @@ Frontend se pokreće sa komandom:
   ng serve -o
   ```
 
-Ostali dokumenti i uputstva za pokretanje ostalih delova aplikacije nalze se u folderu **Documentation**
+Ostali dokumenti i uputstva za pokretanje ostalih delova aplikacije nalaze se u folderu **Documentation**

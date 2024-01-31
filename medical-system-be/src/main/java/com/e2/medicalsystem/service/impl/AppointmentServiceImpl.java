@@ -42,10 +42,17 @@ public class AppointmentServiceImpl implements AppointmentService {
     private void checkIfAppointmentDateTaken(Appointment appointment){
         List<Appointment> appointments = appointmentRepository.findAllByCompanyIdWithLock(appointment.getCompanyId());
         for(Appointment app: appointments){
-            if(app.getDate().compareTo(appointment.getDate()) == 0){
+            if(app.getDate().getDate() == appointment.getDate().getDate()){
                 throw new RuntimeException("Termin vec zauzet");
             }
         }
+    }
+
+    @Transactional
+    public Appointment updateAppointmentToTaken(Appointment appointment){
+        Appointment oldAppointment = appointmentRepository.getById(appointment.getId());
+        oldAppointment.setTaken(true);
+        return appointmentRepository.save(oldAppointment);
     }
 
     public List<Appointment> getAllAppointmentsByCompanyId(long companyId) {

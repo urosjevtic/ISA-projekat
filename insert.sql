@@ -7,22 +7,22 @@ INSERT INTO public.companies(
            (-5, 'Cardinal Health Media Relations 7000 Cardinal Place Dublin, OH 43017', 3.3, 'https://companieslogo.com/img/orig/CAH-8e1f7039.png?t=1681966045', 'Headquartered in Dublin, Ohio, Cardinal Health, Inc. (NYSE: CAH) is a distributor of pharmaceuticals, a global manufacturer and distributor of medical and laboratory products, and a provider of performance and data solutions for healthcare facilities.', 'Cardinal Health', '08:00:00', '15:00:00');
 
 INSERT INTO public.medical_equipment(
-	id, company_id, description, name)
-	VALUES (-1, -1, 'Vitamin D', 'Vitamin D'),
-           (-2, -1, 'Amoxicillin', 'Amoxicillin'),
-           (-3, -1, 'Levothyroxine', 'Levothyroxine'),
-           (-4, -1, 'Lisinopril', 'Lisinopril'),
-           (-5, -1, 'Ibuprofen', 'Ibuprofen'),
-           (-6, -2, 'Gabapentin', 'Gabapentin'),
-           (-7, -2, 'Benzonatate', 'Benzonatate'),
-           (-8, -2, 'Alprazolam', 'Alprazolam'),
-           (-9, -2, 'Cyclobenzaprine', 'Cyclobenzaprine'),
-           (-10, -3, 'Metformin', 'Metformin'),
-           (-11, -3, 'Folic Acid', 'Folic Acid'),
-           (-12, -3, 'Trazodone', 'Trazodone'),
-           (-13, -4, 'Sertraline', 'Sertraline'),
-           (-14, -4, 'Omeprazole', 'Omeprazole'),
-           (-15, -5, 'Meloxicam', 'Meloxicam');
+	id, company_id, count, description, name, version)
+	VALUES (-1, -1, 10, 'Vitamin D', 'Vitamin D', 0),
+           (-2, -1, 10, 'Amoxicillin', 'Amoxicillin', 0),
+           (-3, -1, 10, 'Levothyroxine', 'Levothyroxine', 0),
+           (-4, -1, 10, 'Lisinopril', 'Lisinopril', 0),
+           (-5, -1, 10, 'Ibuprofen', 'Ibuprofen', 0),
+           (-6, -2, 10, 'Gabapentin', 'Gabapentin', 0),
+           (-7, -2, 10, 'Benzonatate', 'Benzonatate', 0),
+           (-8, -2, 10, 'Alprazolam', 'Alprazolam', 0),
+           (-9, -2, 10, 'Cyclobenzaprine', 'Cyclobenzaprine', 0),
+           (-10, -3, 10, 'Metformin', 'Metformin', 0),
+           (-11, -3, 10, 'Folic Acid', 'Folic Acid', 0),
+           (-12, -3, 10, 'Trazodone', 'Trazodone', 0),
+           (-13, -4, 10, 'Sertraline', 'Sertraline', 0),
+           (-14, -4, 10, 'Omeprazole', 'Omeprazole', 0),
+           (-15, -5, 10, 'Meloxicam', 'Meloxicam', 0);
 
 INSERT INTO public.country(
 	id, name)
@@ -68,7 +68,7 @@ INSERT INTO public.users(
 
 INSERT INTO public.appointments(
 	id, admin_id, admin_last_name, admin_name, company_id, date, duration, taken)
-	VALUES (-3, -3, 'Djokic', 'Filip', -1, '2023-12-22 12:00:00', 3, FALSE);
+	VALUES (-3, -3, 'Djokic', 'Filip', -1, '2024-02-22 12:00:00', 3, FALSE);
 
 INSERT INTO public.companies_company_admins(
 	company_profile_id, company_admins_id)

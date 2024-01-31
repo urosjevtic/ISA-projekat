@@ -3,4 +3,5 @@ export interface Contract{
     startDate: Date,
     companyName: string,
     equipment: string[]
+    contractCanceled?: boolean;
 }

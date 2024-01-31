@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Contract } from '../../simulators/model/contract.model';
 import { OrdersService } from '../orders.service';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { Contract } from '../../simulators/model/contract.model';
 
 @Component({
   selector: 'app-user-contracts',
@@ -31,4 +31,13 @@ export class UserContractsComponent implements OnInit {
     return user.role === 'ROLL_COMPANYADMIN';
   }
 
+  cancelContract(contract:Contract){
+    console.log(contract);
+    contract.contractCanceled = true;
+    this.ordersService.cancelContract(contract).subscribe({
+      next: (result) => {
+        console.log(result);
+      }
+    });
+  }
 }

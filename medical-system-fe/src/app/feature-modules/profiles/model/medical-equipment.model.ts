@@ -20,5 +20,4 @@ export interface Reservation{
     reserverId: number,
     delivered: boolean,
     canceled?: boolean
-    deliveryFinished?: boolean;
 }

@@ -1,6 +1,7 @@
 package com.e2.medicalsystem.controller;
 
 import com.e2.medicalsystem.dto.AppointmentDto;
+import com.e2.medicalsystem.dto.CompanyProfileDto;
 import com.e2.medicalsystem.dto.LatLng;
 import com.e2.medicalsystem.dto.ReservationDto;
 import com.e2.medicalsystem.model.*;
@@ -32,11 +33,6 @@ public class ReservationController {
     private EmailSenderService emailSenderService;
     private UsersService usersService;
 
-
-
-
-
-
     @Autowired
     public ReservationController(ReservationService reservationService, AppointmentService appointmentService,
                                  QrCodeService qrCodeService, EmailSenderService emailSenderService, UsersService usersService)
@@ -49,6 +45,19 @@ public class ReservationController {
 
     }
 
+    @GetMapping(value = "all")
+    @PreAuthorize("hasAuthority('ROLL_COMPANYADMIN')")
+    public ResponseEntity<List<ReservationDto>> getAllCompanies() {
+
+        List<Reservation> allReservation = reservationService.getAllReservations();
+        List<ReservationDto> allReservationDto = new ArrayList<>();
+        for(Reservation reservation : allReservation)
+        {
+            allReservationDto.add(new ReservationDto(reservation));
+        }
+        return new ResponseEntity<>(allReservationDto, HttpStatus.OK);
+
+    }
 
     @PostMapping(value = "/save")
     @PreAuthorize("hasAuthority('ROLL_USER')")
@@ -74,8 +83,6 @@ public class ReservationController {
 
         return new ResponseEntity<>(allReservationsDto, HttpStatus.OK);
     }
-
-
 
     @GetMapping("/generate-and-send-email")
     public ResponseEntity<String> generateQrCodeAndSendEmail(@RequestParam int senderId,

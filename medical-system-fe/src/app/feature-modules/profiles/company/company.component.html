@@ -34,7 +34,6 @@
             <th>Name</th>
             <th>Count</th>
             <th></th>
-            <th *ngIf="isUserCompanyAdmin()"></th>
           </tr>
 
           <tr *ngFor="let medicalEquipment of filteredMedicalEquipments(); let i = index">
@@ -93,7 +92,6 @@
             <th>Last Name</th>
             <th>Appointment Date/Time</th>
             <th>Duration(min)</th>
-            <th></th>
           </tr>
 
           <tr *ngFor="let appointment of appointmentList; let i = index">
@@ -102,9 +100,6 @@
             <td>{{appointment.adminLastName}}</td>
             <td>{{appointment.date | date: 'medium' }}</td>
             <td>{{appointment.duration}}</td>
-            <td *ngIf="isUserCompanyAdmin()">
-              <button class="remove-btn">Finish</button>
-            </td>
           </tr>
         </table>
       </div>

@@ -91,7 +91,7 @@ public class ContractServiceImpl implements ContractService {
         producerDto.setUsername(contract.getUsername());
         producerDto.setCompany(contract.getCompanyName());
         producerDto.setEquipment(contract.getEquipment());
-        producerDto.setStatus(EContractStatus.Finished);
+        producerDto.setStatus(EContractStatus.Delivering);
 
         return producerDto;
     }

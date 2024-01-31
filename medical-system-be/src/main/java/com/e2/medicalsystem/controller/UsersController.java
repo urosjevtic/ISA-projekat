@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -63,14 +65,14 @@ public class UsersController {
 
 
     @GetMapping(value = "getUserInfo/{id}")
-    @PreAuthorize("hasAuthority('ROLL_USER')")
+    @Secured("hasAuthority('ROLL_USER', 'ROLL_COMPANYADMIN')")
     public ResponseEntity<UserInfoDto> getUserInfo(@PathVariable Integer id)
     {
         return new ResponseEntity<>(usersService.getUserInfo(id), HttpStatus.OK);
     }
 
     @PostMapping(value = "changePassword/{id}")
-    @PreAuthorize("hasAuthority('ROLL_USER')")
+    @Secured("hasAuthority('ROLL_USER', 'ROLL_COMPANYADMIN')")
     public ResponseEntity<String> changePassword(@Valid @RequestBody PasswordChangeDto passwordChangeDto,@PathVariable Integer id)
     {
         usersService.changePassword(passwordChangeDto,id);
@@ -78,7 +80,7 @@ public class UsersController {
     }
 
     @PostMapping(value = "changeInfo/{id}")
-    @PreAuthorize("hasAuthority('ROLL_USER')")
+    @Secured("hasAuthority('ROLL_USER', 'ROLL_COMPANYADMIN')")
     public ResponseEntity<String> changeInfo(@Valid @RequestBody UserInfoDto userInfoDto, @PathVariable Integer id)
     {
         usersService.changeInfo(userInfoDto,id);

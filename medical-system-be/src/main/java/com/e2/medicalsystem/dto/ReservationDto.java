@@ -2,22 +2,40 @@ package com.e2.medicalsystem.dto;
 
 import com.e2.medicalsystem.model.Reservation;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ReservationDto {
     private Long id;
-    private Long companyId;
-    private Date date;
 
-    public ReservationDto(Long id, Long companyId, Date date) {
-        this.id = id;
-        this.companyId = companyId;
-        this.date = date;
+    private AppointmentDto appointment;
+    private List<ReservationItemDto> reservationItems;
+    private Long reserverId;
+
+    private boolean isDelivered;
+    private boolean canceled;
+
+    public ReservationDto(){}
+    public ReservationDto(Reservation reservation){
+        this.id = reservation.getId();
+        this.appointment = new AppointmentDto(reservation.getAppointment());
+        this.reserverId = reservation.getReserverId();
+        this.reservationItems = new ArrayList<>();
+        for (var item:
+             reservation.getReservationItems()) {
+            this.reservationItems.add(new ReservationItemDto(item));
+        }
+        this.isDelivered = reservation.isDelivered();
+        this.canceled = reservation.isCanceled();
     }
 
-    public ReservationDto(Reservation reservation)
-    {
-        this(reservation.getId(), reservation.getCompanyId(), reservation.getDate());
+    public boolean isDelivered() {
+        return isDelivered;
+    }
+
+    public void setDelivered(boolean delivered) {
+        isDelivered = delivered;
     }
 
     public Long getId() {
@@ -28,19 +46,35 @@ public class ReservationDto {
         this.id = id;
     }
 
-    public Long getCompanyId() {
-        return companyId;
+    public AppointmentDto getAppointment() {
+        return appointment;
     }
 
-    public void setCompanyId(Long companyId) {
-        this.companyId = companyId;
+    public void setAppointment(AppointmentDto appointment) {
+        this.appointment = appointment;
     }
 
-    public Date getDate() {
-        return date;
+    public List<ReservationItemDto> getReservationItems() {
+        return reservationItems;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setReservationItems(List<ReservationItemDto> reservationItems) {
+        this.reservationItems = reservationItems;
+    }
+
+    public Long getReserverId() {
+        return reserverId;
+    }
+
+    public void setReserverId(Long reserverId) {
+        this.reserverId = reserverId;
+    }
+
+    public boolean isCanceled() {
+        return canceled;
+    }
+
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
     }
 }

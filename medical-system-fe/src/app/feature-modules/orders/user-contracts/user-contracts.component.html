@@ -1,0 +1,22 @@
+<div *ngIf="isUserCompanyAdmin()" class="contract-table">
+  <div class="contract-wrapper">
+    <table cellspacing="0" class="styled-table">
+      <tr>
+        <th>No.</th>
+        <th>Company Name</th>
+        <th>Username</th>
+        <th>Start Date</th>
+        <th></th>
+      </tr>
+  
+      <tr *ngFor="let contract of contractList; let i = index" [class.odd-row]="i % 2 !== 0">
+        <td>{{ i + 1 }}.</td>
+        <td>{{ contract.companyName }}</td>
+        <td>{{ contract.username }}</td>
+        <td>{{ contract.startDate | date: 'medium' }}</td>
+        <td> <button (click)="cancelContract(contract)" mat-flat-button color="warn" [disabled]="contract.contractCanceled">Cancel</button></td>
+      </tr>
+    </table>
+  </div>
+</div>
+  

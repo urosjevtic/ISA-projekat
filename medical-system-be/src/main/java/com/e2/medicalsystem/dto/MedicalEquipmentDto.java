@@ -3,28 +3,31 @@ package com.e2.medicalsystem.dto;
 import com.e2.medicalsystem.model.MedicalEquipment;
 
 public class MedicalEquipmentDto {
-    private Integer id;
+    private int id;
     private String name;
     private String description;
     private long companyId;
+    private int count;
 
-    public MedicalEquipmentDto(Integer id, String name, String description, long companyId) {
+    public MedicalEquipmentDto(){}
+    public MedicalEquipmentDto(Integer id, String name, String description, long companyId, int count) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.companyId = companyId;
+        this.count = count;
     }
 
     public MedicalEquipmentDto(MedicalEquipment medicalEquipment)
     {
-        this(medicalEquipment.getId(), medicalEquipment.getName(), medicalEquipment.getDescription(), medicalEquipment.getCompanyId());
+        this(medicalEquipment.getId(), medicalEquipment.getName(), medicalEquipment.getDescription(), medicalEquipment.getCompanyId(), medicalEquipment.getCount());
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -50,5 +53,13 @@ public class MedicalEquipmentDto {
 
     public void setCompanyId(long companyId) {
         this.companyId = companyId;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

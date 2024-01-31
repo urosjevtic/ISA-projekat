@@ -23,13 +23,16 @@ export class UserReservationsComponent {
     this.getAllReservationsForAdmins();
   }
 
-  private getAllReservationsForAdmins(){
+  private getAllReservationsForAdmins() {
     this.service.getAllReservations().subscribe({
       next: (response) => {
-        console.log(response);
-        this.reservations = response;
+        this.reservations = response.filter(reservation => !reservation.canceled);
+        console.log(this.reservations);
+      },
+      error: (error) => {
+        console.error(error);
       }
-    })
+    });
   }
 
   private getAllReservations(){
@@ -61,7 +64,7 @@ export class UserReservationsComponent {
 
   finishedDelivery(reservation: Reservation) {
     if (!this.isReservationDatePassed(reservation)) {
-      reservation.deliveryFinished = true;
+      reservation.delivered = true;
       this.showSnackbarMessage('Reservation finished by ADMIN!');
     } else {
       this.showSnackbarMessage('Cannot finish delivery for past reservations.');

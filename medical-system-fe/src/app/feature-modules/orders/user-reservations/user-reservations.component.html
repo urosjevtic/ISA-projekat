@@ -31,7 +31,7 @@
           <p>Date Passed - Automatically Finished</p>
           </ng-container>
           <ng-template #finishDeliveryButton>
-            <button (click)="finishedDelivery(reservation)" mat-flat-button color="accent" [disabled]="reservation.deliveryFinished">
+            <button (click)="finishedDelivery(reservation)" mat-flat-button color="accent" [disabled]="reservation.delivered">
               Finish Delivery
             </button>
           </ng-template>

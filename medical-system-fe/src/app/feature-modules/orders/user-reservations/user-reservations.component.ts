@@ -66,6 +66,11 @@ export class UserReservationsComponent {
     if (!this.isReservationDatePassed(reservation)) {
       reservation.delivered = true;
       this.showSnackbarMessage('Reservation finished by ADMIN!');
+      this.service.finishReservation(reservation.id!).subscribe({
+        next: (response) => {
+          console.log(response);
+        }
+      })
     } else {
       this.showSnackbarMessage('Cannot finish delivery for past reservations.');
     }

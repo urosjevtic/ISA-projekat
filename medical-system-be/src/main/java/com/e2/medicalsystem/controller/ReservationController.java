@@ -7,6 +7,7 @@ import com.e2.medicalsystem.dto.ReservationDto;
 import com.e2.medicalsystem.model.*;
 import com.e2.medicalsystem.service.*;
 import com.google.zxing.WriterException;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -121,6 +122,7 @@ public class ReservationController {
         return contentBuilder.toString();
     }
 
+    @Transactional
     @PostMapping(value = "/saveCustomReservation")
     @PreAuthorize("hasAuthority('ROLL_USER')")
     public ResponseEntity<ReservationDto> saveCustomReservation(@RequestBody ReservationDto reservationDto){
@@ -138,7 +140,6 @@ public class ReservationController {
                 false
         );
 
-
         appointment = appointmentService.saveAppointment(appointment);
 
 
@@ -148,8 +149,8 @@ public class ReservationController {
 
         Reservation reservation = reservationService.saveReservation(reservationDto);
 
-        appointment.setTaken(true);
-        appointmentService.saveAppointment(appointment);
+        //appointment.setTaken(true);
+        //appointmentService.saveAppointment(appointment);
 
         reservationDto.setId(reservation.getId());
         return new ResponseEntity<>(reservationDto, HttpStatus.OK);

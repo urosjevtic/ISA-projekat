@@ -140,7 +140,12 @@ export class CompanyComponent implements OnInit {
       data: {
         reservation: this.reservation,
         company: this.company
-    }})
+    }});
+    dialogRef.afterClosed().subscribe(result => {
+      this.profilesService.getAllEquipmentByCompanyId(this.companyId)
+      .subscribe(data => this.medicalEquipments = data);
+      this.reservation.reservationItems = [];
+    });
   }
 
   saveAppointment(): void {

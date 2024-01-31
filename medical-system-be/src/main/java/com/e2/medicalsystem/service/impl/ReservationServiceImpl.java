@@ -50,6 +50,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public Reservation saveReservation(ReservationDto reservationDto) {
         try{
+            checkIfUserHaveReservationInCompany(reservationDto);
             Reservation reservation = new Reservation();
             Appointment appointment = appointmentRepository.getByIdWithOptimisticLocking(reservationDto.getAppointment().getId().intValue());
             if(appointment.isTaken()){
@@ -80,6 +81,16 @@ public class ReservationServiceImpl implements ReservationService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Already reserved or not enough equipment");
         }
 
+
+    }
+
+    private void checkIfUserHaveReservationInCompany(ReservationDto reservationDto){
+        List<Reservation> reservations = reservationRepository.findAllByReserverId(reservationDto.getReserverId());
+        for(Reservation res : reservations){
+            if(reservationDto.getAppointment().getCompanyId() == res.getAppointment().getCompanyId() && !res.isCanceled() && !res.isDelivered()){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User already has one reservation in this company");
+            }
+        }
 
     }
 

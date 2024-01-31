@@ -33,4 +33,8 @@ export class OrdersService {
     return this.http.get<any[]>(this.apiUrl + 'contract/all');
   }
 
+  finishReservation(reservationId: number): Observable<any>{
+    return this.http.get(this.apiUrl + 'reservation/finishDelivery/' + reservationId);
+  }
+
 }

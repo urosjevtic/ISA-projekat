@@ -2,15 +2,10 @@ package com.e2.medicalsystem.service.impl;
 
 import com.e2.medicalsystem.dto.LatLng;
 import com.e2.medicalsystem.dto.ReservationDto;
-import com.e2.medicalsystem.model.Appointment;
-import com.e2.medicalsystem.model.Reservation;
-import com.e2.medicalsystem.model.ReservationItem;
-import com.e2.medicalsystem.model.User;
-import com.e2.medicalsystem.repository.AppointmentRepository;
-import com.e2.medicalsystem.repository.ReservationItemRepository;
-import com.e2.medicalsystem.repository.ReservationRepository;
-import com.e2.medicalsystem.repository.UsersRepository;
+import com.e2.medicalsystem.model.*;
+import com.e2.medicalsystem.repository.*;
 import com.e2.medicalsystem.service.ReservationService;
+import jakarta.persistence.OptimisticLockException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,16 +26,18 @@ public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
     private final ReservationItemRepository reservationItemRepository;
     private final AppointmentRepository appointmentRepository;
+    private final MedicalEquipmentRepository medicalEquipmentRepository;
 
     private final UsersRepository usersRepository;
 
     @Autowired
-    public ReservationServiceImpl(ReservationRepository reservationRepository, ReservationItemRepository reservationItemRepository, AppointmentRepository appointmentRepository, UsersRepository usersRepository)
+    public ReservationServiceImpl(ReservationRepository reservationRepository, ReservationItemRepository reservationItemRepository, AppointmentRepository appointmentRepository, UsersRepository usersRepository, MedicalEquipmentRepository medicalEquipmentRepository)
     {
         this.reservationRepository = reservationRepository;
         this.reservationItemRepository = reservationItemRepository;
         this.appointmentRepository = appointmentRepository;
         this.usersRepository = usersRepository;
+        this.medicalEquipmentRepository = medicalEquipmentRepository;
     }
 
 
@@ -52,25 +49,53 @@ public class ReservationServiceImpl implements ReservationService {
     @Transactional
     @Override
     public Reservation saveReservation(ReservationDto reservationDto) {
-        Reservation reservation = new Reservation();
-        Appointment appointment = appointmentRepository.getById(reservationDto.getAppointment().getId());
-        if(appointment.isTaken()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Termin already occupied");
-        }
-        appointment.setTaken(true);
-        appointmentRepository.save(appointment);
+        try{
+            Reservation reservation = new Reservation();
+            Appointment appointment = appointmentRepository.getByIdWithOptimisticLocking(reservationDto.getAppointment().getId().intValue());
+            if(appointment.isTaken()){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Termin already occupied");
+            }
+            appointment.setTaken(true);
+            appointmentRepository.save(appointment);
+            List<ReservationItem> items = reservation.getReservationItems();
 
-        reservation.setAppointment(appointment);
-        List<ReservationItem> reservationItems = new ArrayList<>();
-        for (var item:
-                reservationDto.getReservationItems()) {
-            ReservationItem reservationItem = new ReservationItem(item);
-            reservationItemRepository.save(reservationItem);
-            reservationItems.add(reservationItem);
+
+            reservation.setAppointment(appointment);
+            List<ReservationItem> reservationItems = new ArrayList<>();
+            for (var item:
+                    reservationDto.getReservationItems()) {
+
+                ReservationItem reservationItem = new ReservationItem(item);
+                reservationItem.setEquipment(medicalEquipmentRepository.getByIdWithOptimisticLocking(item.getEquipment().getId()));
+                reservationItemRepository.save(reservationItem);
+                reservationItems.add(reservationItem);
+                updateEquipment(reservationItem.getEquipment(), reservationItem.getCount(), true);
+            }
+            reservation.setReservationItems(reservationItems);
+            reservation.setReserverId(reservationDto.getReserverId());
+            reservation.setCanceled(false);
+
+            return reservationRepository.save(reservation);
+        }catch(OptimisticLockException ex){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Already reserved or not enough equipment");
         }
-        reservation.setReservationItems(reservationItems);
-        reservation.setReserverId(reservationDto.getReserverId());
-        return reservationRepository.save(reservation);
+
+
+    }
+
+    private void updateEquipment(MedicalEquipment equipment, int count, boolean lowering){
+            if(lowering){
+                if(equipment.getCount() - count > 0){
+                    equipment.setCount(equipment.getCount() - count);
+                    medicalEquipmentRepository.save(equipment);
+                }else {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not enough equipment");
+                }
+            }else{
+                equipment.setCount(equipment.getCount() + count);
+                medicalEquipmentRepository.save(equipment);
+            }
+
     }
     @Transactional
     @Override
@@ -114,24 +139,33 @@ public class ReservationServiceImpl implements ReservationService {
         Date currentDateAsDate = Date.from(currentDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
         if(reservation.getAppointment().getDate().after(currentDateAsDate)){
-            Appointment appointment = appointmentRepository.getById(reservation.getAppointment().getId());
-            reservationRepository.delete(reservation);
-            appointment.setTaken(false);
-            appointmentRepository.save(appointment);
-            long timeDifference = reservation.getAppointment().getDate().getTime() - currentDateAsDate.getTime();
-            long timeDifferenceSeconds = timeDifference/ (60 * 60 * 1000);
-            if(timeDifferenceSeconds < 24){
-                user.setPenalPoints(user.getPenalPoints()+2);
-            }else{
-                user.setPenalPoints(user.getPenalPoints()+2);
-
+            for(ReservationItem item :reservation.getReservationItems()){
+                updateEquipment(item.getEquipment(), item.getCount(), false);
             }
-            usersRepository.save(user);
-            return reservationDto;
+
+            try{
+                Appointment appointment = appointmentRepository.getByIdWithOptimisticLocking(reservation.getAppointment().getId().intValue());
+                reservation.setCanceled(true);
+                reservationRepository.save(reservation);
+                appointment.setTaken(false);
+                appointmentRepository.save(appointment);
+                long timeDifference = reservation.getAppointment().getDate().getTime() - currentDateAsDate.getTime();
+                long timeDifferenceSeconds = timeDifference/ (60 * 60 * 1000);
+                if(timeDifferenceSeconds < 24){
+                    user.setPenalPoints(user.getPenalPoints()+2);
+                }else{
+                    user.setPenalPoints(user.getPenalPoints()+2);
+
+                }
+                usersRepository.save(user);
+                return reservationDto;
+            }catch (OptimisticLockException e){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Optimistic lock exception");
+            }
+
         }
         else{
             throw new IllegalArgumentException("Invalid operation: You can't do this");
         }
-
     }
 }

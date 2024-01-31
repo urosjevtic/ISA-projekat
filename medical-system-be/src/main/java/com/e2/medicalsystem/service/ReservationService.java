@@ -11,7 +11,6 @@ public interface ReservationService {
     public Reservation getReservationById(Long id);
     public void deleteReservation(Long id);
     public List<Reservation> getAllReservationsByReserverId(Long reserverId);
-
-    void finishDelivery(Long id);
     public ReservationDto cancelReservation(Long id, Long userId);
+    void finishDelivery(Long id);
 }

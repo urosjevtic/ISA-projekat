@@ -10,6 +10,7 @@ import { AuthGuard } from './infrastructure/auth/auth.guard';
 import { ContractSimulatorComponent } from './feature-modules/simulators/contract-simulator/contract-simulator.component';
 import { UserReservationsComponent } from './feature-modules/orders/user-reservations/user-reservations.component';
 import {MapComponent} from "./infrastructure/map/map.component";
+import { UserContractsComponent } from './feature-modules/orders/user-contracts/user-contracts.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'contract-simulator', component: ContractSimulatorComponent},
   {path: 'my-reservations', component: UserReservationsComponent, canActivate: [AuthGuard]},
+  {path: 'contracts', component: UserContractsComponent, canActivate: [AuthGuard]},
   {path: 'map/:reservationId/:companyId', component: MapComponent}
 ];
 

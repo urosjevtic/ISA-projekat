@@ -1,29 +1,42 @@
 <div class="filter-container">
   <div class="table-companies">
-      <div class="header">
-          My Reservations
-      </div>
+    <div class="header">
+      My Reservations
+    </div>
 
-      <table cellspacing="0">
-         <tr>
-            <th>Date</th>
-            <th>Equipment</th>
-            <th>Duration</th>
-            <th></th>
-         </tr>
+    <table cellspacing="0">
+      <tr>
+        <th>Date</th>
+        <th>Equipment</th>
+        <th>Duration</th>
+        <th></th>
+        <th></th>
+      </tr>
 
-         <tr *ngFor="let reservation of reservations; let idx =index;">
-            <td>{{ reservation.appointment.date | date:'dd.MM.yyyy' }}</td>
-            <td>
-               <span *ngFor="let reservationItem of reservation.reservationItems; let last = last">
-                 {{reservationItem.equipment.name}}({{reservationItem.count}}){{!last ? ', ' : ''}}
-               </span>
-             </td>
-            <td>{{reservation.appointment.duration}}min</td>
-           <td>
-             <button [disabled]="reservation.delivered" mat-raised-button color="primary" routerLink='/map/{{reservation.id}}/{{reservation.reservationItems[0].equipment.companyId}}'>Begin delivery</button>
-           </td>
-            <td><button mat-flat-button color="warn" (click)="cancelReservation(reservation)">Cancel reservation</button></td>
-         </tr>
-      </table>
+      <tr *ngFor="let reservation of reservations; let idx =index;">
+        <td>{{ reservation.appointment.date | date:'dd.MM.yyyy' }}</td>
+        <td>
+          <span *ngFor="let reservationItem of reservation.reservationItems; let last = last">
+            {{reservationItem.equipment.name}}({{reservationItem.count}}){{!last ? ', ' : ''}}
+          </span>
+        </td>
+        <td>{{reservation.appointment.duration}}min</td>
+        <td *ngIf="!isUserCompanyAdmin()">
+          <p *ngIf="reservation.canceled">Reservation canceled</p> 
+          <button *ngIf="!reservation.canceled" [disabled]="reservation.delivered" mat-raised-button color="primary" routerLink='/map/{{reservation.id}}/{{reservation.reservationItems[0].equipment.companyId}}'>Begin delivery</button>
+        </td>
+        <td *ngIf="!isUserCompanyAdmin()"><button *ngIf="!reservation.canceled" mat-flat-button color="warn" (click)="cancelReservation(reservation)">Cancel reservation</button></td>
+        <td *ngIf="isUserCompanyAdmin()">
+          <ng-container *ngIf="isReservationDatePassed(reservation); else finishDeliveryButton">
+          <p>Date Passed - Automatically Finished</p>
+          </ng-container>
+          <ng-template #finishDeliveryButton>
+            <button (click)="finishedDelivery(reservation)" mat-flat-button color="accent" [disabled]="reservation.deliveryFinished">
+              Finish Delivery
+            </button>
+          </ng-template>
+        </td>
+      </tr>
+    </table>
   </div>
+</div>

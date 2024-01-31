@@ -1,6 +1,7 @@
 package com.e2.medicalsystem.controller;
 
 import com.e2.medicalsystem.dto.AppointmentDto;
+import com.e2.medicalsystem.dto.CompanyProfileDto;
 import com.e2.medicalsystem.dto.LatLng;
 import com.e2.medicalsystem.dto.ReservationDto;
 import com.e2.medicalsystem.model.*;
@@ -8,6 +9,7 @@ import com.e2.medicalsystem.service.*;
 import com.google.zxing.WriterException;
 import jakarta.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
@@ -31,11 +33,6 @@ public class ReservationController {
     private EmailSenderService emailSenderService;
     private UsersService usersService;
 
-
-
-
-
-
     @Autowired
     public ReservationController(ReservationService reservationService, AppointmentService appointmentService,
                                  QrCodeService qrCodeService, EmailSenderService emailSenderService, UsersService usersService)
@@ -48,12 +45,30 @@ public class ReservationController {
 
     }
 
+    @GetMapping(value = "all")
+    @PreAuthorize("hasAuthority('ROLL_COMPANYADMIN')")
+    public ResponseEntity<List<ReservationDto>> getAllCompanies() {
+
+        List<Reservation> allReservation = reservationService.getAllReservations();
+        List<ReservationDto> allReservationDto = new ArrayList<>();
+        for(Reservation reservation : allReservation)
+        {
+            allReservationDto.add(new ReservationDto(reservation));
+        }
+        return new ResponseEntity<>(allReservationDto, HttpStatus.OK);
+
+    }
 
     @PostMapping(value = "/save")
     @PreAuthorize("hasAuthority('ROLL_USER')")
-    public ResponseEntity<ReservationDto> saveReservation(@RequestBody ReservationDto reservationDto) {
+    public ResponseEntity<?> saveReservation(@RequestBody ReservationDto reservationDto) {
+        try{
         ReservationDto reservation = new ReservationDto(reservationService.saveReservation(reservationDto));
         return new ResponseEntity<>(reservation, HttpStatus.OK);
+        }
+        catch(OptimisticLockingFailureException o) {
+            return new ResponseEntity<>(HttpStatus.TOO_MANY_REQUESTS);
+        }
     }
 
     @GetMapping(value = "/userReservation")
@@ -68,8 +83,6 @@ public class ReservationController {
 
         return new ResponseEntity<>(allReservationsDto, HttpStatus.OK);
     }
-
-
 
     @GetMapping("/generate-and-send-email")
     public ResponseEntity<String> generateQrCodeAndSendEmail(@RequestParam int senderId,
@@ -152,13 +165,14 @@ public class ReservationController {
     
     @DeleteMapping(value = "/{userId}/{reservationId}")
     @PreAuthorize("hasAuthority('ROLL_USER')")
-    public ResponseEntity<Object> cancelReservation(@PathVariable Long userId,@PathVariable Long reservationId){
-        try{
+    public ResponseEntity<Object> cancelReservation(@PathVariable Long userId,@PathVariable Long reservationId) {
+        try {
             ReservationDto reservation = reservationService.cancelReservation(reservationId, userId);
             return new ResponseEntity<>(reservation, HttpStatus.OK);
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }catch(OptimisticLockingFailureException o) {
+            return new ResponseEntity<>(HttpStatus.TOO_MANY_REQUESTS);
         }
     }
 }

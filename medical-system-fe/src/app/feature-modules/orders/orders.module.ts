@@ -5,12 +5,14 @@ import { MaterialModule } from 'src/app/infrastructure/material/material.module'
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import {RouterLink} from "@angular/router";
+import { UserContractsComponent } from './user-contracts/user-contracts.component';
 
 
 
 @NgModule({
   declarations: [
-    UserReservationsComponent
+    UserReservationsComponent,
+    UserContractsComponent
   ],
     imports: [
         CommonModule,

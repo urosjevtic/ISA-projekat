@@ -13,7 +13,6 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +29,7 @@ import {FormsModule} from "@angular/forms";
     MatNativeDateModule,
     MatButtonModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

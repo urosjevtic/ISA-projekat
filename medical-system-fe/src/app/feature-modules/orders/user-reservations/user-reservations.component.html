@@ -31,12 +31,9 @@
           <p>Date Passed - Automatically Finished</p>
           </ng-container>
           <ng-template #finishDeliveryButton>
-            <button *ngIf="!reservation.canceled; else reservationCanceled" (click)="finishedDelivery(reservation)" mat-flat-button color="accent" [disabled]="reservation.delivered">
+            <button (click)="finishedDelivery(reservation)" mat-flat-button color="accent" [disabled]="reservation.delivered">
               Finish Delivery
             </button>
-          </ng-template>
-          <ng-template #reservationCanceled>
-            Reservation has been canceled!
           </ng-template>
 
         </td>

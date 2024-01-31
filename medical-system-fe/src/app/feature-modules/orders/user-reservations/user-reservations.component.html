@@ -22,19 +22,23 @@
         </td>
         <td>{{reservation.appointment.duration}}min</td>
         <td *ngIf="!isUserCompanyAdmin()">
-          <p *ngIf="reservation.canceled">Reservation canceled</p> 
+          <p *ngIf="reservation.canceled">Reservation canceled</p>
           <button *ngIf="!reservation.canceled" [disabled]="reservation.delivered" mat-raised-button color="primary" routerLink='/map/{{reservation.id}}/{{reservation.reservationItems[0].equipment.companyId}}'>Begin delivery</button>
         </td>
         <td *ngIf="!isUserCompanyAdmin()"><button *ngIf="!reservation.canceled" mat-flat-button color="warn" (click)="cancelReservation(reservation)">Cancel reservation</button></td>
         <td *ngIf="isUserCompanyAdmin()">
-          <ng-container *ngIf="isReservationDatePassed(reservation); else finishDeliveryButton">
+          <ng-container *ngIf="isReservationDatePassed(reservation) && !reservation.canceled; else finishDeliveryButton">
           <p>Date Passed - Automatically Finished</p>
           </ng-container>
-          <ng-template #finishDeliveryButton>
-            <button (click)="finishedDelivery(reservation)" mat-flat-button color="accent" [disabled]="reservation.deliveryFinished">
+          <ng-template #finishDeliveryButton >
+            <button *ngIf="!reservation.canceled; else reservationCanceled" (click)="finishedDelivery(reservation)" mat-flat-button color="accent" [disabled]="reservation.deliveryFinished">
               Finish Delivery
             </button>
           </ng-template>
+          <ng-template #reservationCanceled>
+            Reservation has been canceled!
+          </ng-template>
+
         </td>
       </tr>
     </table>

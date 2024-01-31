@@ -68,7 +68,7 @@ INSERT INTO public.users(
 
 INSERT INTO public.appointments(
 	id, admin_id, admin_last_name, admin_name, company_id, date, duration, taken)
-	VALUES (-3, -3, 'Djokic', 'Filip', -1, '2023-12-22 12:00:00', 3, FALSE);
+	VALUES (-3, -3, 'Djokic', 'Filip', -1, '2024-02-22 12:00:00', 3, FALSE);
 
 INSERT INTO public.companies_company_admins(
 	company_profile_id, company_admins_id)
